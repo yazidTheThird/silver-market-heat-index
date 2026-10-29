@@ -16,6 +16,7 @@ How it reads a store (chosen automatically, or set `platform:` per store):
 from __future__ import annotations
 
 import datetime as dt
+import html as html_lib
 import json
 import os
 import re
@@ -287,11 +288,11 @@ def read_sitemap(url: str, f: Fetcher, pattern: re.Pattern, depth: int = 0) -> l
     if code != 200:
         log.warning("drops: sitemap %s -> HTTP %s", url, code)
         return []
-    locs = re.findall(r"<loc>\s*([^<]+?)\s*</loc>", xml)
+    locs = [html_lib.unescape(u) for u in re.findall(r"<loc>\s*([^<]+?)\s*</loc>", xml)]
     if "<sitemapindex" in xml and depth < 2:
         out = []
         for sm in locs:
-            if re.search(r"product|item|shop", sm, re.I):
+            if re.search(r"product|\bitems?\b|shop", sm, re.I):
                 out.extend(read_sitemap(sm, f, pattern, depth + 1))
         return out
     return [u for u in locs if pattern.search(urlparse(u).path)]
@@ -468,7 +469,14 @@ def _merge(state: pd.DataFrame, base: str, items: list[dict], today: dt.date,
     # Feed-based stores (Shopify/WooCommerce): a tracked in-stock product that has
     # vanished from the feed was removed — almost always because it sold out.
     seen_ids = {it["product_id"] for it in items}
-    for i, r in state.iterrows():
+    in_stock_known = int(((state["store"] == base) & (state["available"].astype(str) == "1")).sum())
+    if in_stock_known >= 10 and len(items) < 0.5 * in_stock_known:
+        # Today's read returned far fewer products than we know are in stock — that's a
+        # partial/failed read, not a wave of sell-outs. Don't mark anything as sold.
+        log.warning("drops: %s returned only %d products vs %d known in stock — "
+                    "skipping sold-out detection today", base, len(items), in_stock_known)
+        seen_ids = None
+    for i, r in (state.iterrows() if seen_ids is not None else []):
         if r["store"] == base and r["product_id"] not in seen_ids and str(r["available"]) == "1":
             state.at[i, "available"] = "0"
             state.at[i, "last_checked"] = t
