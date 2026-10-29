@@ -1,0 +1,136 @@
+# Market Heat Index — settings (colorized collectibles edition)
+# Weights don't need to add to 100; they are rescaled automatically, and any
+# source that fails on a given day is dropped and the rest are rescaled.
+
+weights:
+  drops: 35         # how fast colorized launches are selling out at mints/dealers
+  ebay: 30          # what collectors pay for colorized vs the same plain coin
+  attention: 15     # Reddit + Google Trends chatter about colorized coins
+  silver: 10        # silver price mood (background only)
+  calendar: 10      # paydays, season, weekday, crowded release weeks
+
+thresholds:
+  hot: 70           # >= this: launch, consider bigger mintage
+  dead: 40          # <  this: hold, or pre-orders only
+
+# How many days of history a signal needs before it is scored against its own past.
+min_history_days: 14
+# If sources covering less than this share of the total weight answered today,
+# the dashboard shows "LOW DATA" instead of a HOT/NORMAL/DEAD verdict.
+min_coverage: 0.5
+lookback_days: 90
+
+# What counts as a colorized product (checked against titles, types and tags).
+colorized_pattern: "coloriz|colouriz|colorised|colourised|colou?red\\b|full[- ]colou?r|\\bcolou?r in\\b|chromatic|enamel"
+
+# ---------------------------------------------------------------- 1. drops
+# Stores that sell colorized coins — works on any platform.
+#
+# For each store give the home URL plus at least ONE of:
+#   listing_urls: the page(s) that list their colorized products (or all new
+#                 releases). Best option. Copy them from your browser's address bar.
+#   sitemap_url:  the store's sitemap (often <store>/sitemap.xml) — used to find
+#                 product pages if the listing pages don't work.
+# Shopify and WooCommerce stores are detected automatically and need neither.
+#
+# Optional per store:
+#   listing_is_colorized: true   every product on the listing page is colorized
+#                                (skips the name check — use for "Colorized" categories)
+#   page_param: "page"           pagination parameter if the listing has several pages
+#   max_pages: 3
+#   product_link_pattern: "/product/"   regex matching product URLs, if the default
+#                                       guess picks up the wrong links
+#   render: true                 the store only shows products after JavaScript runs
+#                                (slower — uses a headless browser)
+#   platform: generic            force a method: auto | shopify | woocommerce | generic
+drops:
+  stores:
+    # ---- Small shops with their own colorized/exclusive drops (closest to CCB) ----
+    - url: "https://www.coinstv.net"            # Shopify: read automatically ("Chromatics" line)
+    - url: "https://www.herobullion.com"        # looks like WooCommerce: read automatically;
+      listing_urls:                             # falls back to these pages if not
+        - "https://www.herobullion.com/mints/hero-bullion/exclusives/"
+        - "https://www.herobullion.com/new-arrivals/"
+    - url: "https://grreserve.com"              # same platform style as Hero Bullion
+    - url: "https://bullionsharks.com"          # limited-edition colorized Eagles/Libertads
+      sitemap_url: "https://bullionsharks.com/sitemap.xml"
+      product_link_pattern: "coloriz|colouriz|chromatic"
+    # - url: "https://popcoins.store"           # add its colorized category link to enable
+    #   listing_urls: ["https://popcoins.store/..."]
+    #   listing_is_colorized: true
+
+    # ---- Big dealers' colorized categories (market-wide volume) ----
+    # These sites often block automated visitors; the first run's log shows which work.
+    - url: "https://www.jmbullion.com"
+      listing_urls: ["https://www.jmbullion.com/silver/silver-coins/colorized-silver-coins/"]
+      listing_is_colorized: true
+      product_link_pattern: "coloriz|colouriz"
+    - url: "https://sdbullion.com"
+      listing_urls: ["https://sdbullion.com/buy/colorized-1-oz-silver-coins"]
+      listing_is_colorized: true
+      product_link_pattern: "coloriz|colouriz"
+    - url: "https://www.bgasc.com"
+      listing_urls: ["https://www.bgasc.com/buy-silver/silver-rounds-all-sizes/antiqued-colorized-silver-rounds"]
+      listing_is_colorized: true
+      product_link_pattern: "coloriz|colouriz"
+    - url: "https://www.silver.com"
+      listing_urls: ["https://www.silver.com/silver-bullion/silver-coins/silver-colorized-coins/"]
+      listing_is_colorized: true
+      product_link_pattern: "coloriz|colouriz"
+    - url: "https://bullionexchanges.com"
+      listing_urls: ["https://bullionexchanges.com/buy-silver/coins/colorized-silver-coins"]
+      listing_is_colorized: true
+      product_link_pattern: "coloriz|colouriz"
+    - url: "https://www.apmex.com"
+      listing_urls: ["https://www.apmex.com/category/25063/apmex-colorized-rounds"]
+      listing_is_colorized: true
+      product_link_pattern: "coloriz|colouriz"
+    - url: "https://www.scottsdalemint.com"
+      listing_urls: ["https://www.scottsdalemint.com/shop/silver/silver-color-collectible-bullion-bars-and-rounds"]
+      listing_is_colorized: true
+      product_link_pattern: "/product/"
+    - url: "https://www.littletoncoin.com"
+      listing_urls: ["https://www.littletoncoin.com/shop/colorized-coins"]
+      listing_is_colorized: true
+      product_link_pattern: "coloriz|colouriz"
+  recent_days: 30                 # "recent launches" = launched in the last 30 days
+  fast_sellout_days: 2            # a sell-out within 2 days counts as "fast"
+  max_product_checks_per_store: 150
+  recheck_soldout_days: 7         # sold-out items are re-checked weekly for restocks
+
+# ----------------------------------------------------------------- 2. eBay
+# Each pair compares colorized listings with the same coin in plain form.
+# The ratio between them is the "collector premium" — silver price cancels out.
+ebay:
+  pairs:
+    - colorized: "colorized silver libertad 1 oz"
+      plain: "silver libertad 1 oz"
+    - colorized: "colorized silver eagle 1 oz"
+      plain: "american silver eagle 1 oz"
+    - colorized: "colorized half dollar"
+      plain: "half dollar silver"
+    - colorized: "colorized 1 oz silver round"
+      plain: "1 oz silver round"
+  category_id: "11116"     # Coins & Paper Money
+  max_items_per_query: 200
+
+# ------------------------------------------------------------ 3. attention
+attention:
+  subreddits: ["Silverbugs", "Pmsforsale", "coins", "Coins4Sale"]
+  reddit_query: "colorized OR colourized OR colorised OR colourised"
+  trends_keywords: ["colorized coin", "colorized silver"]
+  trends_geo: "US"
+
+# --------------------------------------------------------------- 4. silver
+silver:
+  ticker: "SI=F"           # COMEX silver futures on Yahoo Finance
+
+# ------------------------------------------------------------- 5. calendar
+calendar:
+  # month -> seasonal demand score (0-100)
+  season: {1: 45, 2: 50, 3: 55, 4: 55, 5: 50, 6: 45, 7: 45, 8: 50, 9: 55, 10: 65, 11: 85, 12: 90}
+  # weekday (0=Mon) -> score
+  weekday: {0: 50, 1: 55, 2: 55, 3: 60, 4: 70, 5: 75, 6: 70}
+  competing_window_days: 3   # drops you log within +/- this many days count
+  competing_penalty: 15      # points removed per competing drop
+  normal_weekly_drops: 5     # auto-detected launches/week above this = crowded week

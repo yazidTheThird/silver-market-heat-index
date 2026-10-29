@@ -1,0 +1,8 @@
+pandas>=2.1
+numpy>=1.26
+requests>=2.31
+pyyaml>=6.0
+beautifulsoup4>=4.12
+yfinance>=0.2.40
+pytrends>=4.9.2
+playwright>=1.45     # only used for stores with render: true
