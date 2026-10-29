@@ -142,6 +142,7 @@ def read_generic(store: dict, f: Fetcher, cfg: dict, known: pd.DataFrame,
             links.append(r.url)
 
     out = []
+    stats = {"fetched": 0, "http_errors": {}, "no_stock_info": 0, "not_colorized": 0}
 
     def keep(prev, url, available=None, checked=False):
         """Carry a known product forward without new information (or with a verdict)."""
@@ -172,6 +173,9 @@ def read_generic(store: dict, f: Fetcher, cfg: dict, known: pd.DataFrame,
             if prev is not None:
                 keep(prev, url)
             continue
+        stats["fetched"] += 1
+        if code != 200:
+            stats["http_errors"][code] = stats["http_errors"].get(code, 0) + 1
         if code in (404, 410):
             if prev is not None:
                 keep(prev, url, available=False, checked=True)   # page removed
@@ -185,8 +189,10 @@ def read_generic(store: dict, f: Fetcher, cfg: dict, known: pd.DataFrame,
         if prev is None and not store.get("listing_is_colorized") and not is_colorized(
                 f'{title} {info["category"]} {url}', cfg):
             ignore.add(url)            # not colorized: never fetch it again
+            stats["not_colorized"] += 1
             continue
         if info["available"] is None:
+            stats["no_stock_info"] += 1
             if prev is not None:
                 keep(prev, url)
             continue
@@ -195,6 +201,10 @@ def read_generic(store: dict, f: Fetcher, cfg: dict, known: pd.DataFrame,
                     "checked": True})
         time.sleep(store.get("delay_seconds", 1.5))
     _save_ignore(ignore)
+    log.info("drops: %s -> %d product links, %d pages fetched, HTTP errors %s, "
+             "%d without readable stock status, %d not colorized",
+             base, len(links), stats["fetched"], stats["http_errors"] or "none",
+             stats["no_stock_info"], stats["not_colorized"])
     return out
 
 
@@ -239,6 +249,7 @@ def discover_links(store: dict, f: Fetcher) -> list[str]:
                 log.warning("drops: listing %s -> %s", listing, e)
                 break
             if code != 200:
+                log.warning("drops: listing %s -> HTTP %s", listing, code)
                 break
             before = len(links)
             soup = BeautifulSoup(html, "html.parser")
@@ -255,6 +266,10 @@ def discover_links(store: dict, f: Fetcher) -> list[str]:
                     if u:
                         add(u)
             if len(links) == before:
+                if page == 1:
+                    log.warning("drops: listing %s loaded (%d chars) but no product links "
+                                "matched — page may need render: true or a product_link_pattern",
+                                listing, len(html))
                 break
             time.sleep(1)
 
@@ -270,6 +285,7 @@ def read_sitemap(url: str, f: Fetcher, pattern: re.Pattern, depth: int = 0) -> l
         log.warning("drops: sitemap %s -> %s", url, e)
         return []
     if code != 200:
+        log.warning("drops: sitemap %s -> HTTP %s", url, code)
         return []
     locs = re.findall(r"<loc>\s*([^<]+?)\s*</loc>", xml)
     if "<sitemapindex" in xml and depth < 2:

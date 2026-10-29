@@ -178,7 +178,7 @@ def ebay(cfg: dict, hist: pd.DataFrame, spot: float | None) -> dict:
         parts.append((sold["score"], 0.5))
 
     if not parts:
-        return _fail("ebay: no API keys and no recent data/ebay_sold.csv entry")
+        return _fail("ebay: no API keys yet, and Terapeak log needs 3+ weekly entries (or newest is >10 days old)")
     tw = sum(w for _, w in parts)
     return {"score": round(sum(s * w for s, w in parts) / tw, 1), "raw": raw, "note": "ok"}
 
@@ -233,7 +233,7 @@ def attention(cfg: dict, hist: pd.DataFrame) -> dict:
     try:
         from pytrends.request import TrendReq
 
-        tr = TrendReq(hl="en-US", tz=0, timeout=(10, 30), retries=2, backoff_factor=1)
+        tr = TrendReq(hl="en-US", tz=0, timeout=(10, 30))  # no retries arg: breaks on urllib3 v2
         tr.build_payload(acfg["trends_keywords"], timeframe="today 12-m", geo=acfg["trends_geo"])
         df = tr.interest_over_time()
         if df is not None and not df.empty:
