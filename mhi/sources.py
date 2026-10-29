@@ -187,25 +187,29 @@ def _ebay_sold_manual() -> dict | None:
     Used only if the newest row is <= 10 days old."""
     if not os.path.exists(os.path.join(ROOT, "data", "ebay_sold.csv")):
         return None
-    df = pd.read_csv(os.path.join(ROOT, "data", "ebay_sold.csv")).dropna(subset=["sold_count"])
+    df = pd.read_csv(os.path.join(ROOT, "data", "ebay_sold.csv")).dropna(subset=["week_start"])
     if df.empty:
         return None
     df["week_start"] = pd.to_datetime(df["week_start"])
+    df = df.sort_values("week_start")
     last = df.iloc[-1]
     if (pd.Timestamp.today() - last["week_start"]).days > 10:
         return None
-    parts = []
-    if len(df) >= 4:
-        parts.append(percentile(last["sold_count"], df["sold_count"].tail(26).tolist()))
-    st = last.get("sell_through_pct")
-    if st is not None and st == st:
-        # Terapeak sell-through: ~30% is ordinary on eBay, 80%+ is very hot.
-        parts.append(clamp((float(st) - 20) / 60 * 100))
-    score = sum(parts) / len(parts) if parts else 50.0
-    raw = {"ebay_sold_week": int(last["sold_count"])}
-    if st is not None and st == st:
-        raw["ebay_sell_through_pct"] = float(st)
-    return {"score": score, "raw": raw}
+    # Each number is compared with YOUR previous weeks (Terapeak's absolute levels
+    # depend on the search and category, e.g. sell-through of a few % is normal for
+    # coins). Needs 3+ weeks logged; before that this signal stays out of the index.
+    raw, parts = {}, []
+    for col, key in (("sell_through_pct", "ebay_sell_through_pct"),
+                     ("sold_count", "ebay_sold_week")):
+        series = pd.to_numeric(df.get(col), errors="coerce").dropna().tail(26)
+        v = pd.to_numeric(pd.Series([last.get(col)]), errors="coerce").iloc[0]
+        if v == v:
+            raw[key] = float(v)
+            if len(series) >= 3:
+                parts.append(percentile(v, series.tolist()))
+    if not parts:
+        return None
+    return {"score": round(sum(parts) / len(parts), 1), "raw": raw}
 
 
 # ============================================== 3. ATTENTION (colorized chatter)
