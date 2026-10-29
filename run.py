@@ -26,8 +26,11 @@ log = logging.getLogger("mhi")
 
 
 def notify(row: dict) -> None:
-    token, chat = os.getenv("TELEGRAM_BOT_TOKEN"), os.getenv("TELEGRAM_CHAT_ID")
+    token = (os.getenv("TELEGRAM_BOT_TOKEN") or "").strip()
+    chat = (os.getenv("TELEGRAM_CHAT_ID") or "").strip()
     if not (token and chat):
+        log.info("telegram: skipped — secret missing (TELEGRAM_BOT_TOKEN set: %s, "
+                 "TELEGRAM_CHAT_ID set: %s)", bool(token), bool(chat))
         return
     parts = [f"{k.replace('score_', '')}: {round(v) if v is not None else 'n/a'}"
              for k, v in row.items() if k.startswith("score_")]
@@ -37,10 +40,18 @@ def notify(row: dict) -> None:
     if url:
         text += f"\n{url}"
     try:
-        requests.post(f"https://api.telegram.org/bot{token}/sendMessage",
-                      data={"chat_id": chat, "text": text}, timeout=20)
+        r = requests.post(f"https://api.telegram.org/bot{token}/sendMessage",
+                          data={"chat_id": chat, "text": text}, timeout=20)
+        body = r.json() if r.headers.get("content-type", "").startswith("application/json") else {}
+        if r.status_code == 200 and body.get("ok"):
+            log.info("telegram: message sent")
+        else:
+            # Telegram's own explanation, e.g. "Unauthorized" (wrong token) or
+            # "Bad Request: chat not found" (wrong chat id / never pressed Start).
+            log.warning("telegram: NOT sent — HTTP %s: %s", r.status_code,
+                        body.get("description", r.text[:200]))
     except Exception as e:  # noqa: BLE001
-        log.warning("telegram: %s", e)
+        log.warning("telegram: NOT sent — %s", type(e).__name__)
 
 
 def main() -> None:
