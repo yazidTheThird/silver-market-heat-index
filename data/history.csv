@@ -1,2 +1,2 @@
 date,index,label,coverage,score_drops,drops_tracked,drops_stores_ok,drops_new_7d,drops_recent_soldout_share,drops_median_days_to_sellout,drops_fast_share,score_ebay,score_attention,score_silver,silver_spot,silver_ret7_pct,silver_ret30_pct,silver_vol30_pct,score_calendar,cal_payday,cal_season,cal_weekday,competing_drops_manual,trends_colorized_interest
-2026-10-29,33.4,LOW DATA,0.35,,766,7,10,0.16,,,,31.1,26.1,52.34,-4.43,-12.91,33.8,44.1,16.0,65.0,60.0,0,21.5
+2026-10-29,34.6,LOW DATA,0.35,,766,8,10,0.16,,,,34.0,26.1,52.33,-4.45,-12.93,33.8,44.1,16.0,65.0,60.0,0,19.8
