@@ -46,53 +46,51 @@ colorized_pattern: "coloriz|colouriz|colorised|colourised|colou?red\\b|full[- ]c
 drops:
   stores:
     # ---- Small shops with their own colorized/exclusive drops (closest to CCB) ----
-    - url: "https://www.coinstv.net"            # Shopify: read automatically ("Chromatics" line)
-    - url: "https://www.herobullion.com"        # looks like WooCommerce: read automatically;
-      listing_urls:                             # falls back to these pages if not
-        - "https://www.herobullion.com/mints/hero-bullion/exclusives/"
-        - "https://www.herobullion.com/new-arrivals/"
-    - url: "https://grreserve.com"              # same platform style as Hero Bullion
+    - url: "https://www.coinstv.net"            # Shopify ("Chromatics" line)
+      platform: shopify
+    - url: "https://www.herobullion.com"        # WooCommerce
+      platform: woocommerce
+    - url: "https://grreserve.com"              # WooCommerce
+      platform: woocommerce
     - url: "https://bullionsharks.com"          # limited-edition colorized Eagles/Libertads
-      sitemap_url: "https://bullionsharks.com/sitemap.xml"
+      platform: generic
+      sitemap_url: "https://bullionsharks.com/xmlsitemap.php"
+      listing_urls: ["https://bullionsharks.com/"]
       product_link_pattern: "coloriz|colouriz|chromatic"
     # - url: "https://popcoins.store"           # add its colorized category link to enable
     #   listing_urls: ["https://popcoins.store/..."]
     #   listing_is_colorized: true
 
     # ---- Big dealers' colorized categories (market-wide volume) ----
-    # These sites often block automated visitors; the first run's log shows which work.
-    - url: "https://www.jmbullion.com"
-      listing_urls: ["https://www.jmbullion.com/silver/silver-coins/colorized-silver-coins/"]
-      listing_is_colorized: true
-      product_link_pattern: "coloriz|colouriz"
-    - url: "https://sdbullion.com"
-      listing_urls: ["https://sdbullion.com/buy/colorized-1-oz-silver-coins"]
-      listing_is_colorized: true
-      product_link_pattern: "coloriz|colouriz"
-    - url: "https://www.bgasc.com"
-      listing_urls: ["https://www.bgasc.com/buy-silver/silver-rounds-all-sizes/antiqued-colorized-silver-rounds"]
-      listing_is_colorized: true
-      product_link_pattern: "coloriz|colouriz"
-    - url: "https://www.silver.com"
-      listing_urls: ["https://www.silver.com/silver-bullion/silver-coins/silver-colorized-coins/"]
-      listing_is_colorized: true
-      product_link_pattern: "coloriz|colouriz"
-    - url: "https://bullionexchanges.com"
-      listing_urls: ["https://bullionexchanges.com/buy-silver/coins/colorized-silver-coins"]
-      listing_is_colorized: true
-      product_link_pattern: "coloriz|colouriz"
     - url: "https://www.apmex.com"
+      platform: generic
       listing_urls: ["https://www.apmex.com/category/25063/apmex-colorized-rounds"]
       listing_is_colorized: true
       product_link_pattern: "coloriz|colouriz"
-    - url: "https://www.scottsdalemint.com"
+    - url: "https://sdbullion.com"
+      platform: generic
+      listing_urls:
+        - "https://sdbullion.com/buy/colorized-1-oz-silver-coins"
+        - "https://sdbullion.com/buy/colorized-lunar-new-year-coins"
+        - "https://sdbullion.com/buy/colorized-zodiac-animal-coins"
+      listing_is_colorized: true
+      product_link_pattern: "coloriz|colouriz"
+    - url: "https://bullionexchanges.com"       # products load via JavaScript
+      platform: generic
+      render: true
+      listing_urls: ["https://bullionexchanges.com/buy-silver/coins/colorized-silver-coins"]
+      listing_is_colorized: true
+      product_link_pattern: "coloriz|colouriz"
+    - url: "https://www.scottsdalemint.com"     # page needs a real browser to load
+      platform: generic
+      render: true
       listing_urls: ["https://www.scottsdalemint.com/shop/silver/silver-color-collectible-bullion-bars-and-rounds"]
       listing_is_colorized: true
       product_link_pattern: "/product/"
-    - url: "https://www.littletoncoin.com"
-      listing_urls: ["https://www.littletoncoin.com/shop/colorized-coins"]
-      listing_is_colorized: true
-      product_link_pattern: "coloriz|colouriz"
+
+    # Removed after the first runs:
+    #   JM Bullion, BGASC, Silver.com — block automated visitors (HTTP 401)
+    #   Littleton — product pages don't show stock status
   recent_days: 30                 # "recent launches" = launched in the last 30 days
   fast_sellout_days: 2            # a sell-out within 2 days counts as "fast"
   max_product_checks_per_store: 150
@@ -133,4 +131,3 @@ calendar:
   weekday: {0: 50, 1: 55, 2: 55, 3: 60, 4: 70, 5: 75, 6: 70}
   competing_window_days: 3   # drops you log within +/- this many days count
   competing_penalty: 15      # points removed per competing drop
-  normal_weekly_drops: 5     # auto-detected launches/week above this = crowded week
