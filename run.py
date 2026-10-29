@@ -14,7 +14,14 @@ import yaml
 from mhi import dashboard
 from mhi.index import compute, save
 
-logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
+_HERE = os.path.dirname(os.path.abspath(__file__))
+os.makedirs(os.path.join(_HERE, "data"), exist_ok=True)
+logging.basicConfig(
+    level=logging.INFO, format="%(levelname)s %(message)s",
+    handlers=[logging.StreamHandler(),
+              # Saved in the repo so the latest run's details can be read any time.
+              logging.FileHandler(os.path.join(_HERE, "data", "last_run_log.txt"),
+                                  mode="w", encoding="utf-8")])
 log = logging.getLogger("mhi")
 
 
