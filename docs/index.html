@@ -106,7 +106,7 @@ details summary { cursor: pointer; color: var(--text-secondary); font-size: 14px
 <div class="tip" id="tip"></div>
 
 <script>
-const D = {"rows": [{"date": "2026-10-29", "index": 34.6, "label": "LOW DATA", "coverage": 0.35, "spot": 52.33, "scores": {"drops": null, "ebay": null, "attention": 34.0, "silver": 26.1, "calendar": 44.1}}], "labels": {"drops": "Colorized drops selling out", "ebay": "eBay collector premium", "attention": "Colorized chatter", "silver": "Silver price mood", "calendar": "Calendar & competition"}, "weights": {"drops": 35, "ebay": 30, "attention": 15, "silver": 10, "calendar": 10}, "hot": 70, "dead": 40};
+const D = {"rows": [{"date": "2026-10-29", "index": 35.0, "label": "LOW DATA", "coverage": 0.35, "spot": 52.22, "scores": {"drops": null, "ebay": null, "attention": 34.0, "silver": 27.3, "calendar": 44.1}}], "labels": {"drops": "Colorized drops selling out", "ebay": "eBay collector premium", "attention": "Colorized chatter", "silver": "Silver price mood", "calendar": "Calendar & competition"}, "weights": {"drops": 35, "ebay": 30, "attention": 15, "silver": 10, "calendar": 10}, "hot": 70, "dead": 40};
 const rows = D.rows.filter(r => r.index !== null);
 const last = rows[rows.length - 1];
 const fmt = v => (v === null || v === undefined || Number.isNaN(v)) ? "—" : Math.round(v);
