@@ -1,22 +1,33 @@
-INFO drops: https://www.coinstv.net via shopify -> 107 colorized products
-INFO drops: https://www.herobullion.com via woocommerce -> 182 colorized products
+INFO drops: https://www.coinstv.net via shopify -> 106 colorized products
+WARNING drops: listing https://www.herobullion.com/mints/hero-bullion/exclusives/ loaded (12163 chars) but no product links matched — page may need render: true or a product_link_pattern
+WARNING drops: listing https://www.herobullion.com/new-arrivals/ loaded (12173 chars) but no product links matched — page may need render: true or a product_link_pattern
+WARNING drops: https://www.herobullion.com: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
 INFO drops: https://grreserve.com via woocommerce -> 384 colorized products
+WARNING drops: sitemap https://bullionsharks.com/sitemap.xml -> HTTP 404
 WARNING drops: https://bullionsharks.com: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
+WARNING drops: listing https://www.jmbullion.com/silver/silver-coins/colorized-silver-coins/ -> HTTP 401
 WARNING drops: https://www.jmbullion.com: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
+INFO drops: https://sdbullion.com -> 15 product links, 9 pages fetched, HTTP errors none, 4 without readable stock status, 0 not colorized
 INFO drops: https://sdbullion.com via generic -> 11 colorized products
+INFO drops: https://www.bgasc.com -> 77 product links, 77 pages fetched, HTTP errors {401: 77}, 0 without readable stock status, 0 not colorized
 INFO drops: https://www.bgasc.com via generic -> 0 colorized products
+INFO drops: https://www.silver.com -> 40 product links, 40 pages fetched, HTTP errors {401: 39}, 1 without readable stock status, 0 not colorized
 INFO drops: https://www.silver.com via generic -> 0 colorized products
+WARNING drops: listing https://bullionexchanges.com/buy-silver/coins/colorized-silver-coins loaded (41455 chars) but no product links matched — page may need render: true or a product_link_pattern
 WARNING drops: https://bullionexchanges.com: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
+INFO drops: https://www.apmex.com -> 88 product links, 88 pages fetched, HTTP errors none, 6 without readable stock status, 0 not colorized
 INFO drops: https://www.apmex.com via generic -> 82 colorized products
+WARNING drops: listing https://www.scottsdalemint.com/shop/silver/silver-color-collectible-bullion-bars-and-rounds loaded (1157 chars) but no product links matched — page may need render: true or a product_link_pattern
 WARNING drops: https://www.scottsdalemint.com: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
+INFO drops: https://www.littletoncoin.com -> 27 product links, 27 pages fetched, HTTP errors none, 27 without readable stock status, 0 not colorized
 INFO drops: https://www.littletoncoin.com via generic -> 0 colorized products
-WARNING ebay: no API keys and no recent data/ebay_sold.csv entry
+WARNING ebay: no API keys yet, and Terapeak log needs 3+ weekly entries (or newest is >10 days old)
 WARNING reddit: 403 Client Error: Blocked for url: https://www.reddit.com/r/Silverbugs/search.json?q=colorized+OR+colourized+OR+colorised+OR+colourised&restrict_sr=1&sort=new&t=week&limit=100
-WARNING google trends: Retry.__init__() got an unexpected keyword argument 'method_whitelist'
 INFO drops       None  drops: tracking, waiting for new colorized launches
-INFO ebay        None  ebay: no API keys and no recent data/ebay_sold.csv entry
-INFO attention   None  attention: building history
-INFO silver      27.4  ok
+INFO ebay        None  ebay: no API keys yet, and Terapeak log needs 3+ weekly entries (or newest is >10 days old)
+INFO attention   31.1  ok
+INFO silver      26.1  ok
 INFO calendar    44.1  ok
-INFO INDEX 35.8 (LOW DATA), coverage 20%
+INFO INDEX 33.4 (LOW DATA), coverage 35%
 INFO dashboard written to /home/runner/work/silver-market-heat-index/silver-market-heat-index/docs/index.html
+WARNING telegram: NOT sent — HTTP 400: Bad Request: chat not found
