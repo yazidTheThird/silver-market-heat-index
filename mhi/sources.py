@@ -87,8 +87,10 @@ def _drop_metrics(state, cfg, hist, today, stores_ok, tracker) -> dict:
 
     parts = []
     if sold_share is not None and len(recent) >= 2:
+        # Compared with this tracker's own history only — what share of launches
+        # sells out depends a lot on which stores you track, so there's no fixed scale.
         parts.append(_hist_pct(sold_share, hist, "drops_recent_soldout_share", cfg,
-                               fallback=clamp(sold_share * 100)))
+                               fallback=None))
     if fast_share is not None and len(days) >= 3:
         parts.append(clamp(fast_share * 100))
     if med_days is not None and len(days) >= 3:
@@ -318,12 +320,12 @@ def silver_from_prices(close: pd.Series) -> dict:
 
 # ===================================================================== 5. CALENDAR
 def calendar(cfg: dict, today: dt.date, competing: pd.DataFrame | None,
-             auto_new_drops: int = 0) -> dict:
+             auto_new_drops: int = 0, hist: pd.DataFrame | None = None) -> dict:
     """Paydays, season, weekday, and how crowded the release calendar is.
     Competing drops = ones you log by hand + new colorized launches the tracker saw."""
     ccfg = cfg["calendar"]
     days_since_payday = today.day - 15 if today.day >= 15 else today.day - 1
-    payday = clamp(100 - days_since_payday * 10)
+    payday = clamp(100 - days_since_payday * 6)
     season = float(ccfg["season"][today.month])
     weekday = float(ccfg["weekday"][today.weekday()])
     n_manual = 0
@@ -331,8 +333,15 @@ def calendar(cfg: dict, today: dt.date, competing: pd.DataFrame | None,
         d = pd.to_datetime(competing["date"], errors="coerce").dt.date.dropna()
         win = ccfg["competing_window_days"]
         n_manual = int(sum(abs((x - today).days) <= win for x in d))
-    # Auto-detected launches in the past week count at half weight (many are small).
-    crowding = n_manual + 0.5 * max(0, auto_new_drops - ccfg["normal_weekly_drops"])
+    # Auto-detected launches only count as "crowded" when this week has more than
+    # usual for the stores you track (their own median, once 14+ days are logged).
+    usual = None
+    if hist is not None and "drops_new_7d" in hist.columns:
+        past = pd.to_numeric(hist["drops_new_7d"], errors="coerce").dropna().tail(90)
+        if len(past) >= cfg["min_history_days"]:
+            usual = float(past.median())
+    extra = max(0.0, auto_new_drops - usual) if usual is not None else 0.0
+    crowding = n_manual + 0.5 * extra
     score = clamp(0.4 * payday + 0.35 * season + 0.25 * weekday
                   - crowding * ccfg["competing_penalty"])
     return {

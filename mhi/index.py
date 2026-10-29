@@ -58,7 +58,7 @@ def compute(cfg: dict, today: dt.date | None = None) -> dict:
     results["ebay"] = sources.ebay(cfg, hist, spot)
     results["attention"] = sources.attention(cfg, hist)
     new_drops = results["drops"]["raw"].get("drops_new_7d", 0) or 0
-    results["calendar"] = sources.calendar(cfg, today, competing, auto_new_drops=new_drops)
+    results["calendar"] = sources.calendar(cfg, today, competing, auto_new_drops=new_drops, hist=hist)
 
     index, coverage = combine(results, cfg)
     if index is None:
