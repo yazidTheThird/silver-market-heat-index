@@ -1,0 +1,22 @@
+INFO drops: https://www.coinstv.net via shopify -> 107 colorized products
+INFO drops: https://www.herobullion.com via woocommerce -> 182 colorized products
+INFO drops: https://grreserve.com via woocommerce -> 384 colorized products
+WARNING drops: https://bullionsharks.com: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
+WARNING drops: https://www.jmbullion.com: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
+INFO drops: https://sdbullion.com via generic -> 11 colorized products
+INFO drops: https://www.bgasc.com via generic -> 0 colorized products
+INFO drops: https://www.silver.com via generic -> 0 colorized products
+WARNING drops: https://bullionexchanges.com: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
+INFO drops: https://www.apmex.com via generic -> 82 colorized products
+WARNING drops: https://www.scottsdalemint.com: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
+INFO drops: https://www.littletoncoin.com via generic -> 0 colorized products
+WARNING ebay: no API keys and no recent data/ebay_sold.csv entry
+WARNING reddit: 403 Client Error: Blocked for url: https://www.reddit.com/r/Silverbugs/search.json?q=colorized+OR+colourized+OR+colorised+OR+colourised&restrict_sr=1&sort=new&t=week&limit=100
+WARNING google trends: Retry.__init__() got an unexpected keyword argument 'method_whitelist'
+INFO drops       None  drops: tracking, waiting for new colorized launches
+INFO ebay        None  ebay: no API keys and no recent data/ebay_sold.csv entry
+INFO attention   None  attention: building history
+INFO silver      27.4  ok
+INFO calendar    44.1  ok
+INFO INDEX 35.8 (LOW DATA), coverage 20%
+INFO dashboard written to /home/runner/work/silver-market-heat-index/silver-market-heat-index/docs/index.html
