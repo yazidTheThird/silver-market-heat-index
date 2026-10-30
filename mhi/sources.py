@@ -116,7 +116,16 @@ def _ebay_token(client_id: str, secret: str) -> str:
               "scope": "https://api.ebay.com/oauth/api_scope"},
         timeout=30,
     )
-    r.raise_for_status()
+    if r.status_code != 200:
+        try:
+            body = r.json()
+            why = f'{body.get("error")}: {body.get("error_description")}'
+        except ValueError:
+            why = r.text[:200]
+        # 401 invalid_client = wrong App ID / Cert ID pair, or the Production keyset
+        # isn't enabled yet (eBay disables it until the account-deletion
+        # notification step is completed or an exemption is filed).
+        raise RuntimeError(f"eBay rejected the keys (HTTP {r.status_code}) — {why}")
     return r.json()["access_token"]
 
 
@@ -146,8 +155,12 @@ def ebay(cfg: dict, hist: pd.DataFrame, spot: float | None) -> dict:
     left is purely the appetite for colorized collectibles.
     Plus weekly sold numbers / sell-through from Terapeak if you paste them."""
     ecfg = cfg["ebay"]
-    cid, sec = os.getenv("EBAY_CLIENT_ID"), os.getenv("EBAY_CLIENT_SECRET")
+    cid = (os.getenv("EBAY_CLIENT_ID") or "").strip()
+    sec = (os.getenv("EBAY_CLIENT_SECRET") or "").strip()
     raw, parts = {}, []
+    if not (cid and sec):
+        log.info("ebay api: skipped — EBAY_CLIENT_ID set: %s, EBAY_CLIENT_SECRET set: %s",
+                 bool(cid), bool(sec))
 
     if cid and sec:
         try:
@@ -178,7 +191,7 @@ def ebay(cfg: dict, hist: pd.DataFrame, spot: float | None) -> dict:
         parts.append((sold["score"], 0.5))
 
     if not parts:
-        return _fail("ebay: no API keys yet, and Terapeak log needs 3+ weekly entries (or newest is >10 days old)")
+        return _fail("ebay: no eBay API data today (see line above), and Terapeak log needs 3+ weekly entries")
     tw = sum(w for _, w in parts)
     return {"score": round(sum(s * w for s, w in parts) / tw, 1), "raw": raw, "note": "ok"}
 
