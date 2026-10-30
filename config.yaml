@@ -81,16 +81,11 @@ drops:
       listing_urls: ["https://bullionexchanges.com/buy-silver/coins/colorized-silver-coins"]
       listing_is_colorized: true
       product_link_pattern: "coloriz|colouriz"
-    - url: "https://www.scottsdalemint.com"     # page needs a real browser to load
-      platform: generic
-      render: true
-      listing_urls: ["https://www.scottsdalemint.com/shop/silver/silver-color-collectible-bullion-bars-and-rounds"]
-      listing_is_colorized: true
-      product_link_pattern: "/product/"
 
     # Removed after the first runs:
     #   JM Bullion, BGASC, Silver.com — block automated visitors (HTTP 401)
     #   Littleton — product pages don't show stock status
+    #   Scottsdale Mint — page times out even in a headless browser
   recent_days: 30                 # "recent launches" = launched in the last 30 days
   fast_sellout_days: 2            # a sell-out within 2 days counts as "fast"
   max_product_checks_per_store: 150
