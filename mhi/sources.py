@@ -179,9 +179,16 @@ def ebay(cfg: dict, hist: pd.DataFrame, spot: float | None) -> dict:
                 prem = statistics.median(ratios)
                 raw.update({"ebay_collector_premium": round(prem, 3),
                             "ebay_colorized_listings": supply})
-                p_prem = _hist_pct(prem, hist, "ebay_collector_premium", cfg, fallback=50)
-                p_sup = _hist_pct(supply, hist, "ebay_colorized_listings", cfg, fallback=50)
-                parts.append((0.75 * p_prem + 0.25 * (100 - p_sup), 0.5))
+                # Scored only once there's enough history to compare against —
+                # no placeholder values that would fake a verdict.
+                p_prem = _hist_pct(prem, hist, "ebay_collector_premium", cfg, fallback=None)
+                p_sup = _hist_pct(supply, hist, "ebay_colorized_listings", cfg, fallback=None)
+                if p_prem is not None and p_sup is not None:
+                    parts.append((0.75 * p_prem + 0.25 * (100 - p_sup), 0.5))
+                else:
+                    n = 0 if hist is None or "ebay_collector_premium" not in hist.columns \
+                        else int(hist["ebay_collector_premium"].notna().sum())
+                    raw["ebay_history_days"] = n + 1
         except Exception as e:  # noqa: BLE001
             log.warning("ebay api: %s", e)
 
@@ -191,6 +198,10 @@ def ebay(cfg: dict, hist: pd.DataFrame, spot: float | None) -> dict:
         parts.append((sold["score"], 0.5))
 
     if not parts:
+        if "ebay_collector_premium" in raw:
+            return {"score": None, "raw": raw,
+                    "note": f"ebay: collecting history (day {raw.get('ebay_history_days', 1)}"
+                            f" of {cfg['min_history_days']})"}
         return _fail("ebay: no eBay API data today (see line above), and Terapeak log needs 3+ weekly entries")
     tw = sum(w for _, w in parts)
     return {"score": round(sum(s * w for s, w in parts) / tw, 1), "raw": raw, "note": "ok"}
