@@ -1,3 +1,4 @@
-date,index,label,coverage,score_drops,drops_tracked,drops_stores_ok,drops_new_7d,drops_recent_soldout_share,drops_median_days_to_sellout,drops_fast_share,score_ebay,score_attention,score_silver,silver_spot,silver_ret7_pct,silver_ret30_pct,silver_vol30_pct,score_calendar,cal_payday,cal_season,cal_weekday,competing_drops_manual,trends_colorized_interest,ebay_collector_premium,ebay_colorized_listings
-2026-10-29,35.0,LOW DATA,0.35,,836,7,11,0.192,,,,34.0,27.3,52.22,-4.65,-13.11,34.0,44.1,16.0,65.0,60.0,0,20.2,,
-2026-10-30,45.9,NORMAL,0.5,,836,7,10,0.2,,,50.0,,35.3,49.78,-7.32,-18.02,36.0,44.2,10.0,65.0,70.0,0,,1.163,10495.0
+date,index,label,coverage,score_drops,drops_tracked,drops_stores_ok,drops_new_7d,drops_recent_soldout_share,drops_median_days_to_sellout,drops_fast_share,score_ebay,score_attention,score_silver,silver_spot,silver_ret7_pct,silver_ret30_pct,silver_vol30_pct,score_calendar,cal_payday,cal_season,cal_weekday,competing_drops_manual,trends_colorized_interest,ebay_collector_premium,ebay_colorized_listings,ebay_history_days
+2026-10-29,35.0,LOW DATA,0.35,,836,7,11,0.192,,,,34.0,27.3,52.22,-4.65,-13.11,34.0,44.1,16.0,65.0,60.0,0,20.2,,,
+2026-10-30,45.9,NORMAL,0.5,,836,7,10,0.2,,,50.0,,35.3,49.78,-7.32,-18.02,36.0,44.2,10.0,65.0,70.0,0,,1.163,10495.0,
+2026-10-31,42.0,LOW DATA,0.35,,845,7,19,0.188,,,,43.4,38.8,49.1,-8.59,-19.15,38.0,43.1,4.0,65.0,75.0,0,24.8,1.197,10499.0,2.0
