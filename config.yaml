@@ -20,6 +20,18 @@ min_history_days: 14
 min_coverage: 0.5
 lookback_days: 90
 
+# What the tracker follows. "collectible" (default) = every collectible / limited
+# release, with colorized ones flagged; plain bullion (random-year coins, generic
+# rounds and bars, tubes, junk silver) is skipped. "colorized" = colorized only.
+# The heat index itself is always computed from the colorized products.
+tracking:
+  mode: collectible
+  # exclude_pattern: "goldback|banknote"     # anything else you never want tracked
+
+# Rough exchange rates for stores that don't price in USD (used for price bands and
+# premium over spot only). Update now and then.
+fx_to_usd: {AUD: 0.65, CAD: 0.72, GBP: 1.30, EUR: 1.10}
+
 # What counts as a colorized product (checked against titles, types and tags).
 colorized_pattern: "coloriz|colouriz|colorised|colourised|colou?red\\b|full[- ]colou?r|\\bcolou?r in\\b|chromatic|enamel"
 
@@ -36,6 +48,9 @@ colorized_pattern: "coloriz|colouriz|colorised|colourised|colou?red\\b|full[- ]c
 # Optional per store:
 #   listing_is_colorized: true   every product on the listing page is colorized
 #                                (skips the name check — use for "Colorized" categories)
+#   listing_is_collectible: true every product on the listing page is a collectible
+#                                release (only plain bullion gets skipped)
+#   currency: AUD                prices on this store aren't in USD (see fx_to_usd)
 #   page_param: "page"           pagination parameter if the listing has several pages
 #   max_pages: 3
 #   product_link_pattern: "/product/"   regex matching product URLs, if the default
@@ -57,30 +72,58 @@ drops:
       sitemap_url: "https://bullionsharks.com/xmlsitemap.php"
       listing_urls: ["https://bullionsharks.com/"]
       product_link_pattern: "coloriz|colouriz|chromatic"
-    # - url: "https://popcoins.store"           # add its colorized category link to enable
-    #   listing_urls: ["https://popcoins.store/..."]
-    #   listing_is_colorized: true
+    - url: "https://popcoins.store"             # micro-mintage colorized coins (auto-detect)
 
-    # ---- Big dealers' colorized categories (market-wide volume) ----
+    # ---- Collector shops (Shopify: whole catalog read from the feed, no setup) ----
+    - url: "https://www.mycollectables.com.au"  # Australia — huge world-coin catalog
+      platform: shopify
+      currency: AUD
+    - url: "https://www.directcoins.com.au"     # Australia — Perth/RAM/new releases
+      currency: AUD
+    - url: "https://cdncoin.com"                # Canada — Royal Canadian Mint releases
+      currency: CAD
+
+    # ---- Big dealers: colorized + new-release / limited-edition categories ----
     - url: "https://www.apmex.com"
       platform: generic
-      listing_urls: ["https://www.apmex.com/category/25063/apmex-colorized-rounds"]
-      listing_is_colorized: true
-      product_link_pattern: "coloriz|colouriz"
+      listing_urls:
+        - "https://www.apmex.com/category/25063/apmex-colorized-rounds"
+        - "https://www.apmex.com/category/80072/new-releases"
+      listing_is_collectible: true
+      product_link_pattern: "/product/\\d+/"
     - url: "https://sdbullion.com"
       platform: generic
       listing_urls:
         - "https://sdbullion.com/buy/colorized-1-oz-silver-coins"
         - "https://sdbullion.com/buy/colorized-lunar-new-year-coins"
         - "https://sdbullion.com/buy/colorized-zodiac-animal-coins"
-      listing_is_colorized: true
-      product_link_pattern: "coloriz|colouriz"
+        - "https://sdbullion.com/buy/limited-edition-silver-coins"
+      listing_is_collectible: true
+      product_link_pattern: "(silver|gold|copper).*(coin|round|bar)"
     - url: "https://bullionexchanges.com"       # products load via JavaScript
       platform: generic
       render: true
       listing_urls: ["https://bullionexchanges.com/buy-silver/coins/colorized-silver-coins"]
       listing_is_colorized: true
       product_link_pattern: "coloriz|colouriz"
+    - url: "https://www.providentmetals.com"
+      platform: generic
+      listing_urls: ["https://www.providentmetals.com/2026-new-releases.html"]
+      listing_is_collectible: true
+      product_link_pattern: "^/\\d{4}-.+\\.html$"
+    - url: "https://www.moneymetals.com"
+      platform: generic
+      listing_urls:
+        - "https://www.moneymetals.com/buy/silver/colorized"
+        - "https://www.moneymetals.com/buy/silver/coins/collectible-silver-coins"
+      listing_is_collectible: true
+      product_link_pattern: "/[a-z0-9-]+/\\d{3,6}$"
+    - url: "https://www.bullionbypost.co.uk"    # UK — 2026 silver coins
+      platform: generic
+      currency: GBP
+      listing_urls: ["https://www.bullionbypost.co.uk/silver-coins/2026-silver-coins/"]
+      listing_is_collectible: true
+      product_link_pattern: "/silver-coins/[^/]+/[^/]+/?$"
 
     # Removed after the first runs:
     #   JM Bullion, BGASC, Silver.com — block automated visitors (HTTP 401)
@@ -91,6 +134,7 @@ drops:
   recent_days: 30                 # "recent launches" = launched in the last 30 days
   fast_sellout_days: 2            # a sell-out within 2 days counts as "fast"
   max_product_checks_per_store: 150
+  feed_max_pages: 20              # Shopify feed pages per store (250 products each)
   recheck_soldout_days: 7         # sold-out items are re-checked weekly for restocks
 
 # ----------------------------------------------------------------- 2. eBay

@@ -97,7 +97,7 @@ DEFAULT_RULES = {
         "Gem / crystal inlay": r"bejewel|crystal|swarovski|gem\b|gemstone|amethyst|sapphire|"
                                r"ruby|emerald|opal",
         "Glow / special ink": r"glow|uv ink|neon|luminous",
-        "Plain colorized": r".",
+        "Standard finish": r".",
     },
     "metals": {
         "Gold": r"\bgold\b(?! plated| gilded| accent| flakes)",
@@ -108,6 +108,100 @@ DEFAULT_RULES = {
 }
 
 
+# Finer cut of the themes: a product can have several. Order doesn't matter.
+SUBTHEMES = {
+    # creatures & animals
+    "Dragons": r"dragon|wyvern|drago\b",
+    "Big cats": r"lion|tiger|leopard|jaguar|cheetah|panther|lynx|cougar|puma",
+    "Wolves & dogs": r"wolf|wolves|dog\b|dogs|fox|husky|coyote|dalmatian",
+    "Bears": r"\bbear|grizzly|panda|koala",
+    "Eagles & birds of prey": r"(?<!silver )(?<!american )(?<!u\.s\. )(?<!us )eagle|falcon|"
+                              r"hawk|owl\b|condor|osprey|raven|crow\b",
+    "Other birds": r"bird|parrot|peacock|flamingo|crane|hummingbird|swan|dove|kookaburra|"
+                   r"penguin|rooster",
+    "Horses": r"horse|stallion|mustang|pony|pegasus|unicorn",
+    "Sea life": r"shark|whale|orca|dolphin|octopus|kraken|turtle|fish|koi|crab|seahorse|"
+                r"jellyfish|ocean|sea\b|coral|mermaid",
+    "Reptiles & insects": r"snake|serpent|rattlesnake|cobra|lizard|chameleon|croc|gator|"
+                          r"frog|spider|scorpion|butterfly|bee\b|bees|beetle|scarab|dragonfly",
+    "Deer, elk & bison": r"\bdeer|stag|elk|moose|bison|buffalo|antelope|kangaroo|"
+                         r"elephant|rhino|gorilla|monkey",
+    "Dinosaurs": r"dino|t-?rex|raptor|velociraptor|triceratops|prehistoric",
+    # myth, horror & fantasy
+    "Greek & Roman myth": r"zeus|poseidon|hades|athena|apollo|ares|hercules|medusa|"
+                          r"olymp|greek|roman|spartan|trojan|titan|minotaur|gorgon|cerberus",
+    "Norse myth & vikings": r"odin|thor|loki|valkyr|norse|viking|ragnarok|yggdrasil|fenrir",
+    "Egyptian": r"anubis|osiris|horus|isis|\bra\b|pharaoh|egypt|cleopatra|tutankh|scarab|"
+                r"pyramid|sphinx",
+    "Aztec, Maya & Inca": r"aztec|maya|mayan|inca|quetzal|xiuh|tenochtitlan",
+    "Asian myth & samurai": r"samurai|ninja|oni|geisha|shogun|kitsune|koi|japan|"
+                            r"chinese myth|fu dog|foo dog|qilin",
+    "Skulls & reapers": r"skull|reaper|skeleton|bones|grim",
+    "Horror & monsters": r"zombie|undead|horror|vampire|werewolf|ghost|phantom|haunt|"
+                        r"frankenstein|monster|demon|devil|hell|witch",
+    "Day of the Dead": r"muertos|day of the dead|calavera|catrina",
+    "Fantasy & magic": r"wizard|magic|fairy|fairies|elf|elves|enchant|sorcer|mystic|"
+                       r"tooth fairy|griffin|phoenix|hydra",
+    "Alien & sci-fi": r"alien|ufo|robot|cyber|android|sci-?fi|space invaders|matrix",
+    # space & nature
+    "Space & planets": r"space|galaxy|cosmic|nebula|planet|saturn|jupiter|mars\b|"
+                       r"venus\b|uranus|neptune|astronaut|apollo 11|moon landing|voyager",
+    "Moon, sun & stars": r"moon|lunar eclipse|eclipse|sun\b|solar|celestial|star(s|ry)?\b|"
+                         r"constellation|aurora",
+    "Flowers & plants": r"rose\b|flower|floral|blossom|bloom|lotus|tulip|poppy|cherry|"
+                        r"garden|mushroom|(?<!maple )leaf\b|leaves",
+    "Seasons & landscapes": r"four seasons|autumn|winter|spring|summer|forest|mountain|"
+                            r"landscape|waterfall|volcan|canyon|national park",
+    # people, culture & events
+    "Lunar New Year": r"lunar|year of the|chinese new year|zodiac (?:rat|ox|tiger|rabbit|dragon|"
+                      r"snake|horse|goat|monkey|rooster|dog|pig)",
+    "Western zodiac": r"aries|taurus|gemini|cancer\b|leo\b|virgo|libra|scorpio|sagittarius|"
+                      r"capricorn|aquarius|pisces|horoscope",
+    "USA 250 & founding": r"\b250\b|semiquincentennial|1776|independence|founding|"
+                          r"liberty bell|constitution|declaration",
+    "Military & veterans": r"military|army|navy|marine|air force|veteran|soldier|"
+                           r"purple heart|9/11|memorial|warship|uss\b|tank\b|fighter",
+    "Flags & states": r"flag|state flags|flags of the world",
+    "Presidents & politics": r"president|trump|washington|lincoln|kennedy|reagan|jefferson|"
+                             r"\bmaga\b",
+    "Faith & religion": r"cross\b|angel|jesus|christ|saint|\bst\.|madonna|psalm|prayer|bible|"
+                        r"archangel|guadalupe|ganesha|buddha|lord's",
+    "Christmas & holidays": r"christmas|navidad|santa|gingerbread|snowman|reindeer|rudolph|"
+                            r"easter|valentine|thanksgiving|halloween|holiday",
+    "Love & weddings": r"love|heart\b|wedding|bride|valentine|anniversary gift|kiss",
+    "Birthdays & gifts": r"birthday|baby|congratulat|thank you|graduation|gift",
+    "Luck & fortune": r"luck|lucky|clover|leprechaun|fortune|horseshoe|four[- ]leaf|"
+                      r"maneki|wealth",
+    "Warriors & knights": r"knight|warrior|gladiator|templar|crusader|legion|pirate|"
+                          r"conquistador|barbarian|chess",
+    "Pirates & treasure": r"pirate|treasure|jolly roger|shipwreck|doubloon",
+    "Art masterpieces": r"botticelli|titian|da vinci|van gogh|monet|klimt|mucha|venus of|"
+                        r"primavera|mona lisa|masterpiece|art gallery|starry night|great wave",
+    "History & landmarks": r"history|historic|landmark|lighthouse|castle|cathedral|colosseum|"
+                           r"great wall|parthenon|temple|eiffel|statue of liberty|atlas|map",
+    "Cars, trains & machines": r"car\b|cars\b|mustang|ford|chevy|corvette|ferrari|truck|"
+                               r"train|locomotive|steam|motorcycle|harley|aircraft|plane|"
+                               r"engine|tonka",
+    # pop culture
+    "Star Wars": r"star wars|darth|vader|jedi|mandalorian|yoda|skywalker|leia|boba fett",
+    "Marvel & DC": r"marvel|avengers|spider-?man|deadpool|captain america|iron man|thor\b|"
+                   r"hulk|x-men|wolverine|dc comics|batman|superman|wonder woman|joker|flash\b",
+    "Disney & cartoons": r"disney|mickey|minnie|pixar|looney|bugs bunny|peppa|winnie|"
+                         r"snoopy|peanuts|scooby|simpsons|cartoon|dalmatians",
+    "Anime & games": r"anime|manga|pokemon|nintendo|mario|zelda|sonic|pac-?man|street fighter|"
+                     r"diablo|warcraft|video game|arcade|dig-?dug|godzilla",
+    "Movies & TV": r"movie|film|tv\b|series poster|stranger things|top gun|harry potter|"
+                   r"lord of the rings|hobbit|james bond|007|ghostbusters|jaws|"
+                   r"john wick|matrix|terminator|invincible|game of thrones",
+    "Brands & logos": r"coca-?cola|coke|pepsi|harley|jeep|budweiser|beer|whisky|logo",
+    "Sports": r"football|basketball|baseball|soccer|tennis|golf|volleyball|hockey|"
+              r"\bmlb\b|\bnba\b|\bnfl\b|\bnhl\b|fifa|world cup|olympic|racing|nascar",
+    "Music": r"music|rock|elvis|beatles|guitar|band\b|concert|jazz",
+    "Money & crypto": r"bitcoin|crypto|satoshi|dollar bill|\$2 bill|banknote",
+    "Tarot & occult": r"tarot|occult|illuminati|pentagram|alchemy|astrolog|ouroboros|"
+                      r"memento mori|sins\b",
+}
+
 # Bullion coins that are 1 oz unless the title says otherwise.
 ONE_OZ_BY_DEFAULT = {"Silver Eagle", "Maple Leaf", "Libertad", "Britannia", "Krugerrand",
                      "Philharmonic", "Kangaroo/Koala/Kookaburra"}
@@ -116,7 +210,9 @@ ONE_OZ_BY_DEFAULT = {"Silver Eagle", "Maple Leaf", "Libertad", "Britannia", "Kru
 # ------------------------------------------------------------------ tagging
 def _rules(cfg: dict) -> dict:
     user = (cfg or {}).get("tags") or {}
-    return {k: user.get(k) or v for k, v in DEFAULT_RULES.items()}
+    rules = {k: user.get(k) or v for k, v in DEFAULT_RULES.items()}
+    rules["subthemes"] = user.get("subthemes") or SUBTHEMES
+    return rules
 
 
 def size_of(title: str) -> str:
@@ -171,12 +267,31 @@ def tag(title: str, rules: dict) -> dict:
     base = next((name for name, rx in rules["base_coins"].items() if re.search(rx, t)), "Other")
     metal = next((name for name, rx in rules["metals"].items() if re.search(rx, t)), "Unknown")
     finish = next((name for name, rx in rules["finishes"].items() if re.search(rx, t)),
-                  "Plain colorized")
+                  "Standard finish")
+    subs = [name for name, rx in rules["subthemes"].items() if re.search(rx, t)]
     size = size_of(t)
     if size == "Other" and base in ONE_OZ_BY_DEFAULT:
         size = "1 oz"          # "2026 Silver Eagle – Storm Edition" is a 1 oz coin
-    return {"themes": themes or ["Other"], "base_coin": base, "size": size, "metal": metal,
-            "finish": finish}
+    return {"themes": themes or ["Other"], "subthemes": subs or ["Other"], "base_coin": base,
+            "size": size, "metal": metal, "finish": finish, "oz": size_oz(t, base)}
+
+
+def size_oz(t: str, base: str = "") -> float | None:
+    """Silver content in troy oz, from the title (None if unknown)."""
+    t = t.replace("½", "1/2").replace("¼", "1/4")
+    if re.search(r"\bkilo\b|\b1\s?kg\b", t):
+        return 32.15
+    m = re.search(r"(\d+\s?/\s?\d+|\d*\.\d+|\d+)\s*(?:-?\s*troy)?\s*-?\s*(?:oz|ounce|onza)", t)
+    if m:
+        return eval_fraction(m.group(1).replace(" ", ""))
+    g = re.search(r"(\d+(?:\.\d+)?)\s*(?:g|gram|grams)\b", t)
+    if g:
+        return float(g.group(1)) / 31.1035
+    if "half dollar" in t:
+        return None          # silver content varies by year
+    if base in ONE_OZ_BY_DEFAULT:
+        return 1.0
+    return None
 
 
 def tag_state(state: pd.DataFrame, cfg: dict) -> pd.DataFrame:
@@ -188,7 +303,53 @@ def tag_state(state: pd.DataFrame, cfg: dict) -> pd.DataFrame:
     d["size"] = tags.map(lambda x: x["size"])
     d["metal"] = tags.map(lambda x: x["metal"])
     d["finish"] = tags.map(lambda x: x["finish"])
+    d["subthemes"] = tags.map(lambda x: x["subthemes"])
+    d["oz"] = tags.map(lambda x: x["oz"])
+    col = d["colorized"] if "colorized" in d.columns else pd.Series("", index=d.index)
+    # Rows from before broad tracking have no flag: they were all colorized.
+    d["is_colorized"] = col.astype(str).map(lambda v: v not in ("0", "0.0"))
+    d["type"] = d["is_colorized"].map(lambda c: "Colorized" if c else "Not colorized")
+    d["store_name"] = d["store"].astype(str).map(lambda u: re.sub(r"^https?://(www\.)?", "", u))
+    fx = (cfg or {}).get("fx_to_usd") or {}
+    cur = {s_["url"].rstrip("/"): s_.get("currency", "USD")
+           for s_ in ((cfg or {}).get("drops") or {}).get("stores", [])}
+    def usd(row):
+        v = pd.to_numeric(row.get("price"), errors="coerce") if "price" in row else None
+        if v is None or pd.isnull(v):
+            return None
+        c = cur.get(str(row.get("store", "")).rstrip("/"), "USD")
+        return float(v) * (fx.get(c, 1.0) if c != "USD" else 1.0)
+    d["price_usd"] = [usd(r) for r in d.to_dict("records")]
+    d["mintage_n"] = pd.to_numeric(d["mintage"], errors="coerce") if "mintage" in d.columns else None
     return d
+
+
+def price_band(p) -> str | None:
+    if p is None or p != p:
+        return None
+    for hi, name in [(50, "Under $50"), (100, "$50–100"), (200, "$100–200"), (500, "$200–500")]:
+        if p < hi:
+            return name
+    return "$500+"
+
+
+def premium_band(p, oz, spot) -> str | None:
+    if p is None or p != p or not oz or not spot:
+        return None
+    x = p / (oz * spot)
+    for hi, name in [(1.5, "Under 1.5× spot"), (2.5, "1.5–2.5× spot"), (4, "2.5–4× spot")]:
+        if x < hi:
+            return name
+    return "4×+ spot"
+
+
+def mintage_band(m) -> str | None:
+    if m is None or m != m:
+        return None
+    for hi, name in [(251, "250 or less"), (1001, "251–1,000"), (5001, "1,001–5,000")]:
+        if m < hi:
+            return name
+    return "5,000+"
 
 
 # ------------------------------------------------------------------ ranking
@@ -213,7 +374,8 @@ def sellout_hours(row) -> float | None:
     return max(0.0, h)
 
 
-def hot_groups(state: pd.DataFrame, cfg: dict, today: dt.date) -> pd.DataFrame:
+def hot_groups(state: pd.DataFrame, cfg: dict, today: dt.date,
+               spot: float | None = None) -> pd.DataFrame:
     tcfg = (cfg or {}).get("hot_groups") or {}
     window = tcfg.get("window_days", 90)
     min_n = tcfg.get("min_launches", 3)
@@ -237,13 +399,37 @@ def hot_groups(state: pd.DataFrame, cfg: dict, today: dt.date) -> pd.DataFrame:
     # A launch only counts toward "share sold out" once it has had `mature_days` to sell;
     # otherwise brand-new launches make every group look cold.
     d["mature"] = age.map(lambda a: a is not None and a >= mature)
+    d["price_band"] = d["price_usd"].map(price_band)
+    d["premium_band"] = [premium_band(p, oz, spot) for p, oz in zip(d["price_usd"], d["oz"])]
+    d["mintage_band"] = d["mintage_n"].map(mintage_band) if d["mintage_n"] is not None else None
 
     rows = []
-    dims = {"Theme": d.explode("themes").rename(columns={"themes": "group"}),
-            "Base coin": d.rename(columns={"base_coin": "group"}),
-            "Size": d.rename(columns={"size": "group"}),
-            "Finish": d.rename(columns={"finish": "group"})}
-    for dim, frame in dims.items():
+    for scope, ds in (("all", d), ("colorized", d[d["is_colorized"]])):
+        rows += _rank(ds, scope, min_n, fast_h)
+    out = pd.DataFrame(rows)
+    if out.empty:
+        return out
+    out["confidence"] = out.apply(lambda r: confidence(r, min_n), axis=1)
+    out = out.sort_values(["scope", "dimension", "heat"], ascending=[True, True, False],
+                          na_position="last")
+    os.makedirs(os.path.dirname(OUT), exist_ok=True)
+    out.to_csv(OUT, index=False)
+    return out
+
+
+DIMENSIONS = [("Theme", "themes"), ("Sub-theme", "subthemes"), ("Base coin", "base_coin"),
+              ("Size", "size"), ("Finish", "finish"), ("Type", "type"),
+              ("Price", "price_band"), ("Premium", "premium_band"),
+              ("Mintage", "mintage_band"), ("Store", "store_name")]
+
+
+def _rank(d: pd.DataFrame, scope: str, min_n: int, fast_h: float) -> list[dict]:
+    rows = []
+    if d.empty:
+        return rows
+    for dim, col in DIMENSIONS:
+        frame = d.explode(col) if col in ("themes", "subthemes") else d
+        frame = frame[frame[col].notnull()].rename(columns={col: "group"})
         for grp, g in frame.groupby("group"):
             seen = g[g["is_launch"] & g["recent"]]
             launches = seen[seen["mature"]]
@@ -251,7 +437,7 @@ def hot_groups(state: pd.DataFrame, cfg: dict, today: dt.date) -> pd.DataFrame:
             hours = [h for h in seen["hours"] if h is not None and h == h]
             n = len(launches)
             row = {
-                "dimension": dim, "group": grp,
+                "scope": scope, "dimension": dim, "group": grp,
                 "tracked": int(len(g)),
                 "snapshot_soldout_share": round(float(g["sold"].mean()), 3),
                 "launches": n,
@@ -262,15 +448,10 @@ def hot_groups(state: pd.DataFrame, cfg: dict, today: dt.date) -> pd.DataFrame:
             }
             row["heat"] = heat_score(row, min_n)
             rows.append(row)
-    out = pd.DataFrame(rows)
-    out["confidence"] = out.apply(lambda r: confidence(r, min_n), axis=1)
-    out = out.sort_values(["dimension", "heat"], ascending=[True, False], na_position="last")
-    os.makedirs(os.path.dirname(OUT), exist_ok=True)
-    out.to_csv(OUT, index=False)
-    return out
+    return rows
 
 
-def product_rows(state: pd.DataFrame, cfg: dict) -> list[dict]:
+def product_rows(state: pd.DataFrame, cfg: dict, spot: float | None = None) -> list[dict]:
     """Per-product list for the dashboard drill-down (silver only, like the ranking)."""
     metals = [m.lower() for m in ((cfg or {}).get("hot_groups") or {}).get("metals", ["Silver"])]
     d = tag_state(state, cfg)
@@ -283,7 +464,14 @@ def product_rows(state: pd.DataFrame, cfg: dict) -> list[dict]:
             "t": str(r.get("title") or "")[:120],
             "u": str(r.get("url") or ""),
             "s": re.sub(r"^https?://(www\.)?", "", str(r.get("store") or "")),
-            "th": r["themes"], "b": r["base_coin"], "z": r["size"], "f": r["finish"],
+            "th": r["themes"], "sub": r["subthemes"], "b": r["base_coin"], "z": r["size"],
+            "f": r["finish"], "c": bool(r["is_colorized"]), "ty": r["type"],
+            "st": r["store_name"],
+            "p": None if r["price_usd"] is None or r["price_usd"] != r["price_usd"]
+                 else round(r["price_usd"], 2),
+            "m": None if pd.isnull(r.get("mintage_n")) else int(r["mintage_n"]),
+            "pb": price_band(r["price_usd"]), "pr": premium_band(r["price_usd"], r["oz"], spot),
+            "mb": mintage_band(r.get("mintage_n")),
             "a": str(r.get("available")) == "1",
             "so": str(r.get("sold_out_date") or "") if str(r.get("sold_out_date")) != "nan" else "",
             "fs": str(r.get("first_seen") or ""),
@@ -324,11 +512,13 @@ def digest(groups: pd.DataFrame, top: int = 3) -> str:
     Groups backed by real launch data are marked; snapshot-only guesses get a "~"."""
     if groups is None or groups.empty:
         return ""
+    if "scope" in groups.columns:
+        groups = groups[groups["scope"] == "all"]
     lines = ["What's hot (silver) — heat 0-100:"]
     cold_all = []
-    for dim in ["Theme", "Base coin", "Size", "Finish"]:
+    for dim in ["Sub-theme", "Base coin", "Size", "Finish", "Mintage", "Premium"]:
         g = groups[(groups["dimension"] == dim) & groups["heat"].notnull()
-                   & ~groups["group"].isin(["Other", "Plain colorized"])
+                   & ~groups["group"].isin(["Other", "Standard finish", "Other mint coins (Niue, Cook Is., Cameroon…)"])
                    & (groups["confidence"] != "too few")]
         if g.empty:
             continue

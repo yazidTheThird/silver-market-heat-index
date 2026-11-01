@@ -41,6 +41,26 @@ Shopify and WooCommerce stores are detected automatically and need no extra setu
 - **Anti-bot protection** (e.g. Cloudflare) can block GitHub's servers outright. For those stores, log their drops by hand in `competing_releases.csv`.
 - **Store layout.** If the tracker picks up the wrong links, set `product_link_pattern` to a piece of text that appears only in product URLs, e.g. `"/product/"`.
 
+## Broad tracking: every collectible silver release
+
+The tracker follows **every collectible / limited release** at each store, not just
+colorized ones: proofs, high relief, shaped coins, privy marks, limited bars and rounds,
+world-mint series. Plain bullion (random-year coins, generic rounds and bars, tubes, junk
+silver) is skipped. Each product is flagged colorized or not, and its **launch price**
+and **mintage** (when the store states it) are saved.
+
+The **heat index stays a colorized gauge**: it is computed only from colorized products,
+so its meaning doesn't change. The "What's hot" card covers everything, with an
+*All collectible silver / Colorized only* switch.
+
+Stores: CoinsTV, Hero Bullion, GR Reserve, Bullion Sharks, PopCoins, MyCollectables (AU),
+Direct Coins (AU), CDN Coin (CA), APMEX, SD Bullion, Bullion Exchanges, Provident,
+Money Metals and Bullion By Post (UK). If a store can't be read, the run log says so
+and the rest carry on. The first broad run at a store records its existing catalog as
+baseline, so old products aren't counted as new launches.
+
+To go back to colorized only, set `tracking: mode: colorized` in `config.yaml`.
+
 ## What's hot: themes, coins, sizes, finishes
 
 The index says *when* the market is hot. This part says *what* is hot. Every tracked
@@ -48,6 +68,12 @@ product is tagged from its title by **theme** (dragons, wildlife, mythology, pat
 lunar…), **base coin** (Libertad, Silver Eagle, Maple…), **size** and **finish**
 (diamond dust, gilded, black proof, antiqued…), then each group is ranked by how fast
 it sells out. Silver only for now (`hot_groups.metals` in `config.yaml`).
+
+Dimensions: **Theme** (16 broad) and **Sub-theme** (about 50: big cats, wolves, Norse
+myth, Egyptian, Star Wars, Marvel & DC, anime & games, USA 250, Day of the Dead…),
+**Base coin**, **Size**, **Finish**, **Type** (colorized or not), **Price**, **Premium**
+over silver spot, **Mintage** and **Store**. Tap any row to see its products, with links,
+price and mintage.
 
 - **Dashboard:** the "What's hot" card, with a tab per dimension.
 - **`data/hot_groups.csv`:** the full table, updated on every run.

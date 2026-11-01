@@ -37,7 +37,10 @@ def build(hist: pd.DataFrame, cfg: dict, groups: pd.DataFrame | None = None) -> 
         try:
             from . import tags
             from .drops import STATE
-            products = tags.product_rows(pd.read_csv(STATE, dtype=str), cfg)
+            spot = None
+            if "silver_spot" in hist.columns and hist["silver_spot"].notna().any():
+                spot = float(hist["silver_spot"].dropna().iloc[-1])
+            products = tags.product_rows(pd.read_csv(STATE, dtype=str), cfg, spot)
         except Exception:  # noqa: BLE001
             products = []
     payload = {
@@ -170,6 +173,7 @@ details summary { cursor: pointer; color: var(--text-secondary); font-size: 14px
 
   <section class="card">
     <h2>What's hot (silver) · by sell-out speed</h2>
+    <div class="tabs" id="gscope" style="margin-bottom:8px"></div>
     <div class="tabs" id="gtabs"></div>
     <div class="tablewrap"><table id="gtbl"></table></div>
     <p class="meta" id="gnote"></p>
@@ -295,7 +299,8 @@ function table() {
 }
 
 function groups(dim) {
-  const G = (D.groups || []).filter(g => g.dimension === dim && g.group !== "Other" && g.confidence !== "too few");
+  const scope = window._gscope || "all";
+  const G = (D.groups || []).filter(g => (g.scope || "all") === scope && g.dimension === dim && g.group !== "Other" && g.confidence !== "too few");
   const tbl = document.getElementById("gtbl"), note = document.getElementById("gnote");
   if (!G.length) { tbl.innerHTML = ""; note.textContent = "Fills in after the tracker has seen a few launches."; return; }
   const rank = c => (c === "high" ? 2 : c === "medium" ? 1 : 0);
@@ -313,11 +318,13 @@ function groups(dim) {
     "Tap a row to see the products behind it. Heat = share of recent launches that sold out, how many sold out within 2 days, and median time to sell out.";
 }
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const FIELD = { "Base coin": "b", "Size": "z", "Finish": "f", "Type": "ty", "Store": "st",
+  "Price": "pb", "Premium": "pr", "Mintage": "mb" };
 function inGroup(p, dim, grp) {
+  if (window._gscope === "colorized" && !p.c) return false;
   if (dim === "Theme") return p.th.includes(grp);
-  if (dim === "Base coin") return p.b === grp;
-  if (dim === "Size") return p.z === grp;
-  return p.f === grp;
+  if (dim === "Sub-theme") return (p.sub || []).includes(grp);
+  return p[FIELD[dim]] === grp;
 }
 function toggle(tr, dim, grp) {
   const next = tr.nextElementSibling;
@@ -329,15 +336,22 @@ function toggle(tr, dim, grp) {
   const dur = h => h === null ? "" : (h < 48 ? ` in ${Math.round(h)} h` : ` in ${(h / 24).toFixed(1)} d`);
   const li = P.map(p => `<li><span class="pill ${p.a ? "in" : "sold"}">${p.a ? "in stock" : "sold out" + dur(p.h)}</span>` +
     `<a href="${esc(p.u)}" target="_blank" rel="noopener">${esc(p.t)}</a>` +
-    `<span class="pmeta">${esc(p.s)}${p.new ? " · new " + p.fs.slice(5) : ""}${p.so ? " · gone " + p.so.slice(5) : ""}</span></li>`).join("");
+    `<span class="pmeta">${p.p ? "$" + Math.round(p.p) + " · " : ""}${p.m ? "mintage " + p.m.toLocaleString() + " · " : ""}${p.c ? "colorized · " : ""}${esc(p.s)}${p.new ? " · new " + p.fs.slice(5) : ""}${p.so ? " · gone " + p.so.slice(5) : ""}</span></li>`).join("");
   const row = document.createElement("tr");
   row.className = "plist";
   row.innerHTML = `<td colspan="7"><ul>${li || "<li>No products listed.</li>"}</ul></td>`;
   tr.after(row);
 }
 function gtabs() {
+  const sc = document.getElementById("gscope");
+  window._gscope = "all";
+  sc.innerHTML = `<button data-s="all" class="on">All collectible silver</button><button data-s="colorized">Colorized only</button>`;
+  sc.querySelectorAll("button").forEach(b => b.onclick = () => {
+    sc.querySelectorAll("button").forEach(x => x.classList.remove("on")); b.classList.add("on");
+    window._gscope = b.dataset.s; groups(window._gdim || "Theme"); });
   const el = document.getElementById("gtabs");
-  const dims = ["Theme", "Base coin", "Size", "Finish"];
+  const present = new Set((D.groups || []).map(g => g.dimension));
+  const dims = ["Theme", "Sub-theme", "Base coin", "Size", "Finish", "Type", "Price", "Premium", "Mintage", "Store"].filter(d => present.has(d));
   el.innerHTML = dims.map((d, i) => `<button data-d="${d}" class="${i ? "" : "on"}">${d}</button>`).join("");
   el.querySelectorAll("button").forEach(b => b.onclick = () => {
     el.querySelectorAll("button").forEach(x => x.classList.remove("on")); b.classList.add("on"); groups(b.dataset.d); });

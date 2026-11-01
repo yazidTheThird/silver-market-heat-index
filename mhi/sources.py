@@ -61,6 +61,10 @@ def drops(cfg: dict, hist: pd.DataFrame, today: dt.date) -> dict:
 
 def _drop_metrics(state, cfg, hist, today, stores_ok, tracker) -> dict:
     d = state.copy()
+    # The heat index stays a COLORIZED gauge even though the tracker now follows every
+    # collectible release; older rows (before broad tracking) were all colorized.
+    if "colorized" in d.columns:
+        d = d[d["colorized"].map(tracker._s) != "0"]
     d["launch"] = tracker.launch_dates(d)
     d["sold_d"] = pd.to_datetime(d["sold_out_date"].map(tracker._s).replace("", None),
                                  errors="coerce").dt.date
@@ -79,7 +83,8 @@ def _drop_metrics(state, cfg, hist, today, stores_ok, tracker) -> dict:
     fast = cfg["drops"]["fast_sellout_days"]
     fast_share = (sum(1 for x in days if x <= fast) / len(days)) if days else None
 
-    raw = {"drops_tracked": int(len(d)), "drops_stores_ok": stores_ok,
+    raw = {"drops_tracked": int(len(d)), "drops_tracked_all": int(len(state)),
+           "drops_stores_ok": stores_ok,
            "drops_new_7d": new_7d,
            "drops_recent_soldout_share": None if sold_share is None else round(sold_share, 3),
            "drops_median_days_to_sellout": med_days,
