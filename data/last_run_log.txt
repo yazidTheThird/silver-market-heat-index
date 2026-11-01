@@ -1,20 +1,20 @@
 INFO drops: https://www.coinstv.net via shopify -> 107 colorized products
-INFO drops: https://www.herobullion.com via woocommerce -> 179 colorized products
+INFO drops: https://www.herobullion.com via woocommerce -> 178 colorized products
 INFO drops: https://grreserve.com via woocommerce -> 389 colorized products
 INFO drops: https://bullionsharks.com -> 56 product links, 18 pages fetched, HTTP errors none, 1 without readable stock status, 0 not colorized
 INFO drops: https://bullionsharks.com via generic -> 55 colorized products
-INFO drops: https://www.apmex.com -> 88 product links, 88 pages fetched, HTTP errors none, 6 without readable stock status, 0 not colorized
-INFO drops: https://www.apmex.com via generic -> 82 colorized products
+INFO drops: https://www.apmex.com -> 90 product links, 90 pages fetched, HTTP errors none, 6 without readable stock status, 0 not colorized
+INFO drops: https://www.apmex.com via generic -> 84 colorized products
 INFO drops: https://sdbullion.com -> 18 product links, 11 pages fetched, HTTP errors none, 6 without readable stock status, 0 not colorized
 INFO drops: https://sdbullion.com via generic -> 12 colorized products
-INFO drops: https://bullionexchanges.com -> 14 product links, 12 pages fetched, HTTP errors none, 0 without readable stock status, 0 not colorized
-INFO drops: https://bullionexchanges.com via generic -> 14 colorized products
+INFO drops: https://bullionexchanges.com -> 13 product links, 11 pages fetched, HTTP errors none, 0 without readable stock status, 0 not colorized
+INFO drops: https://bullionexchanges.com via generic -> 13 colorized products
 WARNING reddit: 403 Client Error: Blocked for url: https://www.reddit.com/r/Silverbugs/search.json?q=colorized+OR+colourized+OR+colorised+OR+colourised&restrict_sr=1&sort=new&t=week&limit=100
 INFO drops       None  drops: tracking, waiting for new colorized launches
-INFO ebay        None  ebay: collecting history (day 2 of 14)
-INFO attention   43.4  ok
+INFO ebay        None  ebay: collecting history (day 3 of 14)
+INFO attention   31.5  ok
 INFO silver      38.8  ok
-INFO calendar    43.1  ok
-INFO INDEX 42.0 (LOW DATA), coverage 35%
+INFO calendar    87.2  ok
+INFO INDEX 49.5 (LOW DATA), coverage 35%
 INFO dashboard written to /home/runner/work/silver-market-heat-index/silver-market-heat-index/docs/index.html
 INFO telegram: message sent
