@@ -35,7 +35,9 @@ STATE_COLS = ["store", "product_id", "title", "url", "published", "first_seen",
               "baseline", "sold_out_date", "available", "last_checked",
               # Hour-level timing (UTC). The fast checker (run.py --fast) re-checks new
               # launches every few hours, so these tell a 2-hour sell-out from a 2-day one.
-              "published_at", "first_seen_at", "sold_out_at"]
+              "published_at", "first_seen_at", "sold_out_at",
+              # Broad tracking: every collectible product, with colorized flagged.
+              "colorized", "price", "mintage"]
 
 SOLD_OUT_WORDS = re.compile(r"\b(sold[\s-]?out|out[\s-]of[\s-]stock|no longer available|"
                             r"currently unavailable)\b", re.I)
@@ -77,7 +79,7 @@ class Fetcher:
 # ------------------------------------------------------------- platform readers
 def read_shopify(base: str, f: Fetcher, cfg: dict) -> list[dict] | None:
     out = []
-    for page in range(1, 6):
+    for page in range(1, cfg["drops"].get("feed_max_pages", 20) + 1):
         code, text = f.get(f"{base}/products.json", params={"limit": 250, "page": page})
         try:
             batch = json.loads(text).get("products") if code == 200 else None
@@ -89,13 +91,18 @@ def read_shopify(base: str, f: Fetcher, cfg: dict) -> list[dict] | None:
             tags = p.get("tags", [])
             tags = " ".join(tags) if isinstance(tags, list) else str(tags)
             text_all = f'{p.get("title","")} {p.get("product_type","")} {tags}'
-            if not is_colorized(text_all, cfg):
+            keep, colored = classify(text_all, cfg)
+            if not keep:
                 continue
+            variants = p.get("variants") or [{}]
+            body = _clean(p.get("body_html") or "")
             out.append({"product_id": str(p["id"]), "title": p.get("title", ""),
                         "url": f'{base}/products/{p.get("handle","")}',
                         "published": (p.get("published_at") or p.get("created_at") or "")[:10],
                         "published_at": p.get("published_at") or p.get("created_at") or "",
-                        "available": any(v.get("available") for v in p.get("variants", []))})
+                        "available": any(v.get("available") for v in variants),
+                        "colorized": colored, "price": _num(variants[0].get("price")),
+                        "mintage": find_mintage(f'{p.get("title","")} {body}')})
         if len(batch) < 250:
             break
         time.sleep(1)
@@ -104,7 +111,7 @@ def read_shopify(base: str, f: Fetcher, cfg: dict) -> list[dict] | None:
 
 def read_woocommerce(base: str, f: Fetcher, cfg: dict) -> list[dict] | None:
     out = []
-    for page in range(1, 11):
+    for page in range(1, cfg["drops"].get("feed_max_pages", 20) + 11):
         code, text = f.get(f"{base}/wp-json/wc/store/v1/products",
                            params={"per_page": 100, "page": page})
         try:
@@ -116,11 +123,19 @@ def read_woocommerce(base: str, f: Fetcher, cfg: dict) -> list[dict] | None:
         for p in batch:
             cats = " ".join(c.get("name", "") for c in p.get("categories", []))
             tags = " ".join(t.get("name", "") for t in p.get("tags", []))
-            if not is_colorized(f'{p.get("name","")} {cats} {tags}', cfg):
+            keep, colored = classify(f'{p.get("name","")} {cats} {tags}', cfg)
+            if not keep:
                 continue
+            prices = p.get("prices") or {}
+            price = _num(prices.get("price"))
+            if price is not None:
+                price = price / (10 ** int(prices.get("currency_minor_unit", 2) or 0))
+            desc = _clean(f'{p.get("short_description","")} {p.get("description","")}')
             out.append({"product_id": str(p["id"]), "title": _clean(p.get("name", "")),
                         "url": p.get("permalink", ""), "published": "",
-                        "available": bool(p.get("is_in_stock"))})
+                        "available": bool(p.get("is_in_stock")),
+                        "colorized": colored, "price": price,
+                        "mintage": find_mintage(f'{p.get("name","")} {desc}')})
         if len(batch) < 100:
             break
         time.sleep(1)
@@ -155,6 +170,7 @@ def read_generic(store: dict, f: Fetcher, cfg: dict, known: pd.DataFrame,
         """Carry a known product forward without new information (or with a verdict)."""
         out.append({"product_id": url, "title": prev.title, "url": url,
                     "published": _s(prev.published),
+                    "colorized": _s(getattr(prev, "colorized", "")) != "0",
                     "available": (str(prev.available) == "1") if available is None else available,
                     "checked": checked})
 
@@ -198,9 +214,13 @@ def read_generic(store: dict, f: Fetcher, cfg: dict, known: pd.DataFrame,
             continue
         info = parse_product_page(html)
         title = info["title"] or (prev.title if prev is not None else "")
-        if prev is None and not store.get("listing_is_colorized") and not is_colorized(
-                f'{title} {info["category"]} {url}', cfg):
-            ignore.add(url)            # not colorized: never fetch it again
+        keep, colored = classify(f'{title} {info["category"]} {url}', cfg)
+        if store.get("listing_is_colorized"):
+            keep, colored = True, True
+        elif store.get("listing_is_collectible"):
+            keep = keep or not BULLION_ONLY.search(title)
+        if prev is None and not keep:
+            ignore.add(url)            # plain bullion / not collectible: never fetch again
             stats["not_colorized"] += 1
             continue
         if info["available"] is None:
@@ -210,11 +230,12 @@ def read_generic(store: dict, f: Fetcher, cfg: dict, known: pd.DataFrame,
             continue
         out.append({"product_id": url, "title": title, "url": url,
                     "published": info["published"], "available": info["available"],
-                    "checked": True})
+                    "checked": True, "colorized": colored, "price": info["price"],
+                    "mintage": find_mintage(f'{title} {info["description"]}')})
         time.sleep(store.get("delay_seconds", 1.5))
     _save_ignore(ignore)
     log.info("drops: %s -> %d product links, %d pages fetched, HTTP errors %s, "
-             "%d without readable stock status, %d not colorized",
+             "%d without readable stock status, %d skipped (plain bullion)",
              base, len(links), stats["fetched"], stats["http_errors"] or "none",
              stats["no_stock_info"], stats["not_colorized"])
     return out
@@ -320,6 +341,7 @@ def read_sitemap(url: str, f: Fetcher, pattern: re.Pattern, depth: int = 0) -> l
 def parse_product_page(html: str) -> dict:
     soup = BeautifulSoup(html, "html.parser")
     title, available, published, category = "", None, "", ""
+    price, description = None, ""
 
     for obj in _jsonld(soup):
         if not isinstance(obj, dict):
@@ -330,6 +352,7 @@ def parse_product_page(html: str) -> dict:
             continue
         title = title or _clean(obj.get("name", ""))
         category = category or str(obj.get("category", ""))
+        description = description or _clean(str(obj.get("description", "") or ""))[:2000]
         published = published or str(obj.get("releaseDate", "") or "")[:10]
         offers = obj.get("offers") or []
         if isinstance(offers, dict):
@@ -338,6 +361,9 @@ def parse_product_page(html: str) -> dict:
             for v in obj["hasVariant"]:
                 o = v.get("offers") if isinstance(v, dict) else None
                 offers += o if isinstance(o, list) else ([o] if o else [])
+        for o in offers:
+            if isinstance(o, dict) and price is None:
+                price = _num(o.get("price") or o.get("lowPrice"))
         states = [str(o.get("availability", "")) for o in offers if isinstance(o, dict)]
         states = [s for s in states if s]
         if states:
@@ -373,8 +399,11 @@ def parse_product_page(html: str) -> dict:
         h1 = soup.find("h1")
         og = soup.find("meta", attrs={"property": "og:title"})
         title = _clean(h1.get_text(" ", strip=True) if h1 else (og.get("content", "") if og else ""))
+    if not description:
+        meta = soup.find("meta", attrs={"name": "description"})
+        description = meta.get("content", "") if meta else ""
     return {"title": title[:150], "available": available, "published": published,
-            "category": category}
+            "category": category, "price": price, "description": description}
 
 
 def _jsonld(soup: BeautifulSoup) -> list:
@@ -401,8 +430,65 @@ def is_colorized(text: str, cfg: dict) -> bool:
     return re.search(cfg["colorized_pattern"], text or "", re.I) is not None
 
 
+# Plain bullion that isn't a collectible release (random-year coins, generic bars…).
+BULLION_ONLY = re.compile(
+    r"random year|varied year|any year|\bbu\b.*\btube\b|monster box|generic|secondary market|"
+    r"\bjunk\b|90% silver|\bbag\b|\bscrap\b|\(random|backdated|sprue", re.I)
+
+
+def classify(text: str, cfg: dict) -> tuple[bool, bool]:
+    """(keep, colorized). Track mode `colorized` keeps only colorized products;
+    `collectible` (default) keeps every collectible / limited release and drops plain
+    bullion (random-year coins, generic rounds and bars, tubes, junk silver)."""
+    colored = is_colorized(text, cfg)
+    if colored:
+        return True, True
+    tcfg = cfg.get("tracking") or {}
+    if tcfg.get("mode", "collectible") == "colorized":
+        return False, False
+    if re.search(tcfg.get("exclude_pattern", "$^"), text or "", re.I) or BULLION_ONLY.search(text or ""):
+        return False, False
+    pat = tcfg.get("collectible_pattern",
+                   r"proof|reverse proof|high relief|\buhr\b|antiqu|gild|limited|mintage|"
+                   r"privy|shaped|colou?r|enamel|hologra|black|ruthenium|diamond|series|"
+                   r"edition|set\b|lunar|zodiac|niue|cook islands|cameroon|chad|tuvalu|"
+                   r"samoa|ghana|liberia|fiji|barbados|solomon|mongolia|pamp|germania|"
+                   r"first strike|ngc|pcgs|ms ?70|pf ?70|pr ?70|coa\b|box\b|capsule|"
+                   r"anniversary|commemorative|collector|numismatic|figurine|art\b")
+    return bool(re.search(pat, text or "", re.I)), False
+
+
+MINTAGE = re.compile(
+    r"(?:mintage(?: of| limit(?:ed)?(?: to)?| is| :)?|limited to|only|max(?:imum)? mintage(?: of)?)"
+    r"\s*:?\s*(\d{1,3}(?:[,. ]\d{3})+|\d{2,6})\b(?!\s*(?:oz|g\b|gram|mm|%))", re.I)
+MINTAGE_AFTER = re.compile(r"\b(\d{1,3}(?:,\d{3})+|\d{2,6})\s*(?:pieces|pcs|coins)?\s*"
+                           r"(?:mintage|minted|worldwide)\b", re.I)
+
+
+def find_mintage(text: str) -> int | None:
+    for rx in (MINTAGE, MINTAGE_AFTER):
+        m = rx.search(text or "")
+        if m:
+            n = int(re.sub(r"[,. ]", "", m.group(1)))
+            if 10 <= n <= 2_000_000:
+                return n
+    return None
+
+
+def _num(x) -> float | None:
+    try:
+        v = float(str(x).replace(",", "").replace("$", "").strip())
+        return v if v > 0 else None
+    except (TypeError, ValueError):
+        return None
+
+
 def _clean(s: str) -> str:
     return re.sub(r"<[^>]+>", "", re.sub(r"&amp;", "&", s or "")).strip()
+
+
+def _flag(x) -> str:
+    return "1" if x else "0"
 
 
 def _s(x) -> str:
@@ -422,6 +508,7 @@ def run_tracker(cfg: dict, today: dt.date, fast: bool = False
             state[c] = ""
     f = Fetcher()
     stores_ok, notes = 0, []
+    broad = _read_set(BROAD)
     try:
         for store in cfg["drops"]["stores"]:
             base = store["url"].rstrip("/")
@@ -446,17 +533,40 @@ def run_tracker(cfg: dict, today: dt.date, fast: bool = False
                 notes.append(msg)
                 continue
             stores_ok += 1
-            log.info("drops: %s via %s -> %d colorized products", base, used, len(items))
-            state = _merge(state, base, items, today, first_run=known.empty, now=now)
+            n_col = sum(1 for it in items if it.get("colorized", True))
+            log.info("drops: %s via %s -> %d collectible products (%d colorized)",
+                     base, used, len(items), n_col)
+            # The first broad run at a store finds its existing non-colorized catalog:
+            # those are old products, not launches, so they join the baseline.
+            first_broad = base not in broad
+            state = _merge(state, base, items, today, first_run=known.empty, now=now,
+                           baseline_noncolor=first_broad)
+            broad.add(base)
     finally:
         f.close()
     os.makedirs(os.path.dirname(STATE), exist_ok=True)
     state[STATE_COLS].to_csv(STATE, index=False)
+    _write_set(BROAD, broad)
     return state, stores_ok, notes
 
 
+BROAD = os.path.join(ROOT, "data", "broad_stores.txt")
+
+
+def _read_set(path: str) -> set[str]:
+    if not os.path.exists(path):
+        return set()
+    with open(path, encoding="utf-8") as fh:
+        return {line.strip() for line in fh if line.strip()}
+
+
+def _write_set(path: str, items: set[str]) -> None:
+    with open(path, "w", encoding="utf-8") as fh:
+        fh.write("\n".join(sorted(items)) + ("\n" if items else ""))
+
+
 def _merge(state: pd.DataFrame, base: str, items: list[dict], today: dt.date,
-           first_run: bool, now: str = "") -> pd.DataFrame:
+           first_run: bool, now: str = "", baseline_noncolor: bool = False) -> pd.DataFrame:
     t = today.isoformat()
     now = now or f"{t}T00:00:00Z"
     for c in STATE_COLS:
@@ -476,10 +586,12 @@ def _merge(state: pd.DataFrame, base: str, items: list[dict], today: dt.date,
                 # Products already on the store the first time we look are the
                 # "baseline": we don't know when they launched, so they don't count
                 # as new launches (unless the store tells us the publish date).
-                "baseline": "1" if first_run else "0",
+                "baseline": "1" if (first_run or (baseline_noncolor and not it.get(
+                    "colorized", True))) else "0",
                 "sold_out_date": "", "available": avail, "last_checked": t,
                 "published_at": it.get("published_at", ""), "first_seen_at": now,
-                "sold_out_at": ""})
+                "sold_out_at": "", "colorized": _flag(it.get("colorized", True)),
+                "price": _s(it.get("price")), "mintage": _s(it.get("mintage"))})
             continue
         i = pos[k]
         if it.get("checked", True) is False:
@@ -492,6 +604,13 @@ def _merge(state: pd.DataFrame, base: str, items: list[dict], today: dt.date,
             state.at[i, "published"] = it["published"]
         if not _s(state.at[i, "published_at"]) and it.get("published_at"):
             state.at[i, "published_at"] = it["published_at"]
+        if not _s(state.at[i, "colorized"]):
+            # Tracked before broad tracking began = it passed the colorized filter then.
+            state.at[i, "colorized"] = "1"
+        if it.get("price") and not _s(state.at[i, "price"]):
+            state.at[i, "price"] = _s(it["price"])        # launch price, kept as first seen
+        if it.get("mintage") and not _s(state.at[i, "mintage"]):
+            state.at[i, "mintage"] = _s(it["mintage"])
         if str(was) == "1" and avail == "0" and not _s(state.at[i, "sold_out_date"]):
             state.at[i, "sold_out_date"] = t
             state.at[i, "sold_out_at"] = now

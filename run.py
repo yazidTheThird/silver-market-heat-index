@@ -62,13 +62,21 @@ def notify(row: dict, extra: str = "") -> None:
         log.warning("telegram: NOT sent — %s", type(e).__name__)
 
 
+def latest_spot() -> float | None:
+    h = load_history()
+    if h.empty or "silver_spot" not in h.columns:
+        return None
+    v = h["silver_spot"].dropna()
+    return float(v.iloc[-1]) if len(v) else None
+
+
 def refresh_groups(cfg: dict, today: dt.date) -> pd.DataFrame:
     """Re-rank themes / base coins / sizes from the tracker state."""
     from mhi.drops import STATE
     if not os.path.exists(STATE):
         return pd.DataFrame()
     try:
-        groups = tags.hot_groups(pd.read_csv(STATE, dtype=str), cfg, today)
+        groups = tags.hot_groups(pd.read_csv(STATE, dtype=str), cfg, today, latest_spot())
         log.info("hot groups: %d groups ranked -> data/hot_groups.csv", len(groups))
         return groups
     except Exception as e:  # noqa: BLE001
