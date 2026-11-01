@@ -41,6 +41,34 @@ Shopify and WooCommerce stores are detected automatically and need no extra setu
 - **Anti-bot protection** (e.g. Cloudflare) can block GitHub's servers outright. For those stores, log their drops by hand in `competing_releases.csv`.
 - **Store layout.** If the tracker picks up the wrong links, set `product_link_pattern` to a piece of text that appears only in product URLs, e.g. `"/product/"`.
 
+## What's hot: themes, coins, sizes, finishes
+
+The index says *when* the market is hot. This part says *what* is hot. Every tracked
+product is tagged from its title by **theme** (dragons, wildlife, mythology, patriotic,
+lunar…), **base coin** (Libertad, Silver Eagle, Maple…), **size** and **finish**
+(diamond dust, gilded, black proof, antiqued…), then each group is ranked by how fast
+it sells out. Silver only for now (`hot_groups.metals` in `config.yaml`).
+
+- **Dashboard:** the "What's hot" card, with a tab per dimension.
+- **`data/hot_groups.csv`:** the full table, updated on every run.
+- **Telegram:** a weekly digest every Monday with the hottest and coldest groups.
+
+**Confidence:** *high* = enough launches and timed sell-outs; *medium* = enough launches
+that had at least 7 days to sell; *low (snapshot)* = only "share sold out right now",
+the early read until launches pile up. Expect real rankings after 2–4 weeks.
+
+Tagging rules are regexes in `mhi/tags.py`. To change one, copy that block into a
+`tags:` section in `config.yaml` and edit it there.
+
+## Fast launch checks (hour-level sell-out timing)
+
+A second workflow, **Fast launch check**, runs every 3 hours. It reads the Shopify and
+WooCommerce feeds in full and, for other stores, only re-checks products launched in
+the last 7 days. It records the time (UTC) each product appears and sells out, so a
+2-hour sell-out is told apart from a 2-day one. It doesn't compute the index or send
+Telegram messages. Both workflows share a lock, so they never write data at the same
+time. To change the frequency, edit the `cron` line in `.github/workflows/fast.yml`.
+
 ## One-time setup (about 20 minutes)
 
 1. **Create a GitHub account** (free) and a **new repository**, e.g. `market-heat-index`.

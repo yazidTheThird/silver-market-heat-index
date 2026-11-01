@@ -9,6 +9,11 @@ on:
 permissions:
   contents: write
 
+# The daily run and the fast checker both save data/ — never let them run at once.
+concurrency:
+  group: market-heat-data
+  cancel-in-progress: false
+
 jobs:
   run:
     runs-on: ubuntu-latest

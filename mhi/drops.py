@@ -32,7 +32,10 @@ from .util import BROWSER_HEADERS, log
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 STATE = os.path.join(ROOT, "data", "drops_state.csv")
 STATE_COLS = ["store", "product_id", "title", "url", "published", "first_seen",
-              "baseline", "sold_out_date", "available", "last_checked"]
+              "baseline", "sold_out_date", "available", "last_checked",
+              # Hour-level timing (UTC). The fast checker (run.py --fast) re-checks new
+              # launches every few hours, so these tell a 2-hour sell-out from a 2-day one.
+              "published_at", "first_seen_at", "sold_out_at"]
 
 SOLD_OUT_WORDS = re.compile(r"\b(sold[\s-]?out|out[\s-]of[\s-]stock|no longer available|"
                             r"currently unavailable)\b", re.I)
@@ -91,6 +94,7 @@ def read_shopify(base: str, f: Fetcher, cfg: dict) -> list[dict] | None:
             out.append({"product_id": str(p["id"]), "title": p.get("title", ""),
                         "url": f'{base}/products/{p.get("handle","")}',
                         "published": (p.get("published_at") or p.get("created_at") or "")[:10],
+                        "published_at": p.get("published_at") or p.get("created_at") or "",
                         "available": any(v.get("available") for v in p.get("variants", []))})
         if len(batch) < 250:
             break
@@ -124,14 +128,16 @@ def read_woocommerce(base: str, f: Fetcher, cfg: dict) -> list[dict] | None:
 
 
 def read_generic(store: dict, f: Fetcher, cfg: dict, known: pd.DataFrame,
-                 today: dt.date) -> list[dict] | None:
+                 today: dt.date, fast: bool = False) -> list[dict] | None:
     base = store["url"].rstrip("/")
     render = bool(store.get("render"))
-    links = discover_links(store, f)
+    links = discover_links(store, f, skip_sitemap=fast)
     if not links:
         return None
     dcfg = cfg["drops"]
-    budget = dcfg.get("max_product_checks_per_store", 150)
+    budget = (dcfg.get("fast_max_checks_per_store", 40) if fast
+              else dcfg.get("max_product_checks_per_store", 150))
+    fast_window = dcfg.get("fast_window_days", 7)
     recheck_soldout = dcfg.get("recheck_soldout_days", 7)
     known_by_url = {r.url: r for r in known.itertuples()} if not known.empty else {}
     ignore = _load_ignore()
@@ -156,6 +162,11 @@ def read_generic(store: dict, f: Fetcher, cfg: dict, known: pd.DataFrame,
         if url in ignore:
             continue
         prev = known_by_url.get(url)
+        # Fast mode: only new products and recent launches still in stock get fetched;
+        # everything else is carried forward unchanged until the daily run.
+        if fast and prev is not None and not _is_recent_in_stock(prev, today, fast_window):
+            keep(prev, url)
+            continue
         # Known sold-out products are only re-checked (for restocks) every few days.
         if prev is not None and str(prev.available) == "0":
             last = pd.to_datetime(prev.last_checked, errors="coerce")
@@ -225,7 +236,14 @@ def _save_ignore(ignore: set[str]) -> None:
         fh.write("\n".join(sorted(ignore)) + ("\n" if ignore else ""))
 
 
-def discover_links(store: dict, f: Fetcher) -> list[str]:
+def _is_recent_in_stock(prev, today: dt.date, days: int) -> bool:
+    if str(prev.available) != "1" or str(getattr(prev, "baseline", "")) == "1":
+        return False
+    d = pd.to_datetime(_s(prev.published) or _s(prev.first_seen), errors="coerce")
+    return pd.notnull(d) and (today - d.date()).days <= days
+
+
+def discover_links(store: dict, f: Fetcher, skip_sitemap: bool = False) -> list[str]:
     base = store["url"].rstrip("/")
     host = urlparse(base).netloc.replace("www.", "")
     pattern = re.compile(store["product_link_pattern"], re.I) if store.get(
@@ -274,7 +292,7 @@ def discover_links(store: dict, f: Fetcher) -> list[str]:
                 break
             time.sleep(1)
 
-    if store.get("sitemap_url"):
+    if store.get("sitemap_url") and not (skip_sitemap and links):
         links.extend(u for u in read_sitemap(store["sitemap_url"], f, pattern) if u not in links)
     return links
 
@@ -392,8 +410,12 @@ def _s(x) -> str:
 
 
 # ------------------------------------------------------------------ main entry
-def run_tracker(cfg: dict, today: dt.date) -> tuple[pd.DataFrame, int, list[str]]:
-    """Reads every store, updates data/drops_state.csv. Returns (state, stores_ok, notes)."""
+def run_tracker(cfg: dict, today: dt.date, fast: bool = False
+                ) -> tuple[pd.DataFrame, int, list[str]]:
+    """Reads every store, updates data/drops_state.csv. Returns (state, stores_ok, notes).
+    fast=True: the every-few-hours check — feeds are read in full (cheap), other stores
+    only re-check new and recent launches."""
+    now = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     state = pd.read_csv(STATE, dtype=str) if os.path.exists(STATE) else pd.DataFrame(columns=STATE_COLS)
     for c in STATE_COLS:
         if c not in state.columns:
@@ -413,7 +435,7 @@ def run_tracker(cfg: dict, today: dt.date) -> tuple[pd.DataFrame, int, list[str]
                     items, used = read_woocommerce(base, f, cfg), "woocommerce"
                 if items is None and platform in ("auto", "generic"):
                     if store.get("listing_urls") or store.get("sitemap_url"):
-                        items, used = read_generic(store, f, cfg, known, today), "generic"
+                        items, used = read_generic(store, f, cfg, known, today, fast), "generic"
             except Exception as e:  # noqa: BLE001
                 log.warning("drops: %s -> %s", base, e)
                 items = None
@@ -425,7 +447,7 @@ def run_tracker(cfg: dict, today: dt.date) -> tuple[pd.DataFrame, int, list[str]
                 continue
             stores_ok += 1
             log.info("drops: %s via %s -> %d colorized products", base, used, len(items))
-            state = _merge(state, base, items, today, first_run=known.empty)
+            state = _merge(state, base, items, today, first_run=known.empty, now=now)
     finally:
         f.close()
     os.makedirs(os.path.dirname(STATE), exist_ok=True)
@@ -434,8 +456,12 @@ def run_tracker(cfg: dict, today: dt.date) -> tuple[pd.DataFrame, int, list[str]
 
 
 def _merge(state: pd.DataFrame, base: str, items: list[dict], today: dt.date,
-           first_run: bool) -> pd.DataFrame:
+           first_run: bool, now: str = "") -> pd.DataFrame:
     t = today.isoformat()
+    now = now or f"{t}T00:00:00Z"
+    for c in STATE_COLS:
+        if c not in state.columns:
+            state[c] = ""
     state = state.copy()
     pos = {(r.store, r.product_id): i for i, r in state.iterrows()}
     new_rows = []
@@ -451,7 +477,9 @@ def _merge(state: pd.DataFrame, base: str, items: list[dict], today: dt.date,
                 # "baseline": we don't know when they launched, so they don't count
                 # as new launches (unless the store tells us the publish date).
                 "baseline": "1" if first_run else "0",
-                "sold_out_date": "", "available": avail, "last_checked": t})
+                "sold_out_date": "", "available": avail, "last_checked": t,
+                "published_at": it.get("published_at", ""), "first_seen_at": now,
+                "sold_out_at": ""})
             continue
         i = pos[k]
         if it.get("checked", True) is False:
@@ -462,10 +490,14 @@ def _merge(state: pd.DataFrame, base: str, items: list[dict], today: dt.date,
         state.at[i, "last_checked"] = t
         if not _s(state.at[i, "published"]) and it.get("published"):
             state.at[i, "published"] = it["published"]
+        if not _s(state.at[i, "published_at"]) and it.get("published_at"):
+            state.at[i, "published_at"] = it["published_at"]
         if str(was) == "1" and avail == "0" and not _s(state.at[i, "sold_out_date"]):
             state.at[i, "sold_out_date"] = t
+            state.at[i, "sold_out_at"] = now
         if avail == "1":
             state.at[i, "sold_out_date"] = ""
+            state.at[i, "sold_out_at"] = ""
     # Feed-based stores (Shopify/WooCommerce): a tracked in-stock product that has
     # vanished from the feed was removed — almost always because it sold out.
     seen_ids = {it["product_id"] for it in items}
@@ -482,6 +514,7 @@ def _merge(state: pd.DataFrame, base: str, items: list[dict], today: dt.date,
             state.at[i, "last_checked"] = t
             if not _s(r["sold_out_date"]):
                 state.at[i, "sold_out_date"] = t
+                state.at[i, "sold_out_at"] = now
     if new_rows:
         state = pd.concat([state, pd.DataFrame(new_rows)], ignore_index=True)
     return state

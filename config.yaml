@@ -86,6 +86,8 @@ drops:
     #   JM Bullion, BGASC, Silver.com — block automated visitors (HTTP 401)
     #   Littleton — product pages don't show stock status
     #   Scottsdale Mint — page times out even in a headless browser
+  fast_window_days: 7             # fast checker re-checks launches from the last 7 days
+  fast_max_checks_per_store: 40   # page fetches per store per fast check (non-feed stores)
   recent_days: 30                 # "recent launches" = launched in the last 30 days
   fast_sellout_days: 2            # a sell-out within 2 days counts as "fast"
   max_product_checks_per_store: 150
@@ -126,3 +128,15 @@ calendar:
   weekday: {0: 50, 1: 55, 2: 55, 3: 60, 4: 70, 5: 75, 6: 70}
   competing_window_days: 3   # drops you log within +/- this many days count
   competing_penalty: 15      # points removed per competing drop
+
+# ---------------------------------------------------------------- What's hot
+# Ranks themes, base coins and sizes by how fast they sell out (dashboard section,
+# data/hot_groups.csv, and a weekly Telegram digest). Tagging rules are in
+# mhi/tags.py; to change them, copy a block from there into `tags:` below.
+hot_groups:
+  metals: ["Silver"]      # keep it silver for now; add "Copper" / "Gold" later
+  window_days: 90         # launches from the last 90 days count
+  min_launches: 3         # fewer launches than this = "low confidence" in that group
+  mature_days: 7          # a launch counts toward "share sold out" after 7 days on sale
+  fast_hours: 48          # a sell-out within 48 h counts as fast
+  digest_weekday: 0       # weekly digest in the Telegram message: 0 = Monday
