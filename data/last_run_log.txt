@@ -1,13 +1,24 @@
-INFO drops: https://www.coinstv.net via shopify -> 107 colorized products
-INFO drops: https://www.herobullion.com via woocommerce -> 178 colorized products
-INFO drops: https://grreserve.com via woocommerce -> 389 colorized products
-INFO drops: https://bullionsharks.com -> 18 product links, 1 pages fetched, HTTP errors none, 1 without readable stock status, 0 not colorized
-INFO drops: https://bullionsharks.com via generic -> 17 colorized products
-INFO drops: https://www.apmex.com -> 89 product links, 9 pages fetched, HTTP errors none, 6 without readable stock status, 0 not colorized
-INFO drops: https://www.apmex.com via generic -> 83 colorized products
-INFO drops: https://sdbullion.com -> 18 product links, 6 pages fetched, HTTP errors none, 6 without readable stock status, 0 not colorized
-INFO drops: https://sdbullion.com via generic -> 12 colorized products
-INFO drops: https://bullionexchanges.com -> 13 product links, 0 pages fetched, HTTP errors none, 0 without readable stock status, 0 not colorized
-INFO drops: https://bullionexchanges.com via generic -> 13 colorized products
+INFO drops: https://www.coinstv.net via shopify -> 3922 collectible products (243 colorized)
+INFO drops: https://www.herobullion.com via woocommerce -> 1398 collectible products (371 colorized)
+INFO drops: https://grreserve.com via woocommerce -> 2778 collectible products (1010 colorized)
+WARNING drops: https://bullionsharks.com -> 'bool' object is not callable
+WARNING drops: https://bullionsharks.com: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
+WARNING drops: https://popcoins.store: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
+INFO drops: https://www.mycollectables.com.au via shopify -> 4257 collectible products (601 colorized)
+INFO drops: https://www.directcoins.com.au via shopify -> 587 collectible products (115 colorized)
+INFO drops: https://cdncoin.com via shopify -> 832 collectible products (24 colorized)
+WARNING drops: https://www.apmex.com -> 'bool' object is not callable
+WARNING drops: https://www.apmex.com: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
+WARNING drops: https://sdbullion.com -> 'bool' object is not callable
+WARNING drops: https://sdbullion.com: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
+INFO drops: https://bullionexchanges.com -> 13 product links, 0 pages fetched, HTTP errors none, 0 without readable stock status, 0 skipped (plain bullion)
+INFO drops: https://bullionexchanges.com via generic -> 13 collectible products (13 colorized)
+WARNING drops: listing https://www.providentmetals.com/2026-new-releases.html -> HTTP 401
+WARNING drops: https://www.providentmetals.com: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
+WARNING drops: listing https://www.moneymetals.com/buy/silver/colorized -> HTTP 403
+WARNING drops: listing https://www.moneymetals.com/buy/silver/coins/collectible-silver-coins -> HTTP 403
+WARNING drops: https://www.moneymetals.com: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
+WARNING drops: listing https://www.bullionbypost.co.uk/silver-coins/2026-silver-coins/ -> HTTP 403
+WARNING drops: https://www.bullionbypost.co.uk: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
 INFO fast check: 7 stores read
-INFO hot groups: 44 groups ranked -> data/hot_groups.csv
+INFO hot groups: 243 groups ranked -> data/hot_groups.csv
