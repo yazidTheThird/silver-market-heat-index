@@ -3,8 +3,8 @@ INFO drops: https://www.herobullion.com via woocommerce -> 178 colorized product
 INFO drops: https://grreserve.com via woocommerce -> 389 colorized products
 INFO drops: https://bullionsharks.com -> 18 product links, 1 pages fetched, HTTP errors none, 1 without readable stock status, 0 not colorized
 INFO drops: https://bullionsharks.com via generic -> 17 colorized products
-INFO drops: https://www.apmex.com -> 90 product links, 10 pages fetched, HTTP errors none, 6 without readable stock status, 0 not colorized
-INFO drops: https://www.apmex.com via generic -> 84 colorized products
+INFO drops: https://www.apmex.com -> 89 product links, 9 pages fetched, HTTP errors none, 6 without readable stock status, 0 not colorized
+INFO drops: https://www.apmex.com via generic -> 83 colorized products
 INFO drops: https://sdbullion.com -> 18 product links, 6 pages fetched, HTTP errors none, 6 without readable stock status, 0 not colorized
 INFO drops: https://sdbullion.com via generic -> 12 colorized products
 INFO drops: https://bullionexchanges.com -> 13 product links, 0 pages fetched, HTTP errors none, 0 without readable stock status, 0 not colorized
