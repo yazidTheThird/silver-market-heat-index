@@ -17,7 +17,7 @@ LABELS = {
 }
 
 
-def build(hist: pd.DataFrame, cfg: dict) -> str:
+def build(hist: pd.DataFrame, cfg: dict, groups: pd.DataFrame | None = None) -> str:
     h = hist.tail(180).copy()
     h = h.where(pd.notnull(h), None)
     rows = []
@@ -28,7 +28,12 @@ def build(hist: pd.DataFrame, cfg: dict) -> str:
             "spot": r.get("silver_spot"),
             "scores": {c: r.get(f"score_{c}") for c in COMPONENTS},
         })
+    gl = []
+    if groups is not None and not groups.empty:
+        g = groups.where(pd.notnull(groups), None)
+        gl = g.to_dict("records")
     payload = {
+        "groups": gl,
         "rows": rows,
         "labels": LABELS,
         "weights": cfg["weights"],
@@ -115,6 +120,11 @@ table { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-nu
 th, td { text-align: right; padding: 6px 4px; border-bottom: 1px solid var(--grid); }
 th:first-child, td:first-child { text-align: left; }
 th { color: var(--text-muted); font-weight: 500; }
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+.tabs button { font: inherit; font-size: 13px; padding: 5px 12px; border-radius: 999px;
+  border: 1px solid var(--border); background: transparent; color: var(--text-secondary); cursor: pointer; }
+.tabs button.on { background: var(--series-1); border-color: var(--series-1); color: #fff; }
+.hb { display: inline-block; height: 8px; border-radius: 4px; background: var(--series-1); vertical-align: middle; margin-right: 6px; }
 details summary { cursor: pointer; color: var(--text-secondary); font-size: 14px; }
 .tablewrap { overflow-x: auto; margin-top: 12px; }
 @media (max-width: 560px) {
@@ -134,6 +144,13 @@ details summary { cursor: pointer; color: var(--text-secondary); font-size: 14px
   <section class="card">
     <h2>What's driving it today</h2>
     <div class="bars" id="bars"></div>
+  </section>
+
+  <section class="card">
+    <h2>What's hot (silver) · by sell-out speed</h2>
+    <div class="tabs" id="gtabs"></div>
+    <div class="tablewrap"><table id="gtbl"></table></div>
+    <p class="meta" id="gnote"></p>
   </section>
 
   <section class="card">
@@ -255,7 +272,32 @@ function table() {
   document.getElementById("tbl").innerHTML = head + body;
 }
 
-hero(); bars(); chart(); table();
+function groups(dim) {
+  const G = (D.groups || []).filter(g => g.dimension === dim && g.group !== "Other" && g.confidence !== "too few");
+  const tbl = document.getElementById("gtbl"), note = document.getElementById("gnote");
+  if (!G.length) { tbl.innerHTML = ""; note.textContent = "Fills in after the tracker has seen a few launches."; return; }
+  const rank = c => (c === "high" ? 2 : c === "medium" ? 1 : 0);
+  G.sort((a, b) => (rank(b.confidence) - rank(a.confidence)) || ((b.heat ?? -1) - (a.heat ?? -1)));
+  const pct = v => v === null || v === undefined ? "—" : Math.round(v * 100) + "%";
+  const hrs = v => v === null || v === undefined ? "—" : (v < 48 ? Math.round(v) + " h" : (v / 24).toFixed(1) + " d");
+  tbl.innerHTML = `<tr><th>${dim}</th><th>Heat</th><th>Launches sold out</th><th>Median time to sell out</th><th>Sold out now</th><th>Tracked</th><th>Confidence</th></tr>` +
+    G.map(g => `<tr><td>${g.group}</td><td><span class="hb" style="width:${Math.max(2, (g.heat || 0) * 0.6)}px"></span>${fmt(g.heat)}</td>` +
+      `<td>${g.launches ? pct(g.launch_soldout_share) + " of " + g.launches : "—"}</td><td>${hrs(g.median_hours_to_sellout)}</td>` +
+      `<td>${pct(g.snapshot_soldout_share)}</td><td>${g.tracked}</td><td>${g.confidence}</td></tr>`).join("");
+  const early = G.every(g => g.confidence.startsWith("low"));
+  note.textContent = early ? "Early read: ranked by what's sold out right now. Launch timing takes over as new launches sell out." :
+    "Heat = share of recent launches that sold out, how many sold out within 2 days, and median time to sell out.";
+}
+function gtabs() {
+  const el = document.getElementById("gtabs");
+  const dims = ["Theme", "Base coin", "Size", "Finish"];
+  el.innerHTML = dims.map((d, i) => `<button data-d="${d}" class="${i ? "" : "on"}">${d}</button>`).join("");
+  el.querySelectorAll("button").forEach(b => b.onclick = () => {
+    el.querySelectorAll("button").forEach(x => x.classList.remove("on")); b.classList.add("on"); groups(b.dataset.d); });
+  groups("Theme");
+}
+
+hero(); bars(); gtabs(); chart(); table();
 window.addEventListener("resize", chart);
 </script>
 </body>

@@ -1,18 +1,24 @@
 """Daily entry point: compute today's Market Heat Index, save it, rebuild the dashboard,
 and (optionally) send a Telegram message.
 
-    python run.py
+    python run.py          # daily run
+    python run.py --fast   # every few hours: re-check new launches only, for hour-level
+                           # sell-out timing (no index, no Telegram)
 """
 from __future__ import annotations
 
+import datetime as dt
 import logging
 import os
+import sys
 
 import requests
 import yaml
 
-from mhi import dashboard
-from mhi.index import compute, save
+import pandas as pd
+
+from mhi import dashboard, tags
+from mhi.index import compute, load_history, save
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 os.makedirs(os.path.join(_HERE, "data"), exist_ok=True)
@@ -25,7 +31,7 @@ logging.basicConfig(
 log = logging.getLogger("mhi")
 
 
-def notify(row: dict) -> None:
+def notify(row: dict, extra: str = "") -> None:
     token = (os.getenv("TELEGRAM_BOT_TOKEN") or "").strip()
     chat = (os.getenv("TELEGRAM_CHAT_ID") or "").strip()
     if not (token and chat):
@@ -36,6 +42,8 @@ def notify(row: dict) -> None:
              for k, v in row.items() if k.startswith("score_")]
     text = (f"Market Heat Index {row['date']}\n"
             f"{row['index']} / 100 — {row['label']}\n" + "\n".join(parts))
+    if extra:
+        text += "\n\n" + extra
     url = os.getenv("DASHBOARD_URL")
     if url:
         text += f"\n{url}"
@@ -54,15 +62,44 @@ def notify(row: dict) -> None:
         log.warning("telegram: NOT sent — %s", type(e).__name__)
 
 
+def refresh_groups(cfg: dict, today: dt.date) -> pd.DataFrame:
+    """Re-rank themes / base coins / sizes from the tracker state."""
+    from mhi.drops import STATE
+    if not os.path.exists(STATE):
+        return pd.DataFrame()
+    try:
+        groups = tags.hot_groups(pd.read_csv(STATE, dtype=str), cfg, today)
+        log.info("hot groups: %d groups ranked -> data/hot_groups.csv", len(groups))
+        return groups
+    except Exception as e:  # noqa: BLE001
+        log.warning("hot groups: failed — %s", e)
+        return pd.DataFrame()
+
+
 def main() -> None:
     here = os.path.dirname(os.path.abspath(__file__))
     with open(os.path.join(here, "config.yaml"), encoding="utf-8") as f:
         cfg = yaml.safe_load(f)
+    today = dt.datetime.utcnow().date()
+
+    if "--fast" in sys.argv:
+        from mhi.drops import run_tracker
+        _, ok, _ = run_tracker(cfg, today, fast=True)
+        log.info("fast check: %d stores read", ok)
+        groups = refresh_groups(cfg, today)
+        hist = load_history()
+        if not hist.empty:
+            dashboard.build(hist, cfg, groups)
+        return
+
     out = compute(cfg)
     hist = save(out["row"])
-    path = dashboard.build(hist, cfg)
+    groups = refresh_groups(cfg, today)
+    path = dashboard.build(hist, cfg, groups)
     log.info("dashboard written to %s", path)
-    notify(out["row"])
+    weekday = (cfg.get("hot_groups") or {}).get("digest_weekday", 0)   # 0 = Monday
+    extra = tags.digest(groups) if today.weekday() == weekday else ""
+    notify(out["row"], extra)
 
 
 if __name__ == "__main__":
