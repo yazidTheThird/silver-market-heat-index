@@ -30,10 +30,19 @@ def build(hist: pd.DataFrame, cfg: dict, groups: pd.DataFrame | None = None) -> 
         })
     gl = []
     if groups is not None and not groups.empty:
-        g = groups.where(pd.notnull(groups), None)
+        g = groups.astype(object).where(pd.notnull(groups), None)
         gl = g.to_dict("records")
+    products = []
+    if gl:
+        try:
+            from . import tags
+            from .drops import STATE
+            products = tags.product_rows(pd.read_csv(STATE, dtype=str), cfg)
+        except Exception:  # noqa: BLE001
+            products = []
     payload = {
         "groups": gl,
+        "products": products,
         "rows": rows,
         "labels": LABELS,
         "weights": cfg["weights"],
@@ -124,6 +133,19 @@ th { color: var(--text-muted); font-weight: 500; }
 .tabs button { font: inherit; font-size: 13px; padding: 5px 12px; border-radius: 999px;
   border: 1px solid var(--border); background: transparent; color: var(--text-secondary); cursor: pointer; }
 .tabs button.on { background: var(--series-1); border-color: var(--series-1); color: #fff; }
+.grow { cursor: pointer; }
+.grow:hover td { background: var(--grid); }
+.grow td:first-child::before { content: "▸ "; color: var(--text-muted); }
+.grow.open td:first-child::before { content: "▾ "; }
+.plist td { text-align: left; padding: 0 0 10px; }
+.plist ul { list-style: none; margin: 0; padding: 4px 0 0 14px; max-height: 360px; overflow-y: auto; }
+.plist li { padding: 5px 0; border-bottom: 1px solid var(--grid); font-size: 13px; display: flex; gap: 8px; align-items: baseline; }
+.plist a { color: var(--series-1); text-decoration: none; flex: 1; }
+.plist a:hover { text-decoration: underline; }
+.pill { font-size: 11px; padding: 1px 7px; border-radius: 999px; white-space: nowrap; }
+.pill.sold { background: rgba(12,163,12,.15); color: var(--good); }
+.pill.in { background: var(--grid); color: var(--text-muted); }
+.pmeta { color: var(--text-muted); font-size: 11px; white-space: nowrap; }
 .hb { display: inline-block; height: 8px; border-radius: 4px; background: var(--series-1); vertical-align: middle; margin-right: 6px; }
 details summary { cursor: pointer; color: var(--text-secondary); font-size: 14px; }
 .tablewrap { overflow-x: auto; margin-top: 12px; }
@@ -280,13 +302,38 @@ function groups(dim) {
   G.sort((a, b) => (rank(b.confidence) - rank(a.confidence)) || ((b.heat ?? -1) - (a.heat ?? -1)));
   const pct = v => v === null || v === undefined ? "—" : Math.round(v * 100) + "%";
   const hrs = v => v === null || v === undefined ? "—" : (v < 48 ? Math.round(v) + " h" : (v / 24).toFixed(1) + " d");
+  window._gdim = dim;
   tbl.innerHTML = `<tr><th>${dim}</th><th>Heat</th><th>Launches sold out</th><th>Median time to sell out</th><th>Sold out now</th><th>Tracked</th><th>Confidence</th></tr>` +
-    G.map(g => `<tr><td>${g.group}</td><td><span class="hb" style="width:${Math.max(2, (g.heat || 0) * 0.6)}px"></span>${fmt(g.heat)}</td>` +
+    G.map((g, i) => `<tr class="grow" data-g="${encodeURIComponent(g.group)}"><td>${g.group}</td><td><span class="hb" style="width:${Math.max(2, (g.heat || 0) * 0.6)}px"></span>${fmt(g.heat)}</td>` +
       `<td>${g.launches ? pct(g.launch_soldout_share) + " of " + g.launches : "—"}</td><td>${hrs(g.median_hours_to_sellout)}</td>` +
       `<td>${pct(g.snapshot_soldout_share)}</td><td>${g.tracked}</td><td>${g.confidence}</td></tr>`).join("");
+  tbl.querySelectorAll(".grow").forEach(tr => tr.onclick = () => toggle(tr, dim, decodeURIComponent(tr.dataset.g)));
   const early = G.every(g => g.confidence.startsWith("low"));
-  note.textContent = early ? "Early read: ranked by what's sold out right now. Launch timing takes over as new launches sell out." :
-    "Heat = share of recent launches that sold out, how many sold out within 2 days, and median time to sell out.";
+  note.textContent = early ? "Tap a row to see the products. Early read: ranked by what's sold out right now. Launch timing takes over as new launches sell out." :
+    "Tap a row to see the products behind it. Heat = share of recent launches that sold out, how many sold out within 2 days, and median time to sell out.";
+}
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function inGroup(p, dim, grp) {
+  if (dim === "Theme") return p.th.includes(grp);
+  if (dim === "Base coin") return p.b === grp;
+  if (dim === "Size") return p.z === grp;
+  return p.f === grp;
+}
+function toggle(tr, dim, grp) {
+  const next = tr.nextElementSibling;
+  if (next && next.classList.contains("plist")) { next.remove(); tr.classList.remove("open"); return; }
+  tr.classList.add("open");
+  const P = (D.products || []).filter(p => inGroup(p, dim, grp));
+  // Sold out first (most recent first), then in stock (newest first).
+  P.sort((a, b) => (a.a - b.a) || (b.so || "").localeCompare(a.so || "") || (b.fs || "").localeCompare(a.fs || ""));
+  const dur = h => h === null ? "" : (h < 48 ? ` in ${Math.round(h)} h` : ` in ${(h / 24).toFixed(1)} d`);
+  const li = P.map(p => `<li><span class="pill ${p.a ? "in" : "sold"}">${p.a ? "in stock" : "sold out" + dur(p.h)}</span>` +
+    `<a href="${esc(p.u)}" target="_blank" rel="noopener">${esc(p.t)}</a>` +
+    `<span class="pmeta">${esc(p.s)}${p.new ? " · new " + p.fs.slice(5) : ""}${p.so ? " · gone " + p.so.slice(5) : ""}</span></li>`).join("");
+  const row = document.createElement("tr");
+  row.className = "plist";
+  row.innerHTML = `<td colspan="7"><ul>${li || "<li>No products listed.</li>"}</ul></td>`;
+  tr.after(row);
 }
 function gtabs() {
   const el = document.getElementById("gtabs");

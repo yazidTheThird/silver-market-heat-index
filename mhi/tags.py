@@ -270,6 +270,29 @@ def hot_groups(state: pd.DataFrame, cfg: dict, today: dt.date) -> pd.DataFrame:
     return out
 
 
+def product_rows(state: pd.DataFrame, cfg: dict) -> list[dict]:
+    """Per-product list for the dashboard drill-down (silver only, like the ranking)."""
+    metals = [m.lower() for m in ((cfg or {}).get("hot_groups") or {}).get("metals", ["Silver"])]
+    d = tag_state(state, cfg)
+    if metals:
+        d = d[d["metal"].str.lower().isin(metals)]
+    out = []
+    for r in d.to_dict("records"):
+        h = sellout_hours(r)
+        out.append({
+            "t": str(r.get("title") or "")[:120],
+            "u": str(r.get("url") or ""),
+            "s": re.sub(r"^https?://(www\.)?", "", str(r.get("store") or "")),
+            "th": r["themes"], "b": r["base_coin"], "z": r["size"], "f": r["finish"],
+            "a": str(r.get("available")) == "1",
+            "so": str(r.get("sold_out_date") or "") if str(r.get("sold_out_date")) != "nan" else "",
+            "fs": str(r.get("first_seen") or ""),
+            "new": str(r.get("baseline")) != "1",
+            "h": None if h is None else round(h, 1),
+        })
+    return out
+
+
 def heat_score(r: dict, min_n: int) -> float | None:
     """0–100 per group. Uses launch stats when there are enough launches; otherwise
     falls back to the sold-out snapshot (marked low confidence)."""
