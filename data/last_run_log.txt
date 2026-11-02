@@ -1,6 +1,6 @@
-INFO drops: https://www.coinstv.net via shopify -> 3922 collectible products (243 colorized)
+INFO drops: https://www.coinstv.net via shopify -> 3921 collectible products (244 colorized)
 INFO drops: https://www.herobullion.com via woocommerce -> 1399 collectible products (371 colorized)
-INFO drops: https://grreserve.com via woocommerce -> 2778 collectible products (1010 colorized)
+INFO drops: https://grreserve.com via woocommerce -> 2778 collectible products (1007 colorized)
 WARNING drops: https://bullionsharks.com -> 'bool' object is not callable
 WARNING drops: https://bullionsharks.com: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
 WARNING drops: https://popcoins.store: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
