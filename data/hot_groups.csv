@@ -6,9 +6,9 @@ all,Base coin,Round/medal,369,0.583,4,0.5,1,21.8,1.0,50.0,medium
 all,Base coin,Silver Eagle,902,0.795,64,0.469,0,,,46.9,medium
 all,Base coin,Half dollar,255,0.918,12,0.417,1,1855.5,0.0,41.7,medium
 all,Base coin,Libertad,149,0.919,6,0.333,0,,,33.3,medium
-all,Base coin,Kangaroo/Koala/Kookaburra,324,0.66,27,0.259,0,,,25.9,medium
+all,Base coin,Kangaroo/Koala/Kookaburra,326,0.656,27,0.259,0,,,25.9,medium
 all,Base coin,Maple Leaf,148,0.791,22,0.227,0,,,22.7,medium
-all,Base coin,"Other mint coins (Niue, Cook Is., Cameroon…)",5120,0.825,295,0.471,4,197.9,0.0,15.7,high
+all,Base coin,"Other mint coins (Niue, Cook Is., Cameroon…)",5120,0.825,295,0.475,5,270.4,0.0,15.8,high
 all,Base coin,Bar,258,0.682,26,0.0,0,,,0.0,medium
 all,Base coin,Perth Lunar,249,0.839,12,0.0,0,,,0.0,medium
 all,Base coin,Philharmonic,1,1.0,0,,0,,,,too few
@@ -17,19 +17,19 @@ all,Finish,Holographic / iridescent,20,0.85,2,0.5,0,,,85.0,low (snapshot)
 all,Finish,Diamond dust,24,0.792,1,0.0,0,,,79.2,low (snapshot)
 all,Finish,Gem / crystal inlay,83,0.771,9,0.333,0,,,33.3,medium
 all,Finish,Antiqued / high relief,843,0.852,24,0.292,1,667.4,0.0,29.2,medium
-all,Finish,Standard finish,6334,0.793,426,0.427,6,193.3,0.167,19.8,high
-all,Finish,Gilded / gold-plated,402,0.836,7,0.143,0,,,14.3,medium
+all,Finish,Standard finish,6335,0.793,426,0.43,7,261.2,0.143,19.1,high
+all,Finish,Gilded / gold-plated,403,0.834,7,0.143,0,,,14.3,medium
 all,Finish,Black proof / ruthenium,117,0.821,5,0.0,0,,,0.0,medium
 all,Mintage,"5,000+",824,0.881,63,0.54,1,270.4,0.0,54.0,medium
 all,Mintage,250 or less,495,0.834,22,0.455,0,,,45.5,medium
-all,Mintage,"1,001–5,000",832,0.826,43,0.302,1,1855.5,0.0,30.2,medium
+all,Mintage,"1,001–5,000",834,0.824,43,0.302,1,1855.5,0.0,30.2,medium
 all,Mintage,"251–1,000",1197,0.815,42,0.19,0,,,19.0,medium
 all,Premium,Under 1.5× spot,1092,0.897,1,1.0,0,,,89.7,low (snapshot)
-all,Premium,2.5–4× spot,2009,0.735,131,0.252,1,667.4,0.0,25.2,medium
-all,Premium,1.5–2.5× spot,1898,0.909,33,0.182,1,125.5,0.0,18.2,medium
-all,Premium,4×+ spot,2700,0.766,309,0.498,4,265.8,0.0,16.6,high
-all,Price,$200–500,1865,0.814,91,0.396,1,667.4,0.0,39.6,medium
-all,Price,$100–200,2750,0.753,223,0.332,0,,,33.2,medium
+all,Premium,1.5–2.5× spot,1898,0.91,33,0.182,1,125.5,0.0,18.2,medium
+all,Premium,4×+ spot,2701,0.765,309,0.498,4,265.8,0.0,16.6,high
+all,Premium,2.5–4× spot,2010,0.735,131,0.26,2,735.6,0.0,8.7,medium
+all,Price,$200–500,1867,0.815,91,0.396,1,667.4,0.0,39.6,medium
+all,Price,$100–200,2750,0.754,223,0.336,1,803.7,0.0,33.6,medium
 all,Price,$50–100,1583,0.847,46,0.304,1,1855.5,0.0,30.4,medium
 all,Price,$500+,812,0.913,67,0.896,2,176.7,0.0,29.9,medium
 all,Price,Under $50,689,0.835,47,0.213,2,193.3,0.0,7.1,medium
@@ -37,20 +37,20 @@ all,Size,10 oz+,96,0.917,0,,0,,,91.7,low (snapshot)
 all,Size,Kilo,93,0.914,2,1.0,0,,,91.4,low (snapshot)
 all,Size,5 oz,255,0.906,2,0.0,0,,,90.6,low (snapshot)
 all,Size,Half dollar,349,0.94,17,0.588,1,1855.5,0.0,58.8,medium
-all,Size,1 oz,3949,0.798,178,0.27,1,21.8,1.0,27.0,medium
-all,Size,2–3 oz,1182,0.842,19,0.211,1,667.4,0.0,21.1,medium
+all,Size,1 oz,3950,0.799,178,0.275,2,412.8,0.5,25.8,medium
+all,Size,2–3 oz,1183,0.841,19,0.211,1,667.4,0.0,21.1,medium
 all,Size,Other,1311,0.769,204,0.603,2,176.7,0.0,20.1,medium
 all,Size,1/2 oz,347,0.669,18,0.167,1,125.5,0.0,16.7,medium
 all,Size,Under 1/2 oz,270,0.663,34,0.118,1,261.2,0.0,11.8,medium
 all,Store,grreserve.com,2404,0.909,0,,0,,,90.9,low (snapshot)
 all,Store,bullionsharks.com,42,0.857,0,,0,,,85.7,low (snapshot)
-all,Store,herobullion.com,608,0.597,0,,0,,,59.7,low (snapshot)
+all,Store,herobullion.com,608,0.6,0,,0,,,60.0,low (snapshot)
 all,Store,sdbullion.com,12,0.583,0,,0,,,58.3,low (snapshot)
 all,Store,cdncoin.com,277,0.563,51,0.294,0,,,29.4,medium
 all,Store,bullionexchanges.com,14,0.214,0,,0,,,21.4,low (snapshot)
 all,Store,coinstv.net,2225,0.914,236,0.64,4,197.9,0.0,21.3,high
-all,Store,directcoins.com.au,417,0.494,70,0.171,1,667.4,0.0,17.1,medium
-all,Store,mycollectables.com.au,1769,0.738,117,0.137,1,261.2,0.0,13.7,medium
+all,Store,mycollectables.com.au,1771,0.737,117,0.137,1,261.2,0.0,13.7,medium
+all,Store,directcoins.com.au,417,0.496,70,0.186,2,735.6,0.0,6.2,medium
 all,Store,apmex.com,84,0.036,0,,1,21.8,1.0,3.6,low (snapshot)
 all,Sub-theme,Day of the Dead,20,1.0,0,,0,,,100.0,low (snapshot)
 all,Sub-theme,Anime & games,47,0.915,0,,0,,,91.5,low (snapshot)
@@ -77,14 +77,14 @@ all,Sub-theme,USA 250 & founding,72,0.611,10,0.5,0,,,50.0,medium
 all,Sub-theme,Bears,133,0.752,9,0.444,1,261.2,0.0,44.4,medium
 all,Sub-theme,Faith & religion,159,0.767,5,0.4,1,667.4,0.0,40.0,medium
 all,Sub-theme,Reptiles & insects,249,0.867,5,0.4,0,,,40.0,medium
+all,Sub-theme,Seasons & landscapes,70,0.757,10,0.4,1,803.7,0.0,40.0,medium
 all,Sub-theme,Brands & logos,41,0.902,3,0.333,0,,,33.3,medium
 all,Sub-theme,Greek & Roman myth,104,0.846,6,0.333,0,,,33.3,medium
 all,Sub-theme,Horses,157,0.783,3,0.333,0,,,33.3,medium
 all,Sub-theme,Flags & states,108,0.639,26,0.308,0,,,30.8,medium
-all,Sub-theme,Seasons & landscapes,70,0.743,10,0.3,0,,,30.0,medium
 all,Sub-theme,Asian myth & samurai,126,0.849,4,0.25,0,,,25.0,medium
 all,Sub-theme,Sports,94,0.617,4,0.25,0,,,25.0,medium
-all,Sub-theme,Other birds,245,0.596,25,0.24,0,,,24.0,medium
+all,Sub-theme,Other birds,247,0.591,25,0.24,0,,,24.0,medium
 all,Sub-theme,Eagles & birds of prey,236,0.775,18,0.222,0,,,22.2,medium
 all,Sub-theme,"Moon, sun & stars",350,0.851,23,0.217,0,,,21.7,medium
 all,Sub-theme,Other,3084,0.815,224,0.603,2,176.7,0.0,20.1,medium
@@ -107,28 +107,28 @@ all,Sub-theme,Sea life,115,0.791,4,0.0,0,,,0.0,medium
 all,Theme,Warriors,107,0.879,0,,0,,,87.9,low (snapshot)
 all,Theme,Holidays,79,0.899,3,0.667,1,667.4,0.0,66.7,medium
 all,Theme,Luck & fortune,39,0.667,2,0.0,0,,,66.7,low (snapshot)
-all,Theme,Flowers & nature,136,0.809,12,0.417,0,,,41.7,medium
+all,Theme,Flowers & nature,136,0.816,12,0.5,1,803.7,0.0,50.0,medium
 all,Theme,Mythology & gods,329,0.851,5,0.4,0,,,40.0,medium
 all,Theme,Faith,169,0.775,6,0.333,1,667.4,0.0,33.3,medium
 all,Theme,Patriotic & USA 250,584,0.611,54,0.315,1,125.5,0.0,31.5,medium
-all,Theme,Other,3775,0.839,258,0.554,4,176.7,0.25,26.8,high
+all,Theme,Other,3775,0.84,258,0.554,4,176.7,0.25,26.8,high
 all,Theme,Pop culture & brands,694,0.86,28,0.25,0,,,25.0,medium
 all,Theme,Skulls & horror,135,0.83,4,0.25,0,,,25.0,medium
 all,Theme,Sports,93,0.634,4,0.25,0,,,25.0,medium
 all,Theme,Space & celestial,396,0.866,23,0.217,0,,,21.7,medium
-all,Theme,Wildlife,1310,0.766,73,0.205,1,261.2,0.0,20.5,medium
+all,Theme,Wildlife,1312,0.765,73,0.205,1,261.2,0.0,20.5,medium
 all,Theme,Art & history,200,0.465,9,0.111,0,,,11.1,medium
 all,Theme,Lunar & zodiac,664,0.855,27,0.111,0,,,11.1,medium
 all,Theme,Dragons,288,0.927,5,0.0,0,,,0.0,medium
-all,Type,Colorized,1762,0.732,92,0.207,2,344.6,0.5,23.6,medium
-all,Type,Not colorized,6090,0.822,382,0.458,5,261.2,0.0,15.3,high
+all,Type,Colorized,1762,0.732,92,0.217,3,667.4,0.333,18.3,high
+all,Type,Not colorized,6092,0.823,382,0.458,5,261.2,0.0,15.3,high
 colorized,Base coin,Perth Lunar,84,0.881,2,0.0,0,,,88.1,low (snapshot)
 colorized,Base coin,Panda,7,0.571,1,1.0,0,,,57.1,low (snapshot)
 colorized,Base coin,Libertad,82,0.927,5,0.4,0,,,40.0,medium
 colorized,Base coin,Round/medal,153,0.353,0,,1,21.8,1.0,35.3,low (snapshot)
-colorized,Base coin,"Other mint coins (Niue, Cook Is., Cameroon…)",1084,0.79,37,0.324,1,667.4,0.0,32.4,medium
 colorized,Base coin,Half dollar,12,0.167,2,0.0,0,,,16.7,low (snapshot)
 colorized,Base coin,Kangaroo/Koala/Kookaburra,51,0.51,6,0.167,0,,,16.7,medium
+colorized,Base coin,"Other mint coins (Niue, Cook Is., Cameroon…)",1084,0.791,37,0.351,2,735.6,0.0,11.7,medium
 colorized,Base coin,Silver Eagle,111,0.64,19,0.105,0,,,10.5,medium
 colorized,Base coin,Maple Leaf,83,0.723,12,0.083,0,,,8.3,medium
 colorized,Base coin,Bar,91,0.692,8,0.0,0,,,0.0,medium
@@ -139,7 +139,7 @@ colorized,Finish,Glow / special ink,22,0.818,0,,0,,,81.8,low (snapshot)
 colorized,Finish,Diamond dust,10,0.8,1,0.0,0,,,80.0,low (snapshot)
 colorized,Finish,Gilded / gold-plated,63,0.762,0,,0,,,76.2,low (snapshot)
 colorized,Finish,Gem / crystal inlay,15,0.667,3,0.333,0,,,33.3,medium
-colorized,Finish,Standard finish,1464,0.717,84,0.19,1,21.8,1.0,19.0,medium
+colorized,Finish,Standard finish,1464,0.718,84,0.202,2,412.8,0.5,23.4,medium
 colorized,Finish,Holographic / iridescent,2,0.5,1,1.0,0,,,,too few
 colorized,Mintage,"5,000+",75,0.84,2,0.0,0,,,84.0,low (snapshot)
 colorized,Mintage,"251–1,000",418,0.77,22,0.227,0,,,22.7,medium
@@ -147,33 +147,34 @@ colorized,Mintage,"1,001–5,000",271,0.723,21,0.19,0,,,19.0,medium
 colorized,Mintage,250 or less,215,0.744,11,0.182,0,,,18.2,medium
 colorized,Premium,Under 1.5× spot,146,1.0,0,,0,,,100.0,low (snapshot)
 colorized,Premium,4×+ spot,361,0.607,32,0.25,0,,,25.0,medium
-colorized,Premium,2.5–4× spot,566,0.661,49,0.184,1,667.4,0.0,18.4,medium
 colorized,Premium,1.5–2.5× spot,537,0.933,11,0.182,0,,,18.2,medium
+colorized,Premium,2.5–4× spot,566,0.663,49,0.204,2,735.6,0.0,6.8,medium
 colorized,Price,$50–100,314,0.924,5,1.0,0,,,100.0,medium
 colorized,Price,$500+,66,0.894,1,1.0,0,,,89.4,low (snapshot)
 colorized,Price,$200–500,368,0.755,19,0.211,1,667.4,0.0,21.1,medium
-colorized,Price,$100–200,751,0.712,61,0.148,0,,,14.8,medium
+colorized,Price,$100–200,751,0.714,61,0.164,1,803.7,0.0,16.4,medium
 colorized,Price,Under $50,111,0.703,6,0.0,0,,,0.0,medium
 colorized,Size,Kilo,11,1.0,1,1.0,0,,,100.0,low (snapshot)
 colorized,Size,5 oz,47,0.936,0,,0,,,93.6,low (snapshot)
 colorized,Size,1/2 oz,143,0.706,1,0.0,0,,,70.6,low (snapshot)
 colorized,Size,Other,64,0.578,11,0.455,0,,,45.5,medium
 colorized,Size,2–3 oz,273,0.864,4,0.25,1,667.4,0.0,25.0,medium
+colorized,Size,1 oz,1119,0.713,67,0.179,2,412.8,0.5,22.6,medium
 colorized,Size,Half dollar,12,0.167,2,0.0,0,,,16.7,low (snapshot)
 colorized,Size,Under 1/2 oz,89,0.64,6,0.167,0,,,16.7,medium
-colorized,Size,1 oz,1119,0.712,67,0.164,1,21.8,1.0,16.4,medium
 colorized,Size,10 oz+,4,1.0,0,,0,,,,too few
 colorized,Store,grreserve.com,962,0.876,0,,0,,,87.6,low (snapshot)
 colorized,Store,bullionsharks.com,42,0.857,0,,0,,,85.7,low (snapshot)
 colorized,Store,herobullion.com,46,0.761,0,,0,,,76.1,low (snapshot)
 colorized,Store,sdbullion.com,12,0.583,0,,0,,,58.3,low (snapshot)
 colorized,Store,cdncoin.com,15,0.267,7,0.429,0,,,42.9,medium
-colorized,Store,directcoins.com.au,84,0.512,17,0.412,1,667.4,0.0,41.2,medium
 colorized,Store,bullionexchanges.com,14,0.214,0,,0,,,21.4,low (snapshot)
 colorized,Store,coinstv.net,206,0.597,39,0.179,0,,,17.9,medium
+colorized,Store,directcoins.com.au,84,0.524,17,0.471,2,735.6,0.0,15.7,medium
 colorized,Store,mycollectables.com.au,297,0.646,29,0.069,0,,,6.9,medium
 colorized,Store,apmex.com,84,0.036,0,,1,21.8,1.0,3.6,low (snapshot)
 colorized,Sub-theme,Day of the Dead,18,1.0,0,,0,,,100.0,low (snapshot)
+colorized,Sub-theme,Seasons & landscapes,22,0.864,4,1.0,1,803.7,0.0,100.0,medium
 colorized,Sub-theme,Anime & games,34,0.941,0,,0,,,94.1,low (snapshot)
 colorized,Sub-theme,Western zodiac,47,0.936,0,,0,,,93.6,low (snapshot)
 colorized,Sub-theme,Disney & cartoons,42,0.929,1,0.0,0,,,92.9,low (snapshot)
@@ -192,7 +193,6 @@ colorized,Sub-theme,Dinosaurs,5,0.8,0,,0,,,80.0,low (snapshot)
 colorized,Sub-theme,Tarot & occult,30,0.8,0,,0,,,80.0,low (snapshot)
 colorized,Sub-theme,Presidents & politics,9,0.778,0,,0,,,77.8,low (snapshot)
 colorized,Sub-theme,Alien & sci-fi,12,0.75,0,,0,,,75.0,low (snapshot)
-colorized,Sub-theme,Seasons & landscapes,22,0.818,4,0.75,0,,,75.0,medium
 colorized,Sub-theme,Horses,42,0.738,1,1.0,0,,,73.8,low (snapshot)
 colorized,Sub-theme,Skulls & reapers,18,0.722,2,0.5,0,,,72.2,low (snapshot)
 colorized,Sub-theme,Sea life,48,0.688,0,,0,,,68.8,low (snapshot)
@@ -225,8 +225,8 @@ colorized,Sub-theme,"Moon, sun & stars",95,0.695,7,0.0,0,,,0.0,medium
 colorized,Sub-theme,Movies & TV,78,0.692,3,0.0,0,,,0.0,medium
 colorized,Sub-theme,Space & planets,51,0.745,5,0.0,0,,,0.0,medium
 colorized,Sub-theme,Pirates & treasure,4,1.0,0,,0,,,,too few
+colorized,Theme,Flowers & nature,42,0.81,6,1.0,1,803.7,0.0,100.0,medium
 colorized,Theme,Warriors,35,0.943,0,,0,,,94.3,low (snapshot)
-colorized,Theme,Flowers & nature,42,0.786,6,0.833,0,,,83.3,medium
 colorized,Theme,Skulls & horror,79,0.823,2,0.5,0,,,82.3,low (snapshot)
 colorized,Theme,Mythology & gods,106,0.774,1,0.0,0,,,77.4,low (snapshot)
 colorized,Theme,Art & history,36,0.75,1,0.0,0,,,75.0,low (snapshot)
@@ -241,4 +241,4 @@ colorized,Theme,Other,659,0.719,38,0.184,1,21.8,1.0,18.4,medium
 colorized,Theme,Patriotic & USA 250,126,0.548,13,0.154,0,,,15.4,medium
 colorized,Theme,Dragons,79,0.873,4,0.0,0,,,0.0,medium
 colorized,Theme,Space & celestial,117,0.769,6,0.0,0,,,0.0,medium
-colorized,Type,Colorized,1762,0.732,92,0.207,2,344.6,0.5,23.6,medium
+colorized,Type,Colorized,1762,0.732,92,0.217,3,667.4,0.333,18.3,high
