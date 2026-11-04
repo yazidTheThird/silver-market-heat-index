@@ -1,12 +1,12 @@
-INFO drops: https://www.coinstv.net via shopify -> 3920 collectible products (244 colorized)
-INFO drops: https://www.herobullion.com via woocommerce -> 1398 collectible products (371 colorized)
-INFO drops: https://grreserve.com via woocommerce -> 2772 collectible products (1004 colorized)
+INFO drops: https://www.coinstv.net via shopify -> 3922 collectible products (244 colorized)
+INFO drops: https://www.herobullion.com via woocommerce -> 1397 collectible products (371 colorized)
+INFO drops: https://grreserve.com via woocommerce -> 2770 collectible products (1003 colorized)
 WARNING drops: https://bullionsharks.com -> 'bool' object is not callable
 WARNING drops: https://bullionsharks.com: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
 WARNING drops: https://popcoins.store: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
 INFO drops: https://www.mycollectables.com.au via shopify -> 4262 collectible products (602 colorized)
 INFO drops: https://www.directcoins.com.au via shopify -> 598 collectible products (119 colorized)
-INFO drops: https://cdncoin.com via shopify -> 793 collectible products (24 colorized)
+INFO drops: https://cdncoin.com via shopify -> 792 collectible products (24 colorized)
 WARNING drops: https://www.apmex.com -> 'bool' object is not callable
 WARNING drops: https://www.apmex.com: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
 WARNING drops: https://sdbullion.com -> 'bool' object is not callable
