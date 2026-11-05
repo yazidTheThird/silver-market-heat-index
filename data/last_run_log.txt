@@ -6,7 +6,7 @@ WARNING drops: https://bullionsharks.com: could not read products — add listin
 WARNING drops: https://popcoins.store: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
 INFO drops: https://www.mycollectables.com.au via shopify -> 4264 collectible products (602 colorized)
 INFO drops: https://www.directcoins.com.au via shopify -> 598 collectible products (119 colorized)
-INFO drops: https://cdncoin.com via shopify -> 791 collectible products (24 colorized)
+INFO drops: https://cdncoin.com via shopify -> 803 collectible products (24 colorized)
 WARNING drops: https://www.apmex.com -> 'bool' object is not callable
 WARNING drops: https://www.apmex.com: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
 WARNING drops: https://sdbullion.com -> 'bool' object is not callable
