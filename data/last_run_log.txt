@@ -1,18 +1,18 @@
 INFO drops: https://www.coinstv.net via shopify -> 3922 collectible products (245 colorized)
 INFO drops: https://www.herobullion.com via woocommerce -> 1397 collectible products (371 colorized)
-INFO drops: https://grreserve.com via woocommerce -> 2767 collectible products (1003 colorized)
-INFO drops: https://bullionsharks.com -> 56 product links, 56 pages fetched, HTTP errors none, 1 without readable stock status, 0 skipped (plain bullion)
-INFO drops: https://bullionsharks.com via generic -> 55 collectible products (55 colorized)
+INFO drops: https://grreserve.com via woocommerce -> 2767 collectible products (1006 colorized)
+WARNING drops: https://bullionsharks.com -> 'bool' object is not callable
+WARNING drops: https://bullionsharks.com: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
 WARNING drops: https://popcoins.store: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
 INFO drops: https://www.mycollectables.com.au via shopify -> 4265 collectible products (603 colorized)
 INFO drops: https://www.directcoins.com.au via shopify -> 598 collectible products (119 colorized)
-INFO drops: https://cdncoin.com via shopify -> 803 collectible products (24 colorized)
+INFO drops: https://cdncoin.com via shopify -> 805 collectible products (24 colorized)
 WARNING drops: https://www.apmex.com -> 'bool' object is not callable
 WARNING drops: https://www.apmex.com: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
 WARNING drops: https://sdbullion.com -> 'bool' object is not callable
 WARNING drops: https://sdbullion.com: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
-INFO drops: https://bullionexchanges.com -> 13 product links, 13 pages fetched, HTTP errors none, 0 without readable stock status, 0 skipped (plain bullion)
-INFO drops: https://bullionexchanges.com via generic -> 13 collectible products (13 colorized)
+INFO drops: https://bullionexchanges.com -> 12 product links, 0 pages fetched, HTTP errors none, 0 without readable stock status, 0 skipped (plain bullion)
+INFO drops: https://bullionexchanges.com via generic -> 12 collectible products (12 colorized)
 WARNING drops: listing https://www.providentmetals.com/2026-new-releases.html -> HTTP 401
 WARNING drops: https://www.providentmetals.com: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
 WARNING drops: listing https://www.moneymetals.com/buy/silver/colorized -> HTTP 403
@@ -20,13 +20,5 @@ WARNING drops: listing https://www.moneymetals.com/buy/silver/coins/collectible-
 WARNING drops: https://www.moneymetals.com: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
 WARNING drops: listing https://www.bullionbypost.co.uk/silver-coins/2026-silver-coins/ -> HTTP 403
 WARNING drops: https://www.bullionbypost.co.uk: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
-WARNING reddit: 403 Client Error: Blocked for url: https://www.reddit.com/r/Silverbugs/search.json?q=colorized+OR+colourized+OR+colorised+OR+colourised&restrict_sr=1&sort=new&t=week&limit=100
-INFO drops       20.0  877 recent colorized launches, 5 sell-outs timed
-INFO ebay        None  ebay: collecting history (day 7 of 14)
-INFO attention   41.5  ok
-INFO silver      19.7  ok
-INFO calendar    75.2  ok
-INFO INDEX 32.5 (DEAD), coverage 70%
+INFO fast check: 7 stores read
 INFO hot groups: 243 groups ranked -> data/hot_groups.csv
-INFO dashboard written to /home/runner/work/silver-market-heat-index/silver-market-heat-index/docs/index.html
-INFO telegram: message sent
