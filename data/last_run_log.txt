@@ -9,7 +9,10 @@ INFO drops: https://www.directcoins.com.au via shopify -> 598 collectible produc
 INFO drops: https://cdncoin.com via shopify -> 805 collectible products (24 colorized)
 WARNING drops: https://www.apmex.com -> 'bool' object is not callable
 WARNING drops: https://www.apmex.com: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
-WARNING drops: https://sdbullion.com -> 'bool' object is not callable
+WARNING drops: listing https://sdbullion.com/buy/colorized-1-oz-silver-coins -> HTTP 503
+WARNING drops: listing https://sdbullion.com/buy/colorized-lunar-new-year-coins -> HTTP 503
+WARNING drops: listing https://sdbullion.com/buy/colorized-zodiac-animal-coins -> HTTP 503
+WARNING drops: listing https://sdbullion.com/buy/limited-edition-silver-coins -> HTTP 503
 WARNING drops: https://sdbullion.com: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
 INFO drops: https://bullionexchanges.com -> 12 product links, 0 pages fetched, HTTP errors none, 0 without readable stock status, 0 skipped (plain bullion)
 INFO drops: https://bullionexchanges.com via generic -> 12 collectible products (12 colorized)
