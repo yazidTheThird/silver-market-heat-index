@@ -2,9 +2,12 @@
 from __future__ import annotations
 
 import json
+import gzip
+import base64
 import math
 import datetime as dt
 import os
+from pathlib import Path
 
 import pandas as pd
 
@@ -81,8 +84,9 @@ def build(hist: pd.DataFrame, cfg: dict, groups: pd.DataFrame | None = None) -> 
             products = []
     payload = {
         "evidence": report,
+        "release_reports": json.loads(Path(ROOT, "data/release_reports.json").read_text()) if Path(ROOT, "data/release_reports.json").exists() else [],
         "groups": gl,
-        "products": products,
+        "products": [],
         "rows": rows,
         "labels": LABELS,
         "weights": cfg["weights"],
@@ -97,7 +101,10 @@ def build(hist: pd.DataFrame, cfg: dict, groups: pd.DataFrame | None = None) -> 
         if isinstance(value, float) and not math.isfinite(value):
             return None
         return value
-    html = TEMPLATE.replace("__DATA__", json.dumps(clean(payload), default=float, allow_nan=False).replace("<", "\\u003c"))
+    template = TEMPLATE.replace("__READINESS_LOGIC__", Path(ROOT, "mhi/readiness.js").read_text()).replace("__READINESS_UI__", Path(ROOT, "mhi/readiness_ui.js").read_text())
+    packed_products = base64.b64encode(gzip.compress(json.dumps(clean(products), default=float, allow_nan=False).encode(), mtime=0)).decode()
+    template = template.replace("__PRODUCTS_GZ__", packed_products)
+    html = template.replace("__DATA__", json.dumps(clean(payload), default=float, allow_nan=False).replace("<", "\\u003c"))
     out = os.path.join(ROOT, "docs", "index.html")
     os.makedirs(os.path.dirname(out), exist_ok=True)
     with open(out, "w", encoding="utf-8") as f:
@@ -110,7 +117,7 @@ TEMPLATE = r"""<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Market Heat Index</title>
+<title>Blackbird · Release Readiness</title>
 <style>
 :root {
   color-scheme: light;
@@ -206,13 +213,31 @@ details summary { cursor: pointer; color: var(--text-secondary); font-size: 14px
   .bars .track { grid-column: 1 / -1; order: 3; }
   .hero .num { font-size: 52px; }
 }
+
+.field {display:flex;flex-direction:column;gap:5px;margin:10px 0;font-size:13px;font-weight:500;}
+.field input,.field select,.field textarea {font:inherit;padding:9px 10px;min-width:0;width:100%;border:1px solid var(--border);border-radius:6px;background:var(--surface-0);color:var(--text-primary);}
+.formgrid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;}
+.formgrid.periods {grid-template-columns:repeat(2,minmax(0,1fr));margin:12px 0;}
+fieldset {min-width:0;border:1px solid var(--border);border-radius:8px;padding:12px;}
+legend {font-weight:600;padding:0 6px;}
+.signal {border-left:5px solid var(--text-muted);padding:14px 16px;background:var(--surface-0);border-radius:6px;margin:16px 0;}
+.signal strong {font-size:23px;}.signal p {margin:8px 0;}.signal ul {padding-left:18px;font-size:13px;}
+.signal.green {border-color:var(--good);}.signal.amber {border-color:var(--warning);}.signal.red {border-color:var(--critical);}
+.checkline {display:flex;align-items:flex-start;gap:8px;margin:14px 0;font-size:13px;}.checkline input{margin-top:4px;}
+#readiness a {color:var(--series-1);}
+#readiness button,.file-button {display:inline-block;font:inherit;padding:9px 12px;border-radius:6px;border:1px solid var(--border);background:var(--surface-0);color:var(--text-primary);cursor:pointer;}
+#readiness button.primary {background:var(--series-1);color:white;}
+.report-tools {display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;}.file-button input{max-width:180px;margin-left:8px;}
+@media(max-width:560px){.formgrid,.formgrid.periods{grid-template-columns:1fr;}.signal strong{font-size:20px;}}
+
 </style>
 </head>
 <body>
 <main>
   <h1>Blackbird Market Monitor</h1>
-  <p class="sub">Coin inventory, eBay supply and silver prices — with sales evidence kept separate</p>
+  <p class="sub">Release decisions from comparable sales · inventory and pricing context below</p>
 
+  <section class="card" id="readiness"></section>
   <section class="card hero" id="hero"></section>
   <section class="card"><h2>Storefront snapshot</h2><div id="snapshot"></div></section>
 
@@ -247,6 +272,8 @@ details summary { cursor: pointer; color: var(--text-secondary); font-size: 14px
 <div class="tip" id="tip"></div>
 
 <script>
+__READINESS_LOGIC__
+__READINESS_UI__
 const D = __DATA__;
 const rows = D.rows.filter(r => r.index !== null && r.version !== 2);
 const last = D.rows[D.rows.length - 1];
@@ -269,7 +296,7 @@ function evidence() {
     ${s.units} units · ${esc(s.period_start)}–${esc(s.period_end)} · ${esc(s.source)}<br>
     Previous comparable week: ${s.previous_units ?? "—"} units · change ${s.change_pct ?? "—"}%<br>
     Median realized price: ${s.median_price ?? "—"} ${esc(s.currency)} · <a href="${esc(s.source_url)}" rel="noopener" target="_blank">Source</a></p>`).join("") :
-    '<p><strong>Completed purchases:</strong> no sales export connected yet. Inventory and asking-price data remain visible above.</p>';
+    '<p><strong>Published weekly sales:</strong> no records imported yet. The release assessment above uses separate 28-day reports you enter or load.</p>';
   if (e.sales_error) document.getElementById("buying").innerHTML += `<p>${esc(e.sales_error)}</p>`;
   const hasCohorts = e.segments.some(s=>s.current.eligible || s.current.unknown);
   document.getElementById("movement").innerHTML = hasCohorts ? `<div class="tablewrap"><table><tr><th>Segment</th><th>Unavailable / eligible</th><th>7-day rate</th><th>Unknown</th><th>Matched change</th></tr>` +
@@ -405,7 +432,18 @@ function gtabs() {
   groups("Theme");
 }
 
-hero(); evidence(); bars(); gtabs(); chart(); table();
+hero(); evidence(); bars(); chart(); table();
+initReadiness(D.release_reports);
+window.catalogReady = (async () => {
+  try {
+    const bytes = Uint8Array.from(atob('__PRODUCTS_GZ__'), c => c.charCodeAt(0));
+    const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
+    D.products = JSON.parse(await new Response(stream).text());
+    gtabs();
+  } catch (error) {
+    document.getElementById('gnote').textContent = 'Catalog could not load. Refresh in a current browser. The release assessment and market readings above are still available.';
+  }
+})();
 window.addEventListener("resize", chart);
 </script>
 </body>

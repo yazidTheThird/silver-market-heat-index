@@ -2,6 +2,39 @@
 
 Tracks **completed purchases**, **store-listing availability**, and **collection quality** separately. GitHub Pages serves `docs/index.html`.
 
+## Release-readiness assessment
+
+The first dashboard panel compares **two complete, consecutive 28-day periods** for a selected comparable coin group. Presets cover 1 oz colorized Eagles, Maples and Libertads; a custom group is available. Review the search results and keep base coin, weight, grading, finish, price range, geography, currency, and shipping treatment identical. Do not aggregate overlapping queries or compare a basic colorized coin to a premium sculpted release.
+
+1. Open [eBay Product Research](https://www.ebay.com/sh/research) in your own account. The panel supplies a starting query and exact date ranges.
+2. Copy each period's actual **units sold**, **average sold price**, and **sellers with sales**. Sell-through is optional; use the same source definition for both periods. A missing observation is never zero. With explicitly zero sales, enter 0 sellers and leave average price blank.
+3. Enter the shared filters, confirm both periods are complete and comparable, then calculate. Optionally compare your planned run and price with the observed market scale.
+4. Reports save in that browser's local storage. Use Download/Load saved reports to back up or move your aggregate reports. Nothing is sent to eBay or GitHub by the form. Browser storage can be cleared or unavailable, so download a backup.
+
+There is **no live connection to eBay Product Research**. The existing Browse API collects active listings only. eBay's [Marketplace Insights API is restricted and closed to new users](https://developer.ebay.com/api-docs/buy/ref-marketplace-supported.html), checked 6 November 2026. Product Research requires an authenticated account and provides actual sold-price data, including accepted Best Offers ([official help](https://www.ebay.com/help/selling/selling-tools/product-research?id=4853)). The dashboard accepts manually copied aggregate figures; it does not claim eBay offers a native CSV export or verify user-entered numbers independently.
+
+Rules, shared by the browser and Node in `mhi/readiness.js`:
+
+- Gray if older than 10 days, prior volume below 30, combined volume below 60, or fewer than three selling sellers in a period. An explicitly zero-sales period is exempt from the current seller minimum.
+- Green: units up at least 20%, average sold price no worse than −5%, optional sell-through no worse than −5 percentage points.
+- Red: zero current sales, volume down at least 50%, or volume down at least 20% with average prices down at least 5%.
+- Otherwise amber when prices are available; missing prices cannot earn green. A sharp verified volume collapse can still be red without prices.
+- No percentage growth from a zero baseline. Planned price and run size do not change the market signal. They are shown separately, with a warning when the planned price exceeds the observed average by more than 20%.
+
+These are explicit **screening heuristics**, not statistically calibrated thresholds, a forecast, or a sellout probability. Changes in product mix can move averages; seller counts do not measure concentration fully. eBay is one sales channel. Validate a design and price with your own audience and dealer orders.
+
+To deliberately publish aggregate reports to the shared site (not private customer data or authenticated URLs):
+
+```sh
+node scripts/import_release_reports.cjs blackbird-release-reports.json
+python run.py --rebuild
+# Review and commit data/release_reports.json and docs/index.html to publish.
+```
+
+The importer validates all records before an atomic write. Identical profile/date/query/filter/marketplace/currency records replace prior values. The shared file starts empty; test fixtures are never published as market evidence. Published reports remain visible to every visitor; local reports remain on the current browser. The weekly series below is a separate legacy-compatible input and is not silently combined into these 28-day comparisons.
+
+Validation: `node tests/readiness.cjs` plus the Python regression suite below.
+
 ## Methodology 2 — 6 November 2026
 
 The previous blended 0–100 index is suspended. Silver price movements, asking prices, Google searches and calendar assumptions cannot establish purchases or predict a release sellout. Old scores remain in `data/history.csv` and appear only in the dashboard's legacy chart. They are not comparable with the corrected measurements.
