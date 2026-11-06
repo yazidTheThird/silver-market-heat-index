@@ -55,10 +55,10 @@
       "confidence": "Insufficient evidence"
     }
   ],
-  "fresh_stores": 4,
+  "fresh_stores": 8,
   "configured_stores": 14,
-  "fresh_listings": 572,
-  "tracked_listings": 14057,
+  "fresh_listings": 13827,
+  "tracked_listings": 14130,
   "horizon_days": 7,
   "note": "Store-listing availability; not unit sales. Same product at different stores counts as separate listings.",
   "sales": [],
@@ -66,29 +66,29 @@
   "as_of": "2026-11-06",
   "methodology_version": 2,
   "snapshot": {
-    "colorized_tracked": 2457,
-    "tracked": 14057,
-    "available": 417,
-    "unavailable": 155,
-    "unknown": 13485,
-    "colorized_available": 95,
-    "colorized_unavailable": 8
+    "colorized_tracked": 2463,
+    "tracked": 14130,
+    "available": 3266,
+    "unavailable": 10561,
+    "unknown": 303,
+    "colorized_available": 821,
+    "colorized_unavailable": 1552
   },
   "collectors": [
     {
       "store": "https://www.coinstv.net",
       "tracked": 3952,
-      "fresh": 208
+      "fresh": 3920
     },
     {
       "store": "https://www.herobullion.com",
       "tracked": 1399,
-      "fresh": 78
+      "fresh": 1397
     },
     {
       "store": "https://grreserve.com",
       "tracked": 2809,
-      "fresh": 84
+      "fresh": 2767
     },
     {
       "store": "https://bullionsharks.com",
@@ -103,27 +103,27 @@
     {
       "store": "https://www.mycollectables.com.au",
       "tracked": 4266,
-      "fresh": 202
+      "fresh": 4265
     },
     {
       "store": "https://www.directcoins.com.au",
       "tracked": 598,
-      "fresh": 0
+      "fresh": 598
     },
     {
       "store": "https://cdncoin.com",
       "tracked": 866,
-      "fresh": 0
+      "fresh": 805
     },
     {
       "store": "https://www.apmex.com",
-      "tracked": 86,
-      "fresh": 0
+      "tracked": 124,
+      "fresh": 40
     },
     {
       "store": "https://sdbullion.com",
-      "tracked": 12,
-      "fresh": 0
+      "tracked": 47,
+      "fresh": 35
     },
     {
       "store": "https://bullionexchanges.com",
