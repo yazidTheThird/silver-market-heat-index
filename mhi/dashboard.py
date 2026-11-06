@@ -30,7 +30,28 @@ def build(hist: pd.DataFrame, cfg: dict, groups: pd.DataFrame | None = None) -> 
         sales_error = ""
     except ValueError as exc:
         sales, sales_error = [], str(exc)
-    report.update(sales=sales, sales_error=sales_error, as_of=today.isoformat(), methodology_version=2)
+    # Current inventory is useful immediately, even before a seven-day cohort matures.
+    fresh = pd.to_datetime(state.get("status_checked_at", pd.Series(dtype=str)), errors="coerce", utc=True).dt.date.eq(today)
+    statuses = state.get("stock_status", pd.Series("unknown", index=state.index))
+    colored = state.get("colorized", pd.Series("0", index=state.index)).astype(str).eq("1")
+    snapshot = {"colorized_tracked": int(colored.sum()), "tracked": len(state),
+                "available": int((fresh & statuses.eq("available")).sum()),
+                "unavailable": int((fresh & statuses.eq("unavailable")).sum()),
+                "unknown": int((~(fresh & statuses.isin(["available", "unavailable"]))).sum()),
+                "colorized_available": int((fresh & colored & statuses.eq("available")).sum()),
+                "colorized_unavailable": int((fresh & colored & statuses.eq("unavailable")).sum())}
+    collector_rows = []
+    for store in cfg["drops"]["stores"]:
+        member = state.get("store", pd.Series(dtype=str)).eq(store["url"].rstrip("/"))
+        collector_rows.append({"store": store["url"], "tracked": int(member.sum()),
+                               "fresh": int((member & fresh & statuses.isin(["available", "unavailable"])).sum())})
+    market = {}
+    for key in ("silver_spot", "silver_ret7_pct", "silver_ret30_pct", "ebay_colorized_listings", "ebay_collector_premium"):
+        if key in hist and hist[key].notna().any():
+            record = hist[hist[key].notna()].iloc[-1]
+            market[key] = {"value": float(record[key]), "date": str(record["date"])}
+    report.update(sales=sales, sales_error=sales_error, as_of=today.isoformat(), methodology_version=2,
+                  snapshot=snapshot, collectors=collector_rows, market=market)
     with open(os.path.join(ROOT, "data", "evidence_report.json"), "w") as f:
         json.dump(report, f, indent=2, allow_nan=False)
     h = hist.tail(180).copy()
@@ -138,6 +159,10 @@ h1 { font-size: 18px; font-weight: 600; margin: 0 0 4px; }
 .status svg { width: 20px; height: 20px; }
 .advice { color: var(--text-secondary); margin-top: 6px; max-width: 420px; }
 .meta { color: var(--text-muted); font-size: 12px; margin-top: 8px; }
+.metrics {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;}
+.metric strong {display:block;font-size:30px;letter-spacing:-1px;}
+.metric span {font-size:13px;color:var(--text-secondary);}
+@media(max-width:560px){.metrics{grid-template-columns:repeat(2,minmax(0,1fr));}.metric strong{font-size:25px;}}
 h2 { font-size: 14px; font-weight: 600; margin: 0 0 12px; color: var(--text-secondary); }
 .bars .row { display: grid; grid-template-columns: 250px 1fr 44px; gap: 12px; align-items: center;
   padding: 6px 0; }
@@ -185,18 +210,19 @@ details summary { cursor: pointer; color: var(--text-secondary); font-size: 14px
 </head>
 <body>
 <main>
-  <h1>Market Heat Index</h1>
-  <p class="sub">Completed purchases, listing availability and collection quality · no inferred buyer counts</p>
+  <h1>Blackbird Market Monitor</h1>
+  <p class="sub">Coin inventory, eBay supply and silver prices — with sales evidence kept separate</p>
 
   <section class="card hero" id="hero"></section>
-  <section class="card"><h2>Buying · completed transactions</h2><div id="buying"></div></section>
-  <section class="card"><h2>Launch movement · unavailable within seven days</h2><div id="movement"></div></section>
-  <section class="card"><h2>Confidence · sample and freshness</h2><div id="confidence"></div></section>
+  <section class="card"><h2>Storefront snapshot</h2><div id="snapshot"></div></section>
 
   <section class="card">
-    <h2>Background context · excluded from buying verdict</h2>
+    <h2>Silver &amp; eBay · latest recorded numbers</h2>
     <div class="bars" id="bars"></div>
   </section>
+
+  <section class="card"><h2>Sales &amp; launch tracking</h2><div id="buying"></div><div id="movement"></div></section>
+  <section class="card"><h2>Collection status</h2><div id="confidence"></div></section>
 
   <section class="card">
     <h2>Catalog explorer · availability is not sales</h2>
@@ -226,40 +252,44 @@ const rows = D.rows.filter(r => r.index !== null && r.version !== 2);
 const last = D.rows[D.rows.length - 1];
 const fmt = v => (v === null || v === undefined || Number.isNaN(v)) ? "—" : Math.round(v);
 
+const count = n => Number(n || 0).toLocaleString();
 function hero() {
-  document.getElementById("hero").innerHTML = `<div><div class="status">Market health: evidence first</div>
-    <div class="advice">The blended 0–100 score is suspended. Availability, asking prices and calendar effects cannot establish buying or predict a sellout.</div>
-    <div class="meta">As of ${D.evidence.as_of} · corrected methodology 2 · earlier scores retained below as legacy</div></div>`;
+  const e = D.evidence;
+  document.getElementById("hero").innerHTML = `<div><div class="num">${count(e.snapshot.colorized_tracked)}<small> colorized listings</small></div>
+    <div class="advice">${count(e.snapshot.tracked)} collectibles in the catalog · ${e.fresh_stores} stores with fresh observations today</div>
+    <div class="meta">Updated ${e.as_of} · inventory observations, not completed purchases</div></div>`;
 }
 function evidence() {
-  const e = D.evidence;
+  const e = D.evidence, snap = e.snapshot;
+  const metric = (number, label) => `<div class="metric"><strong>${count(number)}</strong><span>${label}</span></div>`;
+  document.getElementById("snapshot").innerHTML = `<div class="metrics">${metric(snap.available,"Available listings")}${metric(snap.unavailable,"Explicitly unavailable")}${metric(snap.unknown,"Not freshly verified")}</div>
+    <p class="meta">Colorized subset: ${count(snap.colorized_available)} available · ${count(snap.colorized_unavailable)} unavailable. Unavailable stock can reflect supply, withdrawals or sales; it is not a transaction count.</p>`;
   const sales = e.sales || [];
   document.getElementById("buying").innerHTML = sales.length ? sales.map(s => `<p><strong>${esc(s.segment)}: ${esc(s.label)}</strong>${s.stale ? " · stale" : ""}<br>
     ${s.units} units · ${esc(s.period_start)}–${esc(s.period_end)} · ${esc(s.source)}<br>
     Previous comparable week: ${s.previous_units ?? "—"} units · change ${s.change_pct ?? "—"}%<br>
-    Median realized price: ${s.median_price ?? "—"} ${esc(s.currency)}<br>
-    <a href="${esc(s.source_url)}" rel="noopener" target="_blank">Source</a> · query ${esc(s.query_id)}</p>`).join("") :
-    '<p><strong>Insufficient evidence</strong> — no valid completed-sales series imported.</p><p class="meta">Automatic eBay data contains asking prices and active listings. It cannot establish transactions. A weekly completed-sales import is required.</p>';
+    Median realized price: ${s.median_price ?? "—"} ${esc(s.currency)} · <a href="${esc(s.source_url)}" rel="noopener" target="_blank">Source</a></p>`).join("") :
+    '<p><strong>Completed purchases:</strong> no sales export connected yet. Inventory and asking-price data remain visible above.</p>';
   if (e.sales_error) document.getElementById("buying").innerHTML += `<p>${esc(e.sales_error)}</p>`;
-  const daysAgo = n => { const d = new Date(e.as_of + "T00:00:00Z"); d.setUTCDate(d.getUTCDate()-n); return d.toISOString().slice(0,10); };
-  document.getElementById("movement").innerHTML = `<div class="tablewrap"><table><tr><th>Segment</th><th>Unavailable / eligible</th><th>7-day rate</th><th>Unknown</th><th>Matched change</th></tr>` +
-    e.segments.map(s => `<tr><td>${esc(s.segment)}</td><td>${s.current.unavailable} / ${s.current.eligible}</td><td>${s.current.eligible ? (100*s.current.unavailable/s.current.eligible).toFixed(1)+"%" : "—"}</td><td>${s.current.unknown}</td><td>${s.change_pp === null ? "Insufficient evidence" : s.change_pp+" pp"}</td></tr>`).join("") +
-    `</table></div><p class="meta">Current publication cohort: after ${daysAgo(14)} 00:00 UTC through ${daysAgo(7)} 00:00 UTC. Previous cohort: preceding seven days. Still-available eligible listings count in the denominator. Missing observations and uncertain timing are excluded and counted unknown. Publication is a store-listing date, not necessarily the mint release date.</p>
-    <p class="meta">Comparisons require at least 30 eligible listings in each period across at least three matching stores, within the same segment. These are operational minimums, not statistical confidence levels. Each store listing counts separately; no inference of global mint sellouts.</p>`;
-  document.getElementById("confidence").innerHTML = `<p><strong>${e.fresh_stores} / ${e.configured_stores} stores</strong> have fresh readable availability today.<br>
-    ${e.fresh_listings} fresh listing observations / ${e.tracked_listings} tracked listings.</p>
-    <p class="meta">Availability changes need two explicit checks at least an hour apart after observed availability. Removed pages and failed reads are unknown. Legacy sellout events are excluded. Small samples are shown without a market verdict.</p>`;
+  const hasCohorts = e.segments.some(s=>s.current.eligible || s.current.unknown);
+  document.getElementById("movement").innerHTML = hasCohorts ? `<div class="tablewrap"><table><tr><th>Segment</th><th>Unavailable / eligible</th><th>7-day rate</th><th>Unknown</th><th>Matched change</th></tr>` +
+    e.segments.map(s=>`<tr><td>${esc(s.segment)}</td><td>${s.current.unavailable} / ${s.current.eligible}</td><td>${s.current.eligible ? (100*s.current.unavailable/s.current.eligible).toFixed(1)+"%" : "—"}</td><td>${s.current.unknown}</td><td>${s.change_pp === null ? "Building history" : s.change_pp+" pp"}</td></tr>`).join("")+`</table></div>` :
+    '<p><strong>Seven-day launch tracking:</strong> building fresh history. Rates appear after eligible listings have been followed for a full week; matched comparisons take longer.</p>';
+  document.getElementById("movement").innerHTML += `<details><summary>How the measurements work</summary><p class="meta">Still-available listings stay in the denominator. Missing pages are unknown, not sold. Availability changes need two explicit checks at least an hour apart. Comparisons need 30 eligible listings in each period across three matching stores and the same product segment. Old inferred sellouts are excluded; the old blended score is archived below.</p></details>`;
+  document.getElementById("confidence").innerHTML = `<p><strong>${e.fresh_stores} of ${e.configured_stores} stores with fresh observations</strong> · ${count(e.fresh_listings)} readable listing observations today. Coverage may be partial; these are not full-store inventories.</p>
+    <details><summary>View stores and coverage</summary><div class="tablewrap"><table><tr><th>Store</th><th>Fresh observations</th><th>Tracked</th></tr>`+
+    e.collectors.map(c=>`<tr><td>${esc(c.store.replace(/^https?:\/\/(www\.)?/,""))}</td><td>${c.fresh ? count(c.fresh) : "No fresh reading"}</td><td>${count(c.tracked)}</td></tr>`).join("")+`</table></div></details>`;
 }
-
 function bars() {
-  const el = document.getElementById("bars");
-  el.innerHTML = ["attention", "silver", "calendar"].map(k => {
-    const v = last ? last.scores[k] : null;
-    const body = (v === null || v === undefined)
-      ? `<div class="track"></div><div class="val na">n/a</div>`
-      : `<div class="track"><div class="fill" style="width:${Math.max(2, v)}%"></div></div><div class="val">${fmt(v)}</div>`;
-    return `<div class="row"><div class="name">${D.labels[k]} <span>· context only</span></div>${body}</div>`;
-  }).join("");
+  const m = D.evidence.market;
+  const tile = (key,label,format,note) => { const r=m[key]; return `<div class="metric"><strong>${r ? format(r.value) : "—"}</strong><span>${label}</span><div class="meta">${r ? r.date : "Not collected"}${note ? " · "+note : ""}</div></div>`; };
+  document.getElementById("bars").innerHTML = `<div class="metrics">`+
+    tile("silver_spot","Silver futures reference",v=>"$"+v.toFixed(2),"SI=F · USD/oz")+
+    tile("silver_ret7_pct","Silver · seven-day change",v=>(v>0?"+":"")+v.toFixed(2)+"%","")+
+    tile("silver_ret30_pct","Silver · 30-day change",v=>(v>0?"+":"")+v.toFixed(2)+"%","")+
+    tile("ebay_colorized_listings","eBay active search results",v=>count(v),"not units sold; queries may overlap")+
+    tile("ebay_collector_premium","Colorized/plain asking-price ratio",v=>v.toFixed(2)+"×","matched query pairs; not realized prices")+
+    `</div>`;
 }
 
 function chart() {

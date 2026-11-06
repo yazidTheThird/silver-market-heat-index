@@ -55,14 +55,117 @@
       "confidence": "Insufficient evidence"
     }
   ],
-  "fresh_stores": 0,
+  "fresh_stores": 4,
   "configured_stores": 14,
-  "fresh_listings": 0,
-  "tracked_listings": 14054,
+  "fresh_listings": 572,
+  "tracked_listings": 14057,
   "horizon_days": 7,
   "note": "Store-listing availability; not unit sales. Same product at different stores counts as separate listings.",
   "sales": [],
   "sales_error": "",
   "as_of": "2026-11-06",
-  "methodology_version": 2
+  "methodology_version": 2,
+  "snapshot": {
+    "colorized_tracked": 2457,
+    "tracked": 14057,
+    "available": 417,
+    "unavailable": 155,
+    "unknown": 13485,
+    "colorized_available": 95,
+    "colorized_unavailable": 8
+  },
+  "collectors": [
+    {
+      "store": "https://www.coinstv.net",
+      "tracked": 3952,
+      "fresh": 208
+    },
+    {
+      "store": "https://www.herobullion.com",
+      "tracked": 1399,
+      "fresh": 78
+    },
+    {
+      "store": "https://grreserve.com",
+      "tracked": 2809,
+      "fresh": 84
+    },
+    {
+      "store": "https://bullionsharks.com",
+      "tracked": 55,
+      "fresh": 0
+    },
+    {
+      "store": "https://popcoins.store",
+      "tracked": 0,
+      "fresh": 0
+    },
+    {
+      "store": "https://www.mycollectables.com.au",
+      "tracked": 4266,
+      "fresh": 202
+    },
+    {
+      "store": "https://www.directcoins.com.au",
+      "tracked": 598,
+      "fresh": 0
+    },
+    {
+      "store": "https://cdncoin.com",
+      "tracked": 866,
+      "fresh": 0
+    },
+    {
+      "store": "https://www.apmex.com",
+      "tracked": 86,
+      "fresh": 0
+    },
+    {
+      "store": "https://sdbullion.com",
+      "tracked": 12,
+      "fresh": 0
+    },
+    {
+      "store": "https://bullionexchanges.com",
+      "tracked": 14,
+      "fresh": 0
+    },
+    {
+      "store": "https://www.providentmetals.com",
+      "tracked": 0,
+      "fresh": 0
+    },
+    {
+      "store": "https://www.moneymetals.com",
+      "tracked": 0,
+      "fresh": 0
+    },
+    {
+      "store": "https://www.bullionbypost.co.uk",
+      "tracked": 0,
+      "fresh": 0
+    }
+  ],
+  "market": {
+    "silver_spot": {
+      "value": 51.73,
+      "date": "2026-11-06"
+    },
+    "silver_ret7_pct": {
+      "value": 5.36,
+      "date": "2026-11-06"
+    },
+    "silver_ret30_pct": {
+      "value": -12.42,
+      "date": "2026-11-06"
+    },
+    "ebay_colorized_listings": {
+      "value": 10595.0,
+      "date": "2026-11-06"
+    },
+    "ebay_collector_premium": {
+      "value": 1.161,
+      "date": "2026-11-06"
+    }
+  }
 }
