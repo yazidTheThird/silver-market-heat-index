@@ -37,10 +37,11 @@ STATE_COLS = ["store", "product_id", "title", "url", "published", "first_seen",
               # launches every few hours, so these tell a 2-hour sell-out from a 2-day one.
               "published_at", "first_seen_at", "sold_out_at",
               # Broad tracking: every collectible product, with colorized flagged.
-              "colorized", "price", "mintage"]
+              "colorized", "price", "mintage", "evidence_version", "stock_status",
+              "observed_available_at", "last_available_at", "pending_unavailable_at",
+              "confirmed_unavailable_at", "unavailable_lower_bound", "status_checked_at"]
 
-SOLD_OUT_WORDS = re.compile(r"\b(sold[\s-]?out|out[\s-]of[\s-]stock|no longer available|"
-                            r"currently unavailable)\b", re.I)
+SOLD_OUT_WORDS = re.compile(r"\b(sold[\s-]?out|out[\s-]of[\s-]stock)\b", re.I)
 BUY_WORDS = re.compile(r"\b(add to cart|add to basket|buy now|pre-?order now)\b", re.I)
 PRODUCT_PATH = re.compile(r"/(product|products|p|item|shop/[^/]+/[^/]+)/[^/?#]+", re.I)
 
@@ -100,7 +101,7 @@ def read_shopify(base: str, f: Fetcher, cfg: dict) -> list[dict] | None:
                         "url": f'{base}/products/{p.get("handle","")}',
                         "published": (p.get("published_at") or p.get("created_at") or "")[:10],
                         "published_at": p.get("published_at") or p.get("created_at") or "",
-                        "available": any(v.get("available") for v in variants),
+                        "available": (any(v.get("available") is True for v in variants) if all(isinstance(v.get("available"), bool) for v in variants) else None),
                         "colorized": colored, "price": _num(variants[0].get("price")),
                         "mintage": find_mintage(f'{p.get("title","")} {body}')})
         if len(batch) < 250:
@@ -133,7 +134,7 @@ def read_woocommerce(base: str, f: Fetcher, cfg: dict) -> list[dict] | None:
             desc = _clean(f'{p.get("short_description","")} {p.get("description","")}')
             out.append({"product_id": str(p["id"]), "title": _clean(p.get("name", "")),
                         "url": p.get("permalink", ""), "published": "",
-                        "available": bool(p.get("is_in_stock")),
+                        "available": (p.get("is_in_stock") if isinstance(p.get("is_in_stock"), bool) else None),
                         "colorized": colored, "price": price,
                         "mintage": find_mintage(f'{p.get("name","")} {desc}')})
         if len(batch) < 100:
@@ -166,12 +167,12 @@ def read_generic(store: dict, f: Fetcher, cfg: dict, known: pd.DataFrame,
     out = []
     stats = {"fetched": 0, "http_errors": {}, "no_stock_info": 0, "not_colorized": 0}
 
-    def keep(prev, url, available=None, checked=False):
+    def carry_forward(prev, url, available=None, checked=False):
         """Carry a known product forward without new information (or with a verdict)."""
         out.append({"product_id": url, "title": prev.title, "url": url,
                     "published": _s(prev.published),
                     "colorized": _s(getattr(prev, "colorized", "")) != "0",
-                    "available": (str(prev.available) == "1") if available is None else available,
+                    "available": (None if checked else (str(prev.available) == "1")) if available is None else available,
                     "checked": checked})
 
     for url in links:
@@ -181,17 +182,17 @@ def read_generic(store: dict, f: Fetcher, cfg: dict, known: pd.DataFrame,
         # Fast mode: only new products and recent launches still in stock get fetched;
         # everything else is carried forward unchanged until the daily run.
         if fast and prev is not None and not _is_recent_in_stock(prev, today, fast_window):
-            keep(prev, url)
+            carry_forward(prev, url)
             continue
         # Known sold-out products are only re-checked (for restocks) every few days.
-        if prev is not None and str(prev.available) == "0":
+        if prev is not None and str(prev.available) == "0" and _s(getattr(prev, "confirmed_unavailable_at", "")):
             last = pd.to_datetime(prev.last_checked, errors="coerce")
             if pd.notnull(last) and (today - last.date()).days < recheck_soldout:
-                keep(prev, url)
+                carry_forward(prev, url)
                 continue
         if budget <= 0:
             if prev is not None:
-                keep(prev, url)
+                carry_forward(prev, url)
             continue
         budget -= 1
         try:
@@ -199,18 +200,18 @@ def read_generic(store: dict, f: Fetcher, cfg: dict, known: pd.DataFrame,
         except Exception as e:  # noqa: BLE001
             log.warning("drops: %s -> %s", url, e)
             if prev is not None:
-                keep(prev, url)
+                carry_forward(prev, url, checked=True)
             continue
         stats["fetched"] += 1
         if code != 200:
             stats["http_errors"][code] = stats["http_errors"].get(code, 0) + 1
         if code in (404, 410):
             if prev is not None:
-                keep(prev, url, available=False, checked=True)   # page removed
+                carry_forward(prev, url, available=None, checked=True)   # missing is unknown, never a sale
             continue
         if code != 200:
             if prev is not None:
-                keep(prev, url)
+                carry_forward(prev, url, checked=True)
             continue
         info = parse_product_page(html)
         title = info["title"] or (prev.title if prev is not None else "")
@@ -226,7 +227,7 @@ def read_generic(store: dict, f: Fetcher, cfg: dict, known: pd.DataFrame,
         if info["available"] is None:
             stats["no_stock_info"] += 1
             if prev is not None:
-                keep(prev, url)
+                carry_forward(prev, url, checked=True)
             continue
         out.append({"product_id": url, "title": title, "url": url,
                     "published": info["published"], "available": info["available"],
@@ -238,7 +239,7 @@ def read_generic(store: dict, f: Fetcher, cfg: dict, known: pd.DataFrame,
              "%d without readable stock status, %d skipped (plain bullion)",
              base, len(links), stats["fetched"], stats["http_errors"] or "none",
              stats["no_stock_info"], stats["not_colorized"])
-    return out
+    return out if any(it.get("checked", True) and it.get("available") is not None for it in out) else None
 
 
 IGNORE = os.path.join(ROOT, "data", "drops_ignore.txt")
@@ -258,7 +259,9 @@ def _save_ignore(ignore: set[str]) -> None:
 
 
 def _is_recent_in_stock(prev, today: dt.date, days: int) -> bool:
-    if str(prev.available) != "1" or str(getattr(prev, "baseline", "")) == "1":
+    if str(getattr(prev, "stock_status", "")) == "unknown" or _s(getattr(prev, "pending_unavailable_at", "")):
+        return True
+    if str(prev.available) != "1":
         return False
     d = pd.to_datetime(_s(prev.published) or _s(prev.first_seen), errors="coerce")
     return pd.notnull(d) and (today - d.date()).days <= days
@@ -338,6 +341,15 @@ def read_sitemap(url: str, f: Fetcher, pattern: re.Pattern, depth: int = 0) -> l
 
 
 # ------------------------------------------------------------- product pages
+def stock_value(value):
+    value = re.sub(r"[ _-]", "", str(value).rsplit('/', 1)[-1]).lower()
+    if value in ('instock', 'preorder', 'backorder', 'limitedavailability', 'onlineonly'):
+        return True
+    if value in ('outofstock', 'soldout'):
+        return False
+    return None
+
+
 def parse_product_page(html: str) -> dict:
     soup = BeautifulSoup(html, "html.parser")
     title, available, published, category = "", None, "", ""
@@ -367,19 +379,19 @@ def parse_product_page(html: str) -> dict:
         states = [str(o.get("availability", "")) for o in offers if isinstance(o, dict)]
         states = [s for s in states if s]
         if states:
-            avail = any(re.search(r"InStock|PreOrder|BackOrder|LimitedAvailability|OnlineOnly",
-                                  s, re.I) for s in states)
-            available = avail if available is None else (available or avail)
+            parsed = [stock_value(s) for s in states]
+            avail = True if True in parsed else (False if all(x is False for x in parsed) else None)
+            available = True if available is True or avail is True else avail
 
     if available is None:  # OpenGraph / microdata
         meta = soup.find("meta", attrs={"property": re.compile(r"(product|og):availability", re.I)})
         if meta and meta.get("content"):
-            available = bool(re.search(r"in ?stock|instock|preorder", meta["content"], re.I))
+            available = stock_value(meta["content"])
         else:
             itemprop = soup.find(attrs={"itemprop": "availability"})
             val = itemprop and (itemprop.get("href") or itemprop.get("content") or "")
             if val:
-                available = bool(re.search(r"InStock|PreOrder", val, re.I))
+                available = stock_value(val)
 
     if available is None:  # last resort: the buy button itself
         for tag in soup.find_all(["header", "footer", "nav"]):
@@ -508,6 +520,7 @@ def run_tracker(cfg: dict, today: dt.date, fast: bool = False
             state[c] = ""
     f = Fetcher()
     stores_ok, notes = 0, []
+    health = []
     broad = _read_set(BROAD)
     try:
         for store in cfg["drops"]["stores"]:
@@ -526,13 +539,17 @@ def run_tracker(cfg: dict, today: dt.date, fast: bool = False
             except Exception as e:  # noqa: BLE001
                 log.warning("drops: %s -> %s", base, e)
                 items = None
-            if items is None:
+            if items is None or not any(it.get("checked", True) and it.get("available") is not None for it in items):
+                health.append({"store": base, "checked_at": now, "ok": False})
                 msg = (f"{base}: could not read products — add listing_urls (colorized "
                        f"category page) or sitemap_url for this store, or try render: true")
                 log.warning("drops: %s", msg)
                 notes.append(msg)
+                state.loc[state["store"] == base, "stock_status"] = "unknown"
+                state.loc[state["store"] == base, "pending_unavailable_at"] = ""
                 continue
             stores_ok += 1
+            health.append({"store": base, "checked_at": now, "ok": True})
             n_col = sum(1 for it in items if it.get("colorized", True))
             log.info("drops: %s via %s -> %d collectible products (%d colorized)",
                      base, used, len(items), n_col)
@@ -546,6 +563,7 @@ def run_tracker(cfg: dict, today: dt.date, fast: bool = False
         f.close()
     os.makedirs(os.path.dirname(STATE), exist_ok=True)
     state[STATE_COLS].to_csv(STATE, index=False)
+    pd.DataFrame(health).to_csv(os.path.join(ROOT, "data", "collection_health.csv"), index=False)
     _write_set(BROAD, broad)
     return state, stores_ok, notes
 
@@ -567,76 +585,39 @@ def _write_set(path: str, items: set[str]) -> None:
 
 def _merge(state: pd.DataFrame, base: str, items: list[dict], today: dt.date,
            first_run: bool, now: str = "", baseline_noncolor: bool = False) -> pd.DataFrame:
+    """Keep observations distinct from transactions. Legacy events are never upgraded."""
+    from .evidence import observe
     t = today.isoformat()
     now = now or f"{t}T00:00:00Z"
-    for c in STATE_COLS:
-        if c not in state.columns:
-            state[c] = ""
-    state = state.copy()
-    pos = {(r.store, r.product_id): i for i, r in state.iterrows()}
-    new_rows = []
+    records = state.to_dict("records")
+    pos = {(r["store"], r["product_id"]): i for i, r in enumerate(records)}
+    seen = set()
     for it in items:
-        k = (base, it["product_id"])
-        avail = "1" if it["available"] else "0"
-        if k not in pos:
-            new_rows.append({
-                "store": base, "product_id": it["product_id"], "title": it["title"],
-                "url": it.get("url", ""), "published": it.get("published", ""),
-                "first_seen": t,
-                # Products already on the store the first time we look are the
-                # "baseline": we don't know when they launched, so they don't count
-                # as new launches (unless the store tells us the publish date).
-                "baseline": "1" if (first_run or (baseline_noncolor and not it.get(
-                    "colorized", True))) else "0",
-                "sold_out_date": "", "available": avail, "last_checked": t,
-                "published_at": it.get("published_at", ""), "first_seen_at": now,
-                "sold_out_at": "", "colorized": _flag(it.get("colorized", True)),
-                "price": _s(it.get("price")), "mintage": _s(it.get("mintage"))})
+        key = (base, it["product_id"])
+        seen.add(it["product_id"])
+        if key not in pos:
+            row = {c: "" for c in STATE_COLS}
+            row.update(store=base, product_id=it["product_id"], first_seen=t,
+                       first_seen_at=now, baseline="1" if first_run else "0")
+            pos[key] = len(records)
+            records.append(row)
+        row = records[pos[key]]
+        if not it.get("checked", True):
             continue
-        i = pos[k]
-        if it.get("checked", True) is False:
-            continue
-        was = state.at[i, "available"]
-        state.at[i, "available"] = avail
-        state.at[i, "title"] = it["title"] or state.at[i, "title"]
-        state.at[i, "last_checked"] = t
-        if not _s(state.at[i, "published"]) and it.get("published"):
-            state.at[i, "published"] = it["published"]
-        if not _s(state.at[i, "published_at"]) and it.get("published_at"):
-            state.at[i, "published_at"] = it["published_at"]
-        if not _s(state.at[i, "colorized"]):
-            # Tracked before broad tracking began = it passed the colorized filter then.
-            state.at[i, "colorized"] = "1"
-        if it.get("price") and not _s(state.at[i, "price"]):
-            state.at[i, "price"] = _s(it["price"])        # launch price, kept as first seen
-        if it.get("mintage") and not _s(state.at[i, "mintage"]):
-            state.at[i, "mintage"] = _s(it["mintage"])
-        if str(was) == "1" and avail == "0" and not _s(state.at[i, "sold_out_date"]):
-            state.at[i, "sold_out_date"] = t
-            state.at[i, "sold_out_at"] = now
-        if avail == "1":
-            state.at[i, "sold_out_date"] = ""
-            state.at[i, "sold_out_at"] = ""
-    # Feed-based stores (Shopify/WooCommerce): a tracked in-stock product that has
-    # vanished from the feed was removed — almost always because it sold out.
-    seen_ids = {it["product_id"] for it in items}
-    in_stock_known = int(((state["store"] == base) & (state["available"].astype(str) == "1")).sum())
-    if in_stock_known >= 10 and len(items) < 0.5 * in_stock_known:
-        # Today's read returned far fewer products than we know are in stock — that's a
-        # partial/failed read, not a wave of sell-outs. Don't mark anything as sold.
-        log.warning("drops: %s returned only %d products vs %d known in stock — "
-                    "skipping sold-out detection today", base, len(items), in_stock_known)
-        seen_ids = None
-    for i, r in (state.iterrows() if seen_ids is not None else []):
-        if r["store"] == base and r["product_id"] not in seen_ids and str(r["available"]) == "1":
-            state.at[i, "available"] = "0"
-            state.at[i, "last_checked"] = t
-            if not _s(r["sold_out_date"]):
-                state.at[i, "sold_out_date"] = t
-                state.at[i, "sold_out_at"] = now
-    if new_rows:
-        state = pd.concat([state, pd.DataFrame(new_rows)], ignore_index=True)
-    return state
+        for field in ("title", "url", "published", "published_at", "price", "mintage"):
+            if it.get(field) is not None and _s(it.get(field)):
+                if field in ("title", "url") or not _s(row.get(field)):
+                    row[field] = it[field]
+        row["colorized"] = _flag(it.get("colorized", True))
+        observe(row, it.get("available"), now)
+        row["last_checked"] = t
+    for row in records:
+        if row["store"] == base and row["product_id"] not in seen:
+            # Feed/page omission, including partial pagination: unknown, not sold out.
+            row["stock_status"] = "unknown"
+            row["available"] = ""
+            row["pending_unavailable_at"] = ""
+    return pd.DataFrame(records, columns=STATE_COLS)
 
 
 def launch_dates(state: pd.DataFrame) -> pd.Series:

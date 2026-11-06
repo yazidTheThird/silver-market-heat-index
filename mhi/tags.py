@@ -361,17 +361,15 @@ def _ts(s) -> pd.Timestamp | None:
 
 
 def sellout_hours(row) -> float | None:
-    """Hours from launch to sell-out, using the most precise timestamps we have."""
-    if str(row.get("baseline", "")) == "1" and not (_ts(row.get("published_at"))
-                                                     or _ts(row.get("published"))):
-        return None   # was already on the store when tracking began: launch time unknown
-    end = _ts(row.get("sold_out_at")) or _ts(row.get("sold_out_date"))
-    start = (_ts(row.get("published_at")) or _ts(row.get("first_seen_at"))
-             or _ts(row.get("published")) or _ts(row.get("first_seen")))
-    if end is None or start is None:
+    """Upper-bound availability timing from methodology-2 observations only."""
+    if str(row.get("evidence_version")) != "2":
         return None
-    h = (end - start).total_seconds() / 3600
-    return max(0.0, h)
+    end = _ts(row.get("confirmed_unavailable_at"))
+    start = _ts(row.get("published_at"))
+    first = _ts(row.get("observed_available_at"))
+    if end is None or start is None or first is None or not 0 <= (first-start).total_seconds() <= 86400:
+        return None
+    return max(0.0, (end-start).total_seconds()/3600)
 
 
 def hot_groups(state: pd.DataFrame, cfg: dict, today: dt.date,
@@ -388,7 +386,8 @@ def hot_groups(state: pd.DataFrame, cfg: dict, today: dt.date,
     if d.empty:
         return pd.DataFrame()
     d = d.copy()
-    d["sold"] = d["available"].astype(str) == "0"
+    d["sold"] = d.get("stock_status", pd.Series("unknown", index=d.index)) == "unavailable"
+    d["known"] = d.get("stock_status", pd.Series("unknown", index=d.index)).isin(["available", "unavailable"])
     d["hours"] = [sellout_hours(r) for r in d.to_dict("records")]
     first = pd.to_datetime(d["first_seen"], errors="coerce").dt.date
     pub = pd.to_datetime(d["published"].astype(str).str[:10], errors="coerce").dt.date
@@ -439,12 +438,12 @@ def _rank(d: pd.DataFrame, scope: str, min_n: int, fast_h: float) -> list[dict]:
             row = {
                 "scope": scope, "dimension": dim, "group": grp,
                 "tracked": int(len(g)),
-                "snapshot_soldout_share": round(float(g["sold"].mean()), 3),
-                "launches": n,
-                "launch_soldout_share": round(float(launches["sold"].mean()), 3) if n else None,
+                "snapshot_soldout_share": round(float(g.loc[g["known"], "sold"].mean()), 3) if g["known"].any() else None,
+                "launches": 0,
+                "launch_soldout_share": None,
                 "sellouts_timed": len(hours),
                 "median_hours_to_sellout": round(statistics.median(hours), 1) if hours else None,
-                "fast_share": round(sum(h <= fast_h for h in hours) / len(hours), 3) if hours else None,
+                "fast_share": None,
             }
             row["heat"] = heat_score(row, min_n)
             rows.append(row)
@@ -472,8 +471,8 @@ def product_rows(state: pd.DataFrame, cfg: dict, spot: float | None = None) -> l
             "m": None if pd.isnull(r.get("mintage_n")) else int(r["mintage_n"]),
             "pb": price_band(r["price_usd"]), "pr": premium_band(r["price_usd"], r["oz"], spot),
             "mb": mintage_band(r.get("mintage_n")),
-            "a": str(r.get("available")) == "1",
-            "so": str(r.get("sold_out_date") or "") if str(r.get("sold_out_date")) != "nan" else "",
+            "a": (True if str(r.get("stock_status")) == "available" else False if str(r.get("stock_status")) == "unavailable" else None),
+            "so": str(r.get("confirmed_unavailable_at") or "") if pd.notna(r.get("confirmed_unavailable_at")) else "",
             "fs": str(r.get("first_seen") or ""),
             "new": str(r.get("baseline")) != "1",
             "h": None if h is None else round(h, 1),
@@ -482,29 +481,12 @@ def product_rows(state: pd.DataFrame, cfg: dict, spot: float | None = None) -> l
 
 
 def heat_score(r: dict, min_n: int) -> float | None:
-    """0–100 per group. Uses launch stats when there are enough launches; otherwise
-    falls back to the sold-out snapshot (marked low confidence)."""
-    if r["launches"] >= min_n and r["launch_soldout_share"] is not None:
-        parts = [r["launch_soldout_share"] * 100]
-        if r["fast_share"] is not None and r["sellouts_timed"] >= 2:
-            parts.append(r["fast_share"] * 100)
-        if r["median_hours_to_sellout"] is not None and r["sellouts_timed"] >= 2:
-            # 0 h -> 100, 1 week+ -> 0
-            parts.append(max(0.0, 100 - r["median_hours_to_sellout"] / 168 * 100))
-        return round(sum(parts) / len(parts), 1)
-    if r["tracked"] >= 5:
-        return round(r["snapshot_soldout_share"] * 100, 1)
+    """Do not rank demand using current unavailable stock or selected sellouts."""
     return None
 
 
 def confidence(r, min_n: int) -> str:
-    if r["launches"] >= min_n and r["sellouts_timed"] >= min_n:
-        return "high"
-    if r["launches"] >= min_n:
-        return "medium"
-    if r["tracked"] >= 5:
-        return "low (snapshot)"
-    return "too few"
+    return "Catalog only"
 
 
 def digest(groups: pd.DataFrame, top: int = 3) -> str:

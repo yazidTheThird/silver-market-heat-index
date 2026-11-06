@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import json
+import math
+import datetime as dt
 import os
 
 import pandas as pd
@@ -18,13 +20,26 @@ LABELS = {
 
 
 def build(hist: pd.DataFrame, cfg: dict, groups: pd.DataFrame | None = None) -> str:
+    from . import evidence
+    from .drops import STATE
+    today = dt.datetime.now(dt.timezone.utc).date()
+    state = pd.read_csv(STATE, dtype=str) if os.path.exists(STATE) else pd.DataFrame()
+    report = evidence.availability(state, cfg, today) if not state.empty else {"segments": [], "fresh_stores": 0, "configured_stores": len(cfg["drops"]["stores"]), "fresh_listings": 0, "tracked_listings": 0}
+    try:
+        sales = evidence.completed_sales(today, cfg)
+        sales_error = ""
+    except ValueError as exc:
+        sales, sales_error = [], str(exc)
+    report.update(sales=sales, sales_error=sales_error, as_of=today.isoformat(), methodology_version=2)
+    with open(os.path.join(ROOT, "data", "evidence_report.json"), "w") as f:
+        json.dump(report, f, indent=2, allow_nan=False)
     h = hist.tail(180).copy()
     h = h.where(pd.notnull(h), None)
     rows = []
     for _, r in h.iterrows():
         rows.append({
             "date": r["date"], "index": r.get("index"), "label": r.get("label"),
-            "coverage": r.get("coverage"),
+            "coverage": r.get("coverage"), "version": r.get("methodology_version", 1),
             "spot": r.get("silver_spot"),
             "scores": {c: r.get(f"score_{c}") for c in COMPONENTS},
         })
@@ -44,6 +59,7 @@ def build(hist: pd.DataFrame, cfg: dict, groups: pd.DataFrame | None = None) -> 
         except Exception:  # noqa: BLE001
             products = []
     payload = {
+        "evidence": report,
         "groups": gl,
         "products": products,
         "rows": rows,
@@ -52,7 +68,15 @@ def build(hist: pd.DataFrame, cfg: dict, groups: pd.DataFrame | None = None) -> 
         "hot": cfg["thresholds"]["hot"],
         "dead": cfg["thresholds"]["dead"],
     }
-    html = TEMPLATE.replace("__DATA__", json.dumps(payload, default=float))
+    def clean(value):
+        if isinstance(value, dict):
+            return {k: clean(v) for k, v in value.items()}
+        if isinstance(value, list):
+            return [clean(v) for v in value]
+        if isinstance(value, float) and not math.isfinite(value):
+            return None
+        return value
+    html = TEMPLATE.replace("__DATA__", json.dumps(clean(payload), default=float, allow_nan=False).replace("<", "\\u003c"))
     out = os.path.join(ROOT, "docs", "index.html")
     os.makedirs(os.path.dirname(out), exist_ok=True)
     with open(out, "w", encoding="utf-8") as f:
@@ -162,17 +186,20 @@ details summary { cursor: pointer; color: var(--text-secondary); font-size: 14px
 <body>
 <main>
   <h1>Market Heat Index</h1>
-  <p class="sub">Demand gauge for colorized silver coins &amp; collectibles · 0 = dead market, 100 = hottest in 90 days</p>
+  <p class="sub">Completed purchases, listing availability and collection quality · no inferred buyer counts</p>
 
   <section class="card hero" id="hero"></section>
+  <section class="card"><h2>Buying · completed transactions</h2><div id="buying"></div></section>
+  <section class="card"><h2>Launch movement · unavailable within seven days</h2><div id="movement"></div></section>
+  <section class="card"><h2>Confidence · sample and freshness</h2><div id="confidence"></div></section>
 
   <section class="card">
-    <h2>What's driving it today</h2>
+    <h2>Background context · excluded from buying verdict</h2>
     <div class="bars" id="bars"></div>
   </section>
 
   <section class="card">
-    <h2>What's hot (silver) · by sell-out speed</h2>
+    <h2>Catalog explorer · availability is not sales</h2>
     <div class="tabs" id="gscope" style="margin-bottom:8px"></div>
     <div class="tabs" id="gtabs"></div>
     <div class="tablewrap"><table id="gtbl"></table></div>
@@ -180,8 +207,8 @@ details summary { cursor: pointer; color: var(--text-secondary); font-size: 14px
   </section>
 
   <section class="card">
-    <h2>Index over time</h2>
-    <svg id="chart" role="img" aria-label="Market Heat Index over time"></svg>
+    <h2>Legacy index · discontinued 6 November 2026</h2>
+    <svg id="chart" role="img" aria-label="Market Heat Legacy index · discontinued 6 November 2026"></svg>
   </section>
 
   <section class="card">
@@ -195,50 +222,43 @@ details summary { cursor: pointer; color: var(--text-secondary); font-size: 14px
 
 <script>
 const D = __DATA__;
-const rows = D.rows.filter(r => r.index !== null);
-const last = rows[rows.length - 1];
+const rows = D.rows.filter(r => r.index !== null && r.version !== 2);
+const last = D.rows[D.rows.length - 1];
 const fmt = v => (v === null || v === undefined || Number.isNaN(v)) ? "—" : Math.round(v);
 
-const STATUS = {
-  HOT:    { color: "var(--good)", text: "Hot market",
-            advice: "Good window to launch. Demand is strong — consider a larger mintage.",
-            icon: '<svg viewBox="0 0 20 20"><path d="M10 2c1 3 4 4.5 4 8.5A4 4 0 0 1 6 10.5c0-1.5.8-2.6 1.6-3.4C8 9 9 9.5 9.5 9.5 9.5 6.5 9 4 10 2z" fill="currentColor"/></svg>' },
-  NORMAL: { color: "var(--warning)", text: "Normal market",
-            advice: "Launch with a waitlist and a moderate mintage. Expect a steady sell-through, not an instant sellout.",
-            icon: '<svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M6 10h8" stroke="currentColor" stroke-width="2"/></svg>' },
-  DEAD:   { color: "var(--critical)", text: "Dead market",
-            advice: "Hold the release, or open pre-orders only and let demand set the mintage.",
-            icon: '<svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 7l6 6M13 7l-6 6" stroke="currentColor" stroke-width="2"/></svg>' },
-  "LOW DATA": { color: "var(--text-muted)", text: "Not enough data today",
-            advice: "Too few sources answered today to give a verdict. Check the bars below for what's missing.",
-            icon: '<svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 6v5M10 13.5v.5" stroke="currentColor" stroke-width="2"/></svg>' },
-};
-
 function hero() {
-  const el = document.getElementById("hero");
-  if (!last) { el.innerHTML = "<p>No data yet — the first daily run hasn't happened.</p>"; return; }
-  const s = STATUS[last.label] || STATUS.NORMAL;
-  const prev = rows.length > 7 ? rows[rows.length - 8].index : null;
-  const delta = prev !== null ? Math.round(last.index - prev) : null;
-  el.innerHTML = `
-    <div class="num">${fmt(last.index)}<small> / 100</small></div>
-    <div>
-      <div class="status" style="color:${s.color}">${s.icon}<span>${s.text}</span></div>
-      <div class="advice">${s.advice}</div>
-      <div class="meta">${last.date}${delta !== null ? ` · ${delta >= 0 ? "+" : ""}${delta} vs a week ago` : ""}
-        ${last.spot ? ` · silver $${Number(last.spot).toFixed(2)}` : ""}
-        · data coverage ${Math.round((last.coverage || 0) * 100)}%</div>
-    </div>`;
+  document.getElementById("hero").innerHTML = `<div><div class="status">Market health: evidence first</div>
+    <div class="advice">The blended 0–100 score is suspended. Availability, asking prices and calendar effects cannot establish buying or predict a sellout.</div>
+    <div class="meta">As of ${D.evidence.as_of} · corrected methodology 2 · earlier scores retained below as legacy</div></div>`;
+}
+function evidence() {
+  const e = D.evidence;
+  const sales = e.sales || [];
+  document.getElementById("buying").innerHTML = sales.length ? sales.map(s => `<p><strong>${esc(s.segment)}: ${esc(s.label)}</strong>${s.stale ? " · stale" : ""}<br>
+    ${s.units} units · ${esc(s.period_start)}–${esc(s.period_end)} · ${esc(s.source)}<br>
+    Previous comparable week: ${s.previous_units ?? "—"} units · change ${s.change_pct ?? "—"}%<br>
+    Median realized price: ${s.median_price ?? "—"} ${esc(s.currency)}<br>
+    <a href="${esc(s.source_url)}" rel="noopener" target="_blank">Source</a> · query ${esc(s.query_id)}</p>`).join("") :
+    '<p><strong>Insufficient evidence</strong> — no valid completed-sales series imported.</p><p class="meta">Automatic eBay data contains asking prices and active listings. It cannot establish transactions. A weekly completed-sales import is required.</p>';
+  if (e.sales_error) document.getElementById("buying").innerHTML += `<p>${esc(e.sales_error)}</p>`;
+  const daysAgo = n => { const d = new Date(e.as_of + "T00:00:00Z"); d.setUTCDate(d.getUTCDate()-n); return d.toISOString().slice(0,10); };
+  document.getElementById("movement").innerHTML = `<div class="tablewrap"><table><tr><th>Segment</th><th>Unavailable / eligible</th><th>7-day rate</th><th>Unknown</th><th>Matched change</th></tr>` +
+    e.segments.map(s => `<tr><td>${esc(s.segment)}</td><td>${s.current.unavailable} / ${s.current.eligible}</td><td>${s.current.eligible ? (100*s.current.unavailable/s.current.eligible).toFixed(1)+"%" : "—"}</td><td>${s.current.unknown}</td><td>${s.change_pp === null ? "Insufficient evidence" : s.change_pp+" pp"}</td></tr>`).join("") +
+    `</table></div><p class="meta">Current publication cohort: after ${daysAgo(14)} 00:00 UTC through ${daysAgo(7)} 00:00 UTC. Previous cohort: preceding seven days. Still-available eligible listings count in the denominator. Missing observations and uncertain timing are excluded and counted unknown. Publication is a store-listing date, not necessarily the mint release date.</p>
+    <p class="meta">Comparisons require at least 30 eligible listings in each period across at least three matching stores, within the same segment. These are operational minimums, not statistical confidence levels. Each store listing counts separately; no inference of global mint sellouts.</p>`;
+  document.getElementById("confidence").innerHTML = `<p><strong>${e.fresh_stores} / ${e.configured_stores} stores</strong> have fresh readable availability today.<br>
+    ${e.fresh_listings} fresh listing observations / ${e.tracked_listings} tracked listings.</p>
+    <p class="meta">Availability changes need two explicit checks at least an hour apart after observed availability. Removed pages and failed reads are unknown. Legacy sellout events are excluded. Small samples are shown without a market verdict.</p>`;
 }
 
 function bars() {
   const el = document.getElementById("bars");
-  el.innerHTML = Object.keys(D.labels).map(k => {
+  el.innerHTML = ["attention", "silver", "calendar"].map(k => {
     const v = last ? last.scores[k] : null;
     const body = (v === null || v === undefined)
       ? `<div class="track"></div><div class="val na">n/a</div>`
       : `<div class="track"><div class="fill" style="width:${Math.max(2, v)}%"></div></div><div class="val">${fmt(v)}</div>`;
-    return `<div class="row"><div class="name">${D.labels[k]} <span>· weight ${D.weights[k]}</span></div>${body}</div>`;
+    return `<div class="row"><div class="name">${D.labels[k]} <span>· context only</span></div>${body}</div>`;
   }).join("");
 }
 
@@ -303,19 +323,16 @@ function groups(dim) {
   const G = (D.groups || []).filter(g => (g.scope || "all") === scope && g.dimension === dim && g.group !== "Other" && g.confidence !== "too few");
   const tbl = document.getElementById("gtbl"), note = document.getElementById("gnote");
   if (!G.length) { tbl.innerHTML = ""; note.textContent = "Fills in after the tracker has seen a few launches."; return; }
-  const rank = c => (c === "high" ? 2 : c === "medium" ? 1 : 0);
-  G.sort((a, b) => (rank(b.confidence) - rank(a.confidence)) || ((b.heat ?? -1) - (a.heat ?? -1)));
+  const rank = c => 0;
+  G.sort((a, b) => b.tracked - a.tracked);
   const pct = v => v === null || v === undefined ? "—" : Math.round(v * 100) + "%";
   const hrs = v => v === null || v === undefined ? "—" : (v < 48 ? Math.round(v) + " h" : (v / 24).toFixed(1) + " d");
   window._gdim = dim;
-  tbl.innerHTML = `<tr><th>${dim}</th><th>Heat</th><th>Launches sold out</th><th>Median time to sell out</th><th>Sold out now</th><th>Tracked</th><th>Confidence</th></tr>` +
-    G.map((g, i) => `<tr class="grow" data-g="${encodeURIComponent(g.group)}"><td>${g.group}</td><td><span class="hb" style="width:${Math.max(2, (g.heat || 0) * 0.6)}px"></span>${fmt(g.heat)}</td>` +
-      `<td>${g.launches ? pct(g.launch_soldout_share) + " of " + g.launches : "—"}</td><td>${hrs(g.median_hours_to_sellout)}</td>` +
-      `<td>${pct(g.snapshot_soldout_share)}</td><td>${g.tracked}</td><td>${g.confidence}</td></tr>`).join("");
+  tbl.innerHTML = `<tr><th>${dim}</th><th>Tracked listings</th><th>Use</th></tr>` +
+    G.map(g => `<tr class="grow" data-g="${encodeURIComponent(g.group)}"><td>${esc(g.group)}</td><td>${g.tracked}</td><td>Catalog only</td></tr>`).join("");
   tbl.querySelectorAll(".grow").forEach(tr => tr.onclick = () => toggle(tr, dim, decodeURIComponent(tr.dataset.g)));
-  const early = G.every(g => g.confidence.startsWith("low"));
-  note.textContent = early ? "Tap a row to see the products. Early read: ranked by what's sold out right now. Launch timing takes over as new launches sell out." :
-    "Tap a row to see the products behind it. Heat = share of recent launches that sold out, how many sold out within 2 days, and median time to sell out.";
+  note.textContent = "Explore products by theme, finish or base coin. These groups are not demand rankings; prices are asking prices and currency conversions are approximate.";
+
 }
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const FIELD = { "Base coin": "b", "Size": "z", "Finish": "f", "Type": "ty", "Store": "st",
@@ -334,9 +351,9 @@ function toggle(tr, dim, grp) {
   // Sold out first (most recent first), then in stock (newest first).
   P.sort((a, b) => (a.a - b.a) || (b.so || "").localeCompare(a.so || "") || (b.fs || "").localeCompare(a.fs || ""));
   const dur = h => h === null ? "" : (h < 48 ? ` in ${Math.round(h)} h` : ` in ${(h / 24).toFixed(1)} d`);
-  const li = P.map(p => `<li><span class="pill ${p.a ? "in" : "sold"}">${p.a ? "in stock" : "sold out" + dur(p.h)}</span>` +
+  const li = P.map(p => `<li><span class="pill ${p.a ? "in" : "sold"}">${p.a === null ? "unknown" : p.a ? "available" : "unavailable"}</span>` +
     `<a href="${esc(p.u)}" target="_blank" rel="noopener">${esc(p.t)}</a>` +
-    `<span class="pmeta">${p.p ? "$" + Math.round(p.p) + " · " : ""}${p.m ? "mintage " + p.m.toLocaleString() + " · " : ""}${p.c ? "colorized · " : ""}${esc(p.s)}${p.new ? " · new " + p.fs.slice(5) : ""}${p.so ? " · gone " + p.so.slice(5) : ""}</span></li>`).join("");
+    `<span class="pmeta">${p.p ? "$" + Math.round(p.p) + " · " : ""}${p.m ? "mintage " + p.m.toLocaleString() + " · " : ""}${p.c ? "colorized · " : ""}${esc(p.s)}${p.new ? " · new " + p.fs.slice(5) : ""}${p.so ? " · confirmed unavailable " + p.so.slice(5) : ""}</span></li>`).join("");
   const row = document.createElement("tr");
   row.className = "plist";
   row.innerHTML = `<td colspan="7"><ul>${li || "<li>No products listed.</li>"}</ul></td>`;
@@ -358,7 +375,7 @@ function gtabs() {
   groups("Theme");
 }
 
-hero(); bars(); gtabs(); chart(); table();
+hero(); evidence(); bars(); gtabs(); chart(); table();
 window.addEventListener("resize", chart);
 </script>
 </body>

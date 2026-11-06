@@ -1,0 +1,68 @@
+{
+  "segments": [
+    {
+      "segment": "Colorized silver Eagles",
+      "current": {
+        "eligible": 0,
+        "unavailable": 0,
+        "unknown": 0
+      },
+      "previous": {
+        "eligible": 0,
+        "unavailable": 0,
+        "unknown": 0
+      },
+      "matched_stores": 0,
+      "matched_current": 0,
+      "matched_previous": 0,
+      "change_pp": null,
+      "confidence": "Insufficient evidence"
+    },
+    {
+      "segment": "Other colorized silver",
+      "current": {
+        "eligible": 0,
+        "unavailable": 0,
+        "unknown": 0
+      },
+      "previous": {
+        "eligible": 0,
+        "unavailable": 0,
+        "unknown": 0
+      },
+      "matched_stores": 0,
+      "matched_current": 0,
+      "matched_previous": 0,
+      "change_pp": null,
+      "confidence": "Insufficient evidence"
+    },
+    {
+      "segment": "Plated / base metal",
+      "current": {
+        "eligible": 0,
+        "unavailable": 0,
+        "unknown": 0
+      },
+      "previous": {
+        "eligible": 0,
+        "unavailable": 0,
+        "unknown": 0
+      },
+      "matched_stores": 0,
+      "matched_current": 0,
+      "matched_previous": 0,
+      "change_pp": null,
+      "confidence": "Insufficient evidence"
+    }
+  ],
+  "fresh_stores": 0,
+  "configured_stores": 14,
+  "fresh_listings": 0,
+  "tracked_listings": 14054,
+  "horizon_days": 7,
+  "note": "Store-listing availability; not unit sales. Same product at different stores counts as separate listings.",
+  "sales": [],
+  "sales_error": "",
+  "as_of": "2026-11-06",
+  "methodology_version": 2
+}

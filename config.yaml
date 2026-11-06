@@ -1,3 +1,10 @@
+# Methodology 2: the old composite and its thresholds are retained for historical
+# interpretation only. They do not drive a buying verdict or mintage advice.
+evidence:
+  min_cohort: 30       # operational minimum per matched seven-day cohort
+  min_stores: 3
+  min_sales_units: 30  # per completed-sales period; not a statistical confidence level
+
 # Market Heat Index — settings (colorized collectibles edition)
 # Weights don't need to add to 100; they are rescaled automatically, and any
 # source that fails on a given day is dropped and the rest are rescaled.

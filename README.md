@@ -1,141 +1,77 @@
-# Market Heat Index — colorized collectibles
+# Blackbird.png market tracker
 
-A daily 0–100 score for the **colorized silver coin & collectibles market**:
+Tracks **completed purchases**, **store-listing availability**, and **collection quality** separately. GitHub Pages serves `docs/index.html`.
 
-- **HOT:** launch now, consider a bigger mintage.
-- **NORMAL:** launch with a waitlist.
-- **DEAD:** hold, or take pre-orders only.
+## Methodology 2 — 6 November 2026
 
-It runs by itself every morning on GitHub (free), saves the history, and publishes a dashboard you can open on your phone. It can also send you a Telegram message.
+The previous blended 0–100 index is suspended. Silver price movements, asking prices, Google searches and calendar assumptions cannot establish purchases or predict a release sellout. Old scores remain in `data/history.csv` and appear only in the dashboard's legacy chart. They are not comparable with the corrected measurements.
 
-## What goes into the score
+### Buying
 
-| Component | Weight | Signal |
-|---|---|---|
-| **Colorized drops selling out** | 35 | Watches the colorized products at the mint and dealer stores you list (any platform). It records when each one launches and the day it sells out. Scores the share of last-30-day launches already sold out, the share that sold out within 2 days, and the median days to sell out. |
-| **eBay collector premium** | 30 | Median price of colorized Libertads, Eagles, half dollars and rounds on eBay, divided by the **same coins in plain form**. Silver price cancels out, so what's left is purely what collectors pay for color. Also uses weekly sold count and sell-through % if you paste them from Terapeak. |
-| **Colorized chatter** | 15 | Posts and comments mentioning colorized coins in the past week on r/Silverbugs, r/Pmsforsale, r/coins and r/Coins4Sale, plus Google Trends for "colorized coin" and "colorized silver". |
-| **Silver price mood** | 10 | Silver's weekly move, monthly trend and volatility. Background only: big moves bring buyers out. |
-| **Calendar & competition** | 10 | Paydays (1st and 15th), season, weekday. Crowded weeks lower it: competing drops you log, plus a busy week of new colorized launches spotted by the drop tracker. |
+`data/completed_sales.csv` contains verified, normalized weekly completed-sale records. The automatic eBay Browse feed supplies **asking prices and active listings**, never completed transactions. Fourteen days of that feed does not change this distinction.
 
-Every signal is turned into a **percentile against its own recent past**. 80 means "hotter than 80% of the last 90 days." The index is the weighted average.
+Import a CSV using:
 
-If a source fails on a given day, it's skipped and the dashboard shows the day's **coverage**. When too few sources answered, the dashboard says "Not enough data today" instead of guessing.
-
-### How the drop tracker works (any store platform)
-
-Every day, for each store you list, the tracker:
-
-1. **Finds the products.** It reads the store's colorized category page(s) you give it (`listing_urls`), or its sitemap (`sitemap_url`), and collects the product links.
-2. **Checks each one.** It opens each product page and reads the stock status from the structured product data that stores embed for Google Shopping (`InStock` / `OutOfStock` / `SoldOut`). If a store doesn't include that, it falls back to the buy button itself: "Add to cart" means in stock, "Sold out" means sold out.
-3. **Records what changed.** New products are logged as launches, and it notes the day each one flips to sold out. A tracked product whose page disappears counts as sold out. Sold-out items are re-checked weekly in case of restocks.
-4. **Remembers what to skip.** Non-colorized products are noted once and never fetched again.
-
-Shopify and WooCommerce stores are detected automatically and need no extra setup. For a store that only shows its products after JavaScript runs, add `render: true` and it will use a headless browser.
-
-**Setting up a store takes 1 minute:** open the store's colorized category in your browser, copy the address, and paste it under `listing_urls` in `config.yaml`. If that page only contains colorized items, also set `listing_is_colorized: true`.
-
-**The first day is a baseline.** Products already on a store the first time it's checked don't count as new launches, because there's no way to know when they launched. Everything that appears after that is timed from launch to sell-out. Expect the drop score to fill in once a few new launches have come and gone.
-
-**If a store can't be read**, the run log says so, with what to try. Two things can block it:
-- **Anti-bot protection** (e.g. Cloudflare) can block GitHub's servers outright. For those stores, log their drops by hand in `competing_releases.csv`.
-- **Store layout.** If the tracker picks up the wrong links, set `product_link_pattern` to a piece of text that appears only in product URLs, e.g. `"/product/"`.
-
-## Broad tracking: every collectible silver release
-
-The tracker follows **every collectible / limited release** at each store, not just
-colorized ones: proofs, high relief, shaped coins, privy marks, limited bars and rounds,
-world-mint series. Plain bullion (random-year coins, generic rounds and bars, tubes, junk
-silver) is skipped. Each product is flagged colorized or not, and its **launch price**
-and **mintage** (when the store states it) are saved.
-
-The **heat index stays a colorized gauge**: it is computed only from colorized products,
-so its meaning doesn't change. The "What's hot" card covers everything, with an
-*All collectible silver / Colorized only* switch.
-
-Stores: CoinsTV, Hero Bullion, GR Reserve, Bullion Sharks, PopCoins, MyCollectables (AU),
-Direct Coins (AU), CDN Coin (CA), APMEX, SD Bullion, Bullion Exchanges, Provident,
-Money Metals and Bullion By Post (UK). If a store can't be read, the run log says so
-and the rest carry on. The first broad run at a store records its existing catalog as
-baseline, so old products aren't counted as new launches.
-
-To go back to colorized only, set `tracking: mode: colorized` in `config.yaml`.
-
-## What's hot: themes, coins, sizes, finishes
-
-The index says *when* the market is hot. This part says *what* is hot. Every tracked
-product is tagged from its title by **theme** (dragons, wildlife, mythology, patriotic,
-lunar…), **base coin** (Libertad, Silver Eagle, Maple…), **size** and **finish**
-(diamond dust, gilded, black proof, antiqued…), then each group is ranked by how fast
-it sells out. Silver only for now (`hot_groups.metals` in `config.yaml`).
-
-Dimensions: **Theme** (16 broad) and **Sub-theme** (about 50: big cats, wolves, Norse
-myth, Egyptian, Star Wars, Marvel & DC, anime & games, USA 250, Day of the Dead…),
-**Base coin**, **Size**, **Finish**, **Type** (colorized or not), **Price**, **Premium**
-over silver spot, **Mintage** and **Store**. Tap any row to see its products, with links,
-price and mintage.
-
-- **Dashboard:** the "What's hot" card, with a tab per dimension.
-- **`data/hot_groups.csv`:** the full table, updated on every run.
-- **Telegram:** a weekly digest every Monday with the hottest and coldest groups.
-
-**Confidence:** *high* = enough launches and timed sell-outs; *medium* = enough launches
-that had at least 7 days to sell; *low (snapshot)* = only "share sold out right now",
-the early read until launches pile up. Expect real rankings after 2–4 weeks.
-
-Tagging rules are regexes in `mhi/tags.py`. To change one, copy that block into a
-`tags:` section in `config.yaml` and edit it there.
-
-## Fast launch checks (hour-level sell-out timing)
-
-A second workflow, **Fast launch check**, runs every 3 hours. It reads the Shopify and
-WooCommerce feeds in full and, for other stores, only re-checks products launched in
-the last 7 days. It records the time (UTC) each product appears and sells out, so a
-2-hour sell-out is told apart from a 2-day one. It doesn't compute the index or send
-Telegram messages. Both workflows share a lock, so they never write data at the same
-time. To change the frequency, edit the `cron` line in `.github/workflows/fast.yml`.
-
-## One-time setup (about 20 minutes)
-
-1. **Create a GitHub account** (free) and a **new repository**, e.g. `market-heat-index`.
-2. **Upload these files:** Add file → Upload files → drag in the folder contents, including the hidden `.github` folder. If it doesn't upload, create `.github/workflows/daily.yml` in GitHub's web editor and paste its contents in.
-3. **Turn on the dashboard:** Settings → Pages → *Deploy from a branch* → `main`, folder `/docs` → Save.
-   - Free accounts need a **public** repo for Pages. If you want to keep it private, use the Telegram message instead.
-4. **Run it once by hand:** Actions → *Daily Market Heat Index* → *Run workflow*. Open the run's log to see which stores and sources worked.
-5. From then on it runs daily at **06:47 Morocco time**. To change the time, edit the `cron` line in `.github/workflows/daily.yml`.
-
-## Optional keys (each one makes the index stronger)
-
-Add these under Settings → Secrets and variables → Actions → *New repository secret*.
-
-| Secret | Where | Adds |
-|---|---|---|
-| `EBAY_CLIENT_ID`, `EBAY_CLIENT_SECRET` | developer.ebay.com → create app → **Production** keys (free) | The eBay collector premium, automatically |
-| `REDDIT_CLIENT_ID`, `REDDIT_CLIENT_SECRET` | reddit.com/prefs/apps → create app → type **script** | Reliable Reddit access (Reddit often blocks anonymous server requests) |
-| `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` | @BotFather → /newbot for the token; message your bot, then open `https://api.telegram.org/bot<TOKEN>/getUpdates` for your chat id | A morning message with the score |
-
-To put the dashboard link in the Telegram message, add a **variable** called `DASHBOARD_URL`.
-
-## Files you keep up to date
-
-- **`data/releases.csv`:** after each release (yours, or a competitor's when you know), add one line: launch date, name, seller, mintage, price, waitlist size, and hours until it sold out. This is what tunes the index to *your* buyers.
-- **`data/competing_releases.csv`:** upcoming colorized drops you know about from other mints.
-- **`data/ebay_sold.csv`** *(optional, weekly, 2 minutes)*: in eBay Seller Hub → Research (Terapeak), search "colorized silver" for the last 7 days. Paste the sold count, median sold price and **sell-through %**. This is the strongest eBay signal, and the official API doesn't provide it.
-
-You can edit the CSVs on GitHub directly (click the file → pencil icon).
-
-## Tuning it to your sales (after 15–20 releases)
-
-```bash
-pip install -r requirements.txt
-python calibrate.py
+```sh
+python import_sales.py weekly_sales.csv
+python run.py --rebuild
 ```
 
-It shows which components lined up with how fast releases actually sold out, and suggests new weights for `config.yaml`. It also tells you if your **waitlist ÷ mintage** ratio predicts better than the market index. If it does, use the index to **time** a launch and the waitlist to **size** it.
+Required columns (header also provided by the empty destination CSV):
 
-## Things to know
+| Column | Meaning |
+|---|---|
+| period_start, period_end | YYYY-MM-DD, exactly seven days inclusive; open periods are not displayed |
+| source | e.g. eBay Product Research, or a named client's sales export |
+| query_id | Stable identifier for the exact query, geography, category, exclusions, currency, shipping/returns treatment, and unit-count definition. Change it whenever filters change. |
+| segment | e.g. Colorized silver Eagles, Other colorized silver, Plated / base metal |
+| currency | Currency of the realized price |
+| sold_count | Actual nonnegative integer units sold, not listings, watchers or stock changes |
+| median_sold_price | Positive median realized unit price; blank if unavailable. Keep shipping/tax treatment consistent. |
+| source_url | HTTPS source/report reference for audit; do not commit credentials or private customer details |
 
-- **Colorized matching:** what counts as colorized is set by `colorized_pattern` in `config.yaml` (colorized, colourised, colored, full color, enamel…). Edit it if a store names things differently.
-- **Google Trends:** niche terms like "colorized coin" can have very low search volume, so Trends counts for a third of the chatter score and Reddit for two thirds.
-- **What it reads:** only public product feeds, official APIs and public posts, once a day.
-- **Running locally:** `python run.py`.
+Do not combine overlapping searches or repeat the same sales in multiple rows. The importer replaces a record with the same period/source/query/segment/currency, rejects malformed records, and writes atomically. It does not fetch eBay Product Research or invent transactions. Obtain a verified export or manually transcribe the consistently filtered report first. Client imports should contain aggregate counts only.
+
+Each series is compared only with the immediately preceding seven-day period with identical metadata. A period ending more than ten days ago is stale. Provisional labels require at least 30 units in **each** period: a change of +20% or more is “Buying up,” -20% or less “Buying down,” otherwise “Buying steady.” These are transparent operational thresholds, not statistical significance or a sellout prediction. Low-volume and zero-sale periods remain visible with an insufficient-evidence label; percentage change from zero is undefined.
+
+The old `data/ebay_sold.csv` is retained for audit but not promoted into the new series: it lacks required provenance and a completed-unit count.
+
+### Launch movement
+
+The measurement is **store listings becoming explicitly unavailable within seven days**, not a global mint sellout or unit-sales count.
+
+* First observed availability must be within 24 hours after a documented publication timestamp. Unknown publication dates and old catalog discoveries are excluded.
+* Two explicit unavailable observations at least one hour apart, following observed availability, confirm an availability event. Missing pages, unknown schema status, failed requests and feed omissions are unknown, never inferred sellouts.
+* The event timestamp is an upper bound. If the observation interval straddles the seven-day deadline, the outcome is unknown.
+* Still-available eligible listings stay in the denominator. Listings too young to complete seven days are excluded. Unknown outcomes are counted separately.
+* Current cohort: publication age 7–<14 days; previous cohort: 14–<21 days, measured at midnight UTC on the report date. Cohort dates appear on the dashboard.
+* Comparisons use the same segment and stores appearing in both cohorts, with at least 30 observed outcomes per period and three common stores. Below this, raw counts are shown but no directional verdict.
+* Colorized silver Eagles, other colorized silver, and plated/base-metal products are separate. Classification is title-based and may need review. Each store listing is one observation; duplicates across dealers are not unique global releases.
+* Historical inferred sellout dates are never upgraded to verified events. New evidence starts with fresh checks after this change. First confirmed events survive restocks for cohort accounting.
+
+The catalog explorer keeps theme/finish/base-coin drilldowns, but no longer ranks demand from old unavailable stock or the speed of only the products that disappeared. Catalog prices are asking prices, with approximate configured FX conversions.
+
+### Confidence and collectors
+
+The dashboard shows fresh readable stores, fresh listing counts and cohort denominators. These are **coverage measures**, not confidence percentages. Failed reads make availability unknown; they do not turn into zero sales. `data/collection_health.csv` and `data/last_run_log.txt` identify collector failures. `data/evidence_report.json` contains the current dashboard evidence.
+
+The generic collector's boolean/function name collision is fixed. This does not remove a website's 401/403 access restrictions. Those failures remain visible. A successful workflow can still contain partial collection failures.
+
+## Running
+
+Python 3.12 is used in GitHub Actions:
+
+```sh
+pip install -r requirements.txt
+python -m playwright install chromium  # if config.yaml uses render: true
+python -m unittest discover -s tests -v
+python run.py               # daily collection + optional existing Telegram notification
+python run.py --fast        # refresh availability and dashboard, no notification
+python run.py --rebuild     # rebuild from saved data, no network collection or notification
+```
+
+`config.yaml` defines stores, platforms, category/sitemap URLs, currencies, title filters and sample minimums. Public Shopify/WooCommerce feeds are used where available; generic stores use product-page stock data. Collection handles unreadable availability as unknown. Do not bypass access blocks.
+
+Optional existing secrets: `EBAY_CLIENT_ID`, `EBAY_CLIENT_SECRET`, `REDDIT_CLIENT_ID`, `REDDIT_CLIENT_SECRET`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`. `DASHBOARD_URL` is an optional environment variable. No secrets are needed for offline tests/rebuild. Telegram remains part of the existing daily workflow; the repair/rebuild itself sends no message.
+
+The scheduled daily and fast workflows share a concurrency group. They commit generated `data/` and `docs/` updates. Workflow schedules remain unchanged.

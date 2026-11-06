@@ -60,54 +60,11 @@ def drops(cfg: dict, hist: pd.DataFrame, today: dt.date) -> dict:
 
 
 def _drop_metrics(state, cfg, hist, today, stores_ok, tracker) -> dict:
-    d = state.copy()
-    # The heat index stays a COLORIZED gauge even though the tracker now follows every
-    # collectible release; older rows (before broad tracking) were all colorized.
-    if "colorized" in d.columns:
-        d = d[d["colorized"].map(tracker._s) != "0"]
-    d["launch"] = tracker.launch_dates(d)
-    d["sold_d"] = pd.to_datetime(d["sold_out_date"].map(tracker._s).replace("", None),
-                                 errors="coerce").dt.date
-    age = d["launch"].map(lambda x: (today - x).days if pd.notnull(x) else 9999)
-
-    win = cfg["drops"]["recent_days"]
-    recent = d[age <= win]
-    new_7d = int(((age <= 7) & (age >= 0)).sum())
-    sold_share = None if recent.empty else float((recent["available"].astype(str) == "0").mean())
-
-    # Days to sell out — only for launches we watched sell out.
-    watched = d[d["sold_d"].notnull() & (age <= 2 * win)]
-    days = [max(0, (s - l).days) for s, l in zip(watched["sold_d"], watched["launch"])
-            if pd.notnull(l)]
-    med_days = statistics.median(days) if days else None
-    fast = cfg["drops"]["fast_sellout_days"]
-    fast_share = (sum(1 for x in days if x <= fast) / len(days)) if days else None
-
-    raw = {"drops_tracked": int(len(d)), "drops_tracked_all": int(len(state)),
-           "drops_stores_ok": stores_ok,
-           "drops_new_7d": new_7d,
-           "drops_recent_soldout_share": None if sold_share is None else round(sold_share, 3),
-           "drops_median_days_to_sellout": med_days,
-           "drops_fast_share": None if fast_share is None else round(fast_share, 3)}
-
-    parts = []
-    if sold_share is not None and len(recent) >= 2:
-        # Compared with this tracker's own history only — what share of launches
-        # sells out depends a lot on which stores you track, so there's no fixed scale.
-        parts.append(_hist_pct(sold_share, hist, "drops_recent_soldout_share", cfg,
-                               fallback=None))
-    if fast_share is not None and len(days) >= 3:
-        parts.append(clamp(fast_share * 100))
-    if med_days is not None and len(days) >= 3:
-        p = _hist_pct(med_days, hist, "drops_median_days_to_sellout", cfg, fallback=None)
-        if p is not None:
-            parts.append(100 - p)                       # fewer days = hotter
-    parts = [p for p in parts if p is not None]
-    if not parts:
-        return {"score": None, "raw": raw,
-                "note": "drops: tracking, waiting for new colorized launches"}
-    return {"score": round(sum(parts) / len(parts), 1), "raw": raw,
-            "note": f"{len(recent)} recent colorized launches, {len(days)} sell-outs timed"}
+    from .evidence import availability
+    report = availability(state, cfg, today)
+    return {"score": None, "raw": {"drops_tracked_all": len(state),
+            "drops_stores_ok": stores_ok, "drops_fresh_listings": report["fresh_listings"]},
+            "note": "Availability cohorts only; no inferred unit sales or composite score"}
 
 
 # =============================================================== 2. eBay COLORIZED
@@ -155,10 +112,7 @@ def _ebay_search(token: str, q: str, ecfg: dict) -> tuple[int, list]:
 
 
 def ebay(cfg: dict, hist: pd.DataFrame, spot: float | None) -> dict:
-    """Collector premium: what colorized coins ask on eBay compared with the SAME
-    plain coins. Dividing by the plain version removes the silver price, so what's
-    left is purely the appetite for colorized collectibles.
-    Plus weekly sold numbers / sell-through from Terapeak if you paste them."""
+    """Collect asking-price and active-supply context; never infer purchases."""
     ecfg = cfg["ebay"]
     cid = (os.getenv("EBAY_CLIENT_ID") or "").strip()
     sec = (os.getenv("EBAY_CLIENT_SECRET") or "").strip()
@@ -184,63 +138,12 @@ def ebay(cfg: dict, hist: pd.DataFrame, spot: float | None) -> dict:
                 prem = statistics.median(ratios)
                 raw.update({"ebay_collector_premium": round(prem, 3),
                             "ebay_colorized_listings": supply})
-                # Scored only once there's enough history to compare against —
-                # no placeholder values that would fake a verdict.
-                p_prem = _hist_pct(prem, hist, "ebay_collector_premium", cfg, fallback=None)
-                p_sup = _hist_pct(supply, hist, "ebay_colorized_listings", cfg, fallback=None)
-                if p_prem is not None and p_sup is not None:
-                    parts.append((0.75 * p_prem + 0.25 * (100 - p_sup), 0.5))
-                else:
-                    n = 0 if hist is None or "ebay_collector_premium" not in hist.columns \
-                        else int(hist["ebay_collector_premium"].notna().sum())
-                    raw["ebay_history_days"] = n + 1
         except Exception as e:  # noqa: BLE001
             log.warning("ebay api: %s", e)
 
-    sold = _ebay_sold_manual()
-    if sold is not None:
-        raw.update(sold["raw"])
-        parts.append((sold["score"], 0.5))
+    return {"score": None, "raw": raw,
+            "note": "Asking prices/listing supply only; completed purchases are reported separately"}
 
-    if not parts:
-        if "ebay_collector_premium" in raw:
-            return {"score": None, "raw": raw,
-                    "note": f"ebay: collecting history (day {raw.get('ebay_history_days', 1)}"
-                            f" of {cfg['min_history_days']})"}
-        return _fail("ebay: no eBay API data today (see line above), and Terapeak log needs 3+ weekly entries")
-    tw = sum(w for _, w in parts)
-    return {"score": round(sum(s * w for s, w in parts) / tw, 1), "raw": raw, "note": "ok"}
-
-
-def _ebay_sold_manual() -> dict | None:
-    """data/ebay_sold.csv, filled weekly from Terapeak (search 'colorized silver', last 7 days):
-    week_start, sold_count, median_sold_price, sell_through_pct.
-    Used only if the newest row is <= 10 days old."""
-    if not os.path.exists(os.path.join(ROOT, "data", "ebay_sold.csv")):
-        return None
-    df = pd.read_csv(os.path.join(ROOT, "data", "ebay_sold.csv")).dropna(subset=["week_start"])
-    if df.empty:
-        return None
-    df["week_start"] = pd.to_datetime(df["week_start"])
-    df = df.sort_values("week_start")
-    last = df.iloc[-1]
-    if (pd.Timestamp.today() - last["week_start"]).days > 10:
-        return None
-    # Each number is compared with YOUR previous weeks (Terapeak's absolute levels
-    # depend on the search and category, e.g. sell-through of a few % is normal for
-    # coins). Needs 3+ weeks logged; before that this signal stays out of the index.
-    raw, parts = {}, []
-    for col, key in (("sell_through_pct", "ebay_sell_through_pct"),
-                     ("sold_count", "ebay_sold_week")):
-        series = pd.to_numeric(df.get(col), errors="coerce").dropna().tail(26)
-        v = pd.to_numeric(pd.Series([last.get(col)]), errors="coerce").iloc[0]
-        if v == v:
-            raw[key] = float(v)
-            if len(series) >= 3:
-                parts.append(percentile(v, series.tolist()))
-    if not parts:
-        return None
-    return {"score": round(sum(parts) / len(parts), 1), "raw": raw}
 
 
 # ============================================== 3. ATTENTION (colorized chatter)

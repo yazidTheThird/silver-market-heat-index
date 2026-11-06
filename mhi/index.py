@@ -32,20 +32,12 @@ def label(index: float, cfg: dict) -> str:
 
 
 def combine(results: dict, cfg: dict) -> tuple[float | None, float]:
-    """Weighted mean of the components that returned a score.
-    Returns (index, coverage) where coverage = share of total weight that had data."""
-    w = cfg["weights"]
-    total_w = sum(w[c] for c in COMPONENTS)
-    got = [(results[c]["score"], w[c]) for c in COMPONENTS if results[c]["score"] is not None]
-    if not got:
-        return None, 0.0
-    used_w = sum(wt for _, wt in got)
-    index = sum(s * wt for s, wt in got) / used_w
-    return round(index, 1), round(used_w / total_w, 2)
+    """Composite suspended: context and availability cannot establish purchases."""
+    return None, 0.0
 
 
 def compute(cfg: dict, today: dt.date | None = None) -> dict:
-    today = today or dt.datetime.utcnow().date()
+    today = today or dt.datetime.now(dt.timezone.utc).date()
     hist = load_history()
     if not hist.empty:
         hist = hist[hist["date"] != today.isoformat()]  # re-runs replace the day
@@ -62,12 +54,12 @@ def compute(cfg: dict, today: dt.date | None = None) -> dict:
 
     index, coverage = combine(results, cfg)
     if index is None:
-        lab = "NO DATA"
+        lab = "INSUFFICIENT EVIDENCE"
     elif coverage < cfg.get("min_coverage", 0.5):
         lab = "LOW DATA"   # too few sources answered today to trust a verdict
     else:
         lab = label(index, cfg)
-    row = {"date": today.isoformat(), "index": index, "label": lab, "coverage": coverage}
+    row = {"date": today.isoformat(), "index": index, "label": lab, "coverage": coverage, "methodology_version": 2}
     for c in COMPONENTS:
         row[f"score_{c}"] = results[c]["score"]
         row.update(results[c]["raw"])

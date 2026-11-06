@@ -26,6 +26,7 @@ logging.basicConfig(
     level=logging.INFO, format="%(levelname)s %(message)s",
     handlers=[logging.StreamHandler(),
               # Saved in the repo so the latest run's details can be read any time.
+              logging.NullHandler() if "--rebuild" in sys.argv else
               logging.FileHandler(os.path.join(_HERE, "data", "last_run_log.txt"),
                                   mode="w", encoding="utf-8")])
 log = logging.getLogger("mhi")
@@ -41,7 +42,7 @@ def notify(row: dict, extra: str = "") -> None:
     parts = [f"{k.replace('score_', '')}: {round(v) if v is not None else 'n/a'}"
              for k, v in row.items() if k.startswith("score_")]
     text = (f"Market Heat Index {row['date']}\n"
-            f"{row['index']} / 100 — {row['label']}\n" + "\n".join(parts))
+            f"Buying evidence: see completed-sales and availability panels. Composite suspended.\n" + "\n".join(parts))
     if extra:
         text += "\n\n" + extra
     url = os.getenv("DASHBOARD_URL")
@@ -88,7 +89,14 @@ def main() -> None:
     here = os.path.dirname(os.path.abspath(__file__))
     with open(os.path.join(here, "config.yaml"), encoding="utf-8") as f:
         cfg = yaml.safe_load(f)
-    today = dt.datetime.utcnow().date()
+    today = dt.datetime.now(dt.timezone.utc).date()
+
+    if "--rebuild" in sys.argv:
+        # No network collection and no notification. Preserve old rows as legacy.
+        hist = load_history()
+        groups = refresh_groups(cfg, today)
+        dashboard.build(hist, cfg, groups)
+        return
 
     if "--fast" in sys.argv:
         from mhi.drops import run_tracker
