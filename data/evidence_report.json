@@ -55,10 +55,10 @@
       "confidence": "Insufficient evidence"
     }
   ],
-  "fresh_stores": 10,
+  "fresh_stores": 8,
   "configured_stores": 14,
-  "fresh_listings": 13856,
-  "tracked_listings": 14132,
+  "fresh_listings": 13827,
+  "tracked_listings": 14133,
   "horizon_days": 7,
   "note": "Store-listing availability; not unit sales. Same product at different stores counts as separate listings.",
   "sales": [],
@@ -66,13 +66,13 @@
   "as_of": "2026-11-07",
   "methodology_version": 2,
   "snapshot": {
-    "colorized_tracked": 2463,
-    "tracked": 14132,
-    "available": 3290,
-    "unavailable": 10566,
-    "unknown": 276,
-    "colorized_available": 846,
-    "colorized_unavailable": 1556
+    "colorized_tracked": 2464,
+    "tracked": 14133,
+    "available": 3259,
+    "unavailable": 10568,
+    "unknown": 306,
+    "colorized_available": 820,
+    "colorized_unavailable": 1554
   },
   "collectors": [
     {
@@ -93,7 +93,7 @@
     {
       "store": "https://bullionsharks.com",
       "tracked": 55,
-      "fresh": 17
+      "fresh": 0
     },
     {
       "store": "https://popcoins.store",
@@ -102,7 +102,7 @@
     },
     {
       "store": "https://www.mycollectables.com.au",
-      "tracked": 4266,
+      "tracked": 4267,
       "fresh": 4265
     },
     {
@@ -128,7 +128,7 @@
     {
       "store": "https://bullionexchanges.com",
       "tracked": 14,
-      "fresh": 12
+      "fresh": 0
     },
     {
       "store": "https://www.providentmetals.com",
