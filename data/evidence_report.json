@@ -55,24 +55,24 @@
       "confidence": "Insufficient evidence"
     }
   ],
-  "fresh_stores": 10,
+  "fresh_stores": 8,
   "configured_stores": 14,
-  "fresh_listings": 14052,
+  "fresh_listings": 13826,
   "tracked_listings": 14245,
   "horizon_days": 7,
   "note": "Store-listing availability; not unit sales. Same product at different stores counts as separate listings.",
   "sales": [],
   "sales_error": "",
-  "as_of": "2026-11-07",
+  "as_of": "2026-11-08",
   "methodology_version": 2,
   "snapshot": {
     "colorized_tracked": 2563,
     "tracked": 14245,
-    "available": 3426,
-    "unavailable": 10626,
-    "unknown": 193,
-    "colorized_available": 931,
-    "colorized_unavailable": 1570
+    "available": 3248,
+    "unavailable": 10578,
+    "unknown": 419,
+    "colorized_available": 820,
+    "colorized_unavailable": 1554
   },
   "collectors": [
     {
@@ -93,7 +93,7 @@
     {
       "store": "https://bullionsharks.com",
       "tracked": 55,
-      "fresh": 17
+      "fresh": 0
     },
     {
       "store": "https://popcoins.store",
@@ -118,17 +118,17 @@
     {
       "store": "https://www.apmex.com",
       "tracked": 160,
-      "fresh": 151
+      "fresh": 40
     },
     {
       "store": "https://sdbullion.com",
       "tracked": 125,
-      "fresh": 122
+      "fresh": 35
     },
     {
       "store": "https://bullionexchanges.com",
       "tracked": 14,
-      "fresh": 11
+      "fresh": 0
     },
     {
       "store": "https://www.providentmetals.com",
