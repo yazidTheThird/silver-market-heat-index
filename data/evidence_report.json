@@ -57,8 +57,8 @@
   ],
   "fresh_stores": 10,
   "configured_stores": 14,
-  "fresh_listings": 13855,
-  "tracked_listings": 14245,
+  "fresh_listings": 14087,
+  "tracked_listings": 14256,
   "horizon_days": 7,
   "note": "Store-listing availability; not unit sales. Same product at different stores counts as separate listings.",
   "sales": [],
@@ -67,12 +67,12 @@
   "methodology_version": 2,
   "snapshot": {
     "colorized_tracked": 2563,
-    "tracked": 14245,
-    "available": 3274,
-    "unavailable": 10581,
-    "unknown": 390,
-    "colorized_available": 845,
-    "colorized_unavailable": 1557
+    "tracked": 14256,
+    "available": 3421,
+    "unavailable": 10666,
+    "unknown": 169,
+    "colorized_available": 929,
+    "colorized_unavailable": 1610
   },
   "collectors": [
     {
@@ -93,7 +93,7 @@
     {
       "store": "https://bullionsharks.com",
       "tracked": 55,
-      "fresh": 17
+      "fresh": 55
     },
     {
       "store": "https://popcoins.store",
@@ -117,13 +117,13 @@
     },
     {
       "store": "https://www.apmex.com",
-      "tracked": 160,
-      "fresh": 41
+      "tracked": 163,
+      "fresh": 150
     },
     {
       "store": "https://sdbullion.com",
-      "tracked": 125,
-      "fresh": 35
+      "tracked": 133,
+      "fresh": 120
     },
     {
       "store": "https://bullionexchanges.com",
@@ -148,24 +148,24 @@
   ],
   "market": {
     "silver_spot": {
-      "value": 51.8,
-      "date": "2026-11-07"
+      "value": 51.94,
+      "date": "2026-11-08"
     },
     "silver_ret7_pct": {
-      "value": 5.51,
-      "date": "2026-11-07"
+      "value": 5.79,
+      "date": "2026-11-08"
     },
     "silver_ret30_pct": {
-      "value": -12.29,
-      "date": "2026-11-07"
+      "value": -12.06,
+      "date": "2026-11-08"
     },
     "ebay_colorized_listings": {
-      "value": 10602.0,
-      "date": "2026-11-07"
+      "value": 10618.0,
+      "date": "2026-11-08"
     },
     "ebay_collector_premium": {
-      "value": 1.141,
-      "date": "2026-11-07"
+      "value": 1.195,
+      "date": "2026-11-08"
     }
   }
 }
