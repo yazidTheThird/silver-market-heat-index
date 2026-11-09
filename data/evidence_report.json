@@ -55,10 +55,10 @@
       "confidence": "Insufficient evidence"
     }
   ],
-  "fresh_stores": 10,
+  "fresh_stores": 8,
   "configured_stores": 14,
-  "fresh_listings": 14096,
-  "tracked_listings": 14273,
+  "fresh_listings": 14033,
+  "tracked_listings": 14282,
   "horizon_days": 7,
   "note": "Store-listing availability; not unit sales. Same product at different stores counts as separate listings.",
   "sales": [],
@@ -66,19 +66,19 @@
   "as_of": "2026-11-09",
   "methodology_version": 2,
   "snapshot": {
-    "colorized_tracked": 2569,
-    "tracked": 14273,
-    "available": 3417,
-    "unavailable": 10679,
-    "unknown": 177,
-    "colorized_available": 932,
-    "colorized_unavailable": 1610
+    "colorized_tracked": 2571,
+    "tracked": 14282,
+    "available": 3393,
+    "unavailable": 10640,
+    "unknown": 249,
+    "colorized_available": 908,
+    "colorized_unavailable": 1569
   },
   "collectors": [
     {
       "store": "https://www.coinstv.net",
-      "tracked": 3958,
-      "fresh": 3921
+      "tracked": 3961,
+      "fresh": 3920
     },
     {
       "store": "https://www.herobullion.com",
@@ -88,12 +88,12 @@
     {
       "store": "https://grreserve.com",
       "tracked": 2811,
-      "fresh": 2767
+      "fresh": 2765
     },
     {
       "store": "https://bullionsharks.com",
       "tracked": 55,
-      "fresh": 55
+      "fresh": 0
     },
     {
       "store": "https://popcoins.store",
@@ -107,8 +107,8 @@
     },
     {
       "store": "https://www.directcoins.com.au",
-      "tracked": 598,
-      "fresh": 598
+      "tracked": 600,
+      "fresh": 600
     },
     {
       "store": "https://cdncoin.com",
@@ -117,8 +117,8 @@
     },
     {
       "store": "https://www.apmex.com",
-      "tracked": 166,
-      "fresh": 152
+      "tracked": 170,
+      "fresh": 156
     },
     {
       "store": "https://sdbullion.com",
@@ -128,7 +128,7 @@
     {
       "store": "https://bullionexchanges.com",
       "tracked": 14,
-      "fresh": 11
+      "fresh": 0
     },
     {
       "store": "https://www.providentmetals.com",
