@@ -57,8 +57,8 @@
   ],
   "fresh_stores": 10,
   "configured_stores": 14,
-  "fresh_listings": 13862,
-  "tracked_listings": 14286,
+  "fresh_listings": 11504,
+  "tracked_listings": 14308,
   "horizon_days": 7,
   "note": "Store-listing availability; not unit sales. Same product at different stores counts as separate listings.",
   "sales": [],
@@ -66,19 +66,19 @@
   "as_of": "2026-11-10",
   "methodology_version": 2,
   "snapshot": {
-    "colorized_tracked": 2571,
-    "tracked": 14286,
-    "available": 3259,
-    "unavailable": 10603,
-    "unknown": 424,
-    "colorized_available": 847,
-    "colorized_unavailable": 1557
+    "colorized_tracked": 2575,
+    "tracked": 14308,
+    "available": 3394,
+    "unavailable": 8110,
+    "unknown": 2804,
+    "colorized_available": 934,
+    "colorized_unavailable": 1524
   },
   "collectors": [
     {
       "store": "https://www.coinstv.net",
-      "tracked": 3961,
-      "fresh": 3920
+      "tracked": 3967,
+      "fresh": 1329
     },
     {
       "store": "https://www.herobullion.com",
@@ -87,13 +87,13 @@
     },
     {
       "store": "https://grreserve.com",
-      "tracked": 2811,
+      "tracked": 2812,
       "fresh": 2765
     },
     {
       "store": "https://bullionsharks.com",
       "tracked": 55,
-      "fresh": 17
+      "fresh": 55
     },
     {
       "store": "https://popcoins.store",
@@ -103,7 +103,7 @@
     {
       "store": "https://www.mycollectables.com.au",
       "tracked": 4275,
-      "fresh": 4272
+      "fresh": 4270
     },
     {
       "store": "https://www.directcoins.com.au",
@@ -117,13 +117,13 @@
     },
     {
       "store": "https://www.apmex.com",
-      "tracked": 170,
-      "fresh": 40
+      "tracked": 179,
+      "fresh": 150
     },
     {
       "store": "https://sdbullion.com",
-      "tracked": 134,
-      "fresh": 35
+      "tracked": 140,
+      "fresh": 122
     },
     {
       "store": "https://bullionexchanges.com",
@@ -148,24 +148,24 @@
   ],
   "market": {
     "silver_spot": {
-      "value": 52.79,
-      "date": "2026-11-09"
+      "value": 51.87,
+      "date": "2026-11-10"
     },
     "silver_ret7_pct": {
-      "value": 4.08,
-      "date": "2026-11-09"
+      "value": 4.59,
+      "date": "2026-11-10"
     },
     "silver_ret30_pct": {
-      "value": -12.99,
-      "date": "2026-11-09"
+      "value": -13.76,
+      "date": "2026-11-10"
     },
     "ebay_colorized_listings": {
-      "value": 10601.0,
-      "date": "2026-11-09"
+      "value": 10655.0,
+      "date": "2026-11-10"
     },
     "ebay_collector_premium": {
-      "value": 1.235,
-      "date": "2026-11-09"
+      "value": 1.185,
+      "date": "2026-11-10"
     }
   }
 }
