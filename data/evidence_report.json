@@ -55,10 +55,10 @@
       "confidence": "Insufficient evidence"
     }
   ],
-  "fresh_stores": 10,
+  "fresh_stores": 8,
   "configured_stores": 14,
-  "fresh_listings": 11504,
-  "tracked_listings": 14308,
+  "fresh_listings": 14017,
+  "tracked_listings": 14318,
   "horizon_days": 7,
   "note": "Store-listing availability; not unit sales. Same product at different stores counts as separate listings.",
   "sales": [],
@@ -67,18 +67,18 @@
   "methodology_version": 2,
   "snapshot": {
     "colorized_tracked": 2575,
-    "tracked": 14308,
-    "available": 3394,
-    "unavailable": 8110,
-    "unknown": 2804,
-    "colorized_available": 934,
-    "colorized_unavailable": 1524
+    "tracked": 14318,
+    "available": 3391,
+    "unavailable": 10626,
+    "unknown": 301,
+    "colorized_available": 910,
+    "colorized_unavailable": 1569
   },
   "collectors": [
     {
       "store": "https://www.coinstv.net",
       "tracked": 3967,
-      "fresh": 1329
+      "fresh": 3919
     },
     {
       "store": "https://www.herobullion.com",
@@ -88,12 +88,12 @@
     {
       "store": "https://grreserve.com",
       "tracked": 2812,
-      "fresh": 2765
+      "fresh": 2763
     },
     {
       "store": "https://bullionsharks.com",
       "tracked": 55,
-      "fresh": 55
+      "fresh": 0
     },
     {
       "store": "https://popcoins.store",
@@ -112,13 +112,13 @@
     },
     {
       "store": "https://cdncoin.com",
-      "tracked": 866,
-      "fresh": 805
+      "tracked": 876,
+      "fresh": 795
     },
     {
       "store": "https://www.apmex.com",
       "tracked": 179,
-      "fresh": 150
+      "fresh": 151
     },
     {
       "store": "https://sdbullion.com",
@@ -128,7 +128,7 @@
     {
       "store": "https://bullionexchanges.com",
       "tracked": 14,
-      "fresh": 11
+      "fresh": 0
     },
     {
       "store": "https://www.providentmetals.com",
