@@ -55,24 +55,24 @@
       "confidence": "Insufficient evidence"
     }
   ],
-  "fresh_stores": 8,
+  "fresh_stores": 10,
   "configured_stores": 14,
-  "fresh_listings": 14033,
-  "tracked_listings": 14282,
+  "fresh_listings": 13862,
+  "tracked_listings": 14286,
   "horizon_days": 7,
   "note": "Store-listing availability; not unit sales. Same product at different stores counts as separate listings.",
   "sales": [],
   "sales_error": "",
-  "as_of": "2026-11-09",
+  "as_of": "2026-11-10",
   "methodology_version": 2,
   "snapshot": {
     "colorized_tracked": 2571,
-    "tracked": 14282,
-    "available": 3393,
-    "unavailable": 10640,
-    "unknown": 249,
-    "colorized_available": 908,
-    "colorized_unavailable": 1569
+    "tracked": 14286,
+    "available": 3259,
+    "unavailable": 10603,
+    "unknown": 424,
+    "colorized_available": 847,
+    "colorized_unavailable": 1557
   },
   "collectors": [
     {
@@ -93,7 +93,7 @@
     {
       "store": "https://bullionsharks.com",
       "tracked": 55,
-      "fresh": 0
+      "fresh": 17
     },
     {
       "store": "https://popcoins.store",
@@ -102,8 +102,8 @@
     },
     {
       "store": "https://www.mycollectables.com.au",
-      "tracked": 4271,
-      "fresh": 4268
+      "tracked": 4275,
+      "fresh": 4272
     },
     {
       "store": "https://www.directcoins.com.au",
@@ -118,17 +118,17 @@
     {
       "store": "https://www.apmex.com",
       "tracked": 170,
-      "fresh": 156
+      "fresh": 40
     },
     {
       "store": "https://sdbullion.com",
       "tracked": 134,
-      "fresh": 122
+      "fresh": 35
     },
     {
       "store": "https://bullionexchanges.com",
       "tracked": 14,
-      "fresh": 0
+      "fresh": 11
     },
     {
       "store": "https://www.providentmetals.com",
