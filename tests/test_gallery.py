@@ -126,7 +126,8 @@ class Pictures(unittest.TestCase):
             media.save(saved, path)
             again = media.load(path)
             self.assertEqual(again, {('s', '1'): {'thumb': 'https://c.example/1s.jpg',
-                                                  'images': ['https://c.example/1.jpg', 'https://c.example/1b.jpg']}})
+                                                  'images': ['https://c.example/1.jpg', 'https://c.example/1b.jpg'],
+                                                  'presale': False, 'ships': ''}})
             # a later read without pictures keeps what was saved; ageing out removes it
             media.update(again, 's', [{'product_id': '1'}], keep)
             self.assertIn(('s', '1'), again)
@@ -232,7 +233,7 @@ class Page(unittest.TestCase):
     def test_settings_fall_back_to_defaults(self):
         self.assertEqual(gallery.settings({})['window_days'], 90)
         self.assertEqual(gallery.settings({'gallery': {'window_days': '30', 'bulk_first_seen': 'x'}}),
-                         {'window_days': 30, 'bulk_first_seen': 25, 'keep_pictures_extra_days': 30})
+                         {'window_days': 30, 'bulk_first_seen': 25, 'keep_pictures_extra_days': 30, 'catchup_days': 10})
 
 
 class TrackerRun(unittest.TestCase):
@@ -266,3 +267,121 @@ class TrackerRun(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class Presale(unittest.TestCase):
+    def test_wording(self):
+        yes = ['PREORDER: 2022 Silver Eagle', '2027 Goat 1 oz (Presale)', 'Pre-Sale', 'Available for pre-ordering',
+               'Presale &#8211; 2027 Kangaroo', 'Silver Presale',
+               'Expected to ship on or around December 15, 2026', 'Ships around Jan 20']
+        no = ['2026 Silver Eagle Veteran Edition', 'In stock', 'Pressed copper round', 'Shipping is free over $99',
+              'Order now while supplies last', 'In Stock / On Backorder', 'Available on backorder']
+        for t in yes:
+            self.assertTrue(media.presale_in(t)[0], t)
+        for t in no:
+            self.assertFalse(media.presale_in(t)[0], t)
+        self.assertEqual(media.presale_in('Pre-order. Expected to ship on or around December 15, 2026.')[1], 'December 15, 2026')
+        self.assertEqual(media.presale_in('<p>Presale</p><p>Ships after: Jan 20</p>')[1], 'Jan 20')
+        self.assertEqual(media.presale_in('No presale here', None, 5), (True, ''))
+
+    def test_feeds(self):
+        p = media.presale_shopify({'title': 'Dragon Coin', 'tags': ['Pre-Order', 'Silver'], 'body_html': ''})
+        self.assertTrue(p['presale'])
+        p = media.presale_shopify({'title': 'Dragon Coin', 'tags': [], 'body_html': '<p>Pre-sale. Ships around Feb 2027</p>'})
+        self.assertEqual((p['presale'], p['presale_text'], p['ships']), (False, True, 'Feb 2027'))
+        w = media.presale_woocommerce({'name': 'Round', 'is_on_backorder': True,
+                                       'stock_availability': {'text': 'In Stock / On Backorder'}})
+        self.assertFalse(w['presale'])
+        w = media.presale_woocommerce({'name': 'Round', 'categories': [{'name': 'Pre-Sale Silver'}]})
+        self.assertTrue(w['presale'])
+        w = media.presale_woocommerce({'name': 'Round', 'stock_availability': {'text': 'In stock'}})
+        self.assertFalse(w['presale'])
+        self.assertEqual(media.presale_shopify(None)['presale'], False)
+
+    def test_product_page(self):
+        html = ('<script type="application/ld+json">{"@type":"Product","name":"Goat",'
+                '"offers":{"availability":"https://schema.org/PreOrder"}}</script>'
+                '<div class="ship-date">Expected to ship on or around Dec 15, 2026</div>')
+        info = drops.parse_product_page(html, 'https://s.example/p')
+        self.assertEqual((info['available'], info['presale'], info['ships']), (True, True, 'Dec 15, 2026'))
+        plain = '<script type="application/ld+json">{"@type":"Product","offers":{"availability":"InStock"}}</script>'
+        self.assertFalse(drops.parse_product_page(plain)['presale'])
+        button = '<h1>Lion</h1><button>Pre-order now</button>'
+        self.assertTrue(drops.parse_product_page(button)['presale'])
+
+    def test_boilerplate_ignored_and_status_kept(self):
+        saved = {}
+        items = [{'product_id': str(i), 'images': [f'https://c.example/{i}.jpg'], 'presale': False,
+                  'presale_text': True, 'ships': ''} for i in range(10)]           # every description says it
+        media.update(saved, 's', items)
+        self.assertFalse(any(m['presale'] for m in saved.values()))
+        items[0].update(presale=True, ships='Dec 1')
+        media.update(saved, 's', items)
+        self.assertEqual((saved[('s', '0')]['presale'], saved[('s', '0')]['ships']), (True, 'Dec 1'))
+        # a page that failed this time keeps the earlier answer
+        media.update(saved, 's', [{'product_id': '0', 'checked': True}])
+        self.assertTrue(saved[('s', '0')]['presale'])
+        # presale without a picture is still recorded; turning off clears the ship date
+        media.update(saved, 's', [{'product_id': '99', 'presale': True, 'ships': 'Jan 5'}])
+        self.assertEqual(saved[('s', '99')], {'thumb': '', 'images': [], 'presale': True, 'ships': 'Jan 5'})
+        media.update(saved, 's', [{'product_id': '99', 'presale': False}])
+        self.assertNotIn(('s', '99'), saved)
+        with tempfile.TemporaryDirectory() as tmp:
+            path = str(Path(tmp) / 'm.csv')
+            media.save(saved, path)
+            self.assertEqual(media.load(path), saved)
+
+    def test_old_file_without_presale_columns_loads(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'm.csv'
+            path.write_text('store,product_id,thumb,images\ns,1,,https://c.example/1.jpg\n')
+            self.assertEqual(media.load(str(path))[('s', '1')]['presale'], False)
+
+    def test_page_item_carries_presale(self):
+        rows = [row(1, published='2026-11-10')]
+        items, _ = gallery.releases(rows, CFG, TODAY, {('https://shop.example', '1'): {
+            'thumb': '', 'images': [], 'presale': True, 'ships': 'Dec 15'}})
+        self.assertEqual((items[0]['ps'], items[0]['sh']), (1, 'Dec 15'))
+        items, _ = gallery.releases(rows, CFG, TODAY, {})
+        self.assertNotIn('ps', items[0])
+
+
+class MoreStores(unittest.TestCase):
+    def test_sitemap_newest_first_with_age_limit(self):
+        today = dt.datetime.now(dt.timezone.utc).date()
+        recent, older, old = (today - dt.timedelta(days=d) for d in (2, 20, 400))
+        index = ('<sitemapindex><sitemap><loc>https://s.example/sm-1.xml</loc></sitemap>'
+                 '<sitemap><loc>https://s.example/blog.xml</loc></sitemap></sitemapindex>')
+        child = (f'<urlset><url><loc>https://s.example/p/old-coin</loc><lastmod>{old}</lastmod></url>'
+                 f'<url><loc>https://s.example/p/mid-coin</loc><lastmod>{older}T10:00:00+00:00</lastmod></url>'
+                 f'<url><loc>https://s.example/p/new-coin</loc><lastmod>{recent}</lastmod></url>'
+                 '<url><loc>https://s.example/p/undated-coin</loc></url>'
+                 '<url><loc>https://s.example/about-us</loc></url></urlset>')
+        pages = {'https://s.example/index.xml': index, 'https://s.example/sm-1.xml': child}
+
+        class Fake:
+            def get(self, url, **kw):
+                return (200, pages[url]) if url in pages else (404, '')
+
+        pat = re.compile('^/p/')
+        self.assertEqual(drops.read_sitemap('https://s.example/index.xml', Fake(), pat, child='sm-'),
+                         ['https://s.example/p/old-coin', 'https://s.example/p/mid-coin',
+                          'https://s.example/p/new-coin', 'https://s.example/p/undated-coin'])
+        self.assertEqual(drops.read_sitemap('https://s.example/index.xml', Fake(), pat, child='sm-', max_age_days=90),
+                         ['https://s.example/p/new-coin', 'https://s.example/p/mid-coin', 'https://s.example/p/undated-coin'])
+        # default child filter (product|items|shop) still applies without a pattern
+        self.assertEqual(drops.read_sitemap('https://s.example/index.xml', Fake(), pat), [])
+
+    def test_catchup_period_hidden_for_page_by_page_stores(self):
+        cfg = {**CFG, 'drops': {'stores': [{'url': 'https://shop.example'},
+                                           {'url': 'https://slow.example', 'platform': 'generic'}]}}
+        rows = [row(1, store='https://slow.example', first_seen='2026-10-20', baseline='1'),   # tracking began
+                row(2, store='https://slow.example', first_seen='2026-10-25'),                 # catch-up: hidden
+                row(3, store='https://slow.example', first_seen='2026-11-05'),                 # real launch
+                row(4, store='https://slow.example', first_seen='2026-10-26', published='2026-10-26'),  # dated: shown
+                row(5, store='https://shop.example', first_seen='2026-10-25')]                 # feed store: shown
+        got = sorted(it['t'] + str(it['s']) for it in gallery.releases(rows, cfg, TODAY)[0])
+        self.assertEqual(len(got), 3)
+        items, stores = gallery.releases(rows, cfg, TODAY)
+        self.assertEqual(sorted((stores[it['s']]['n'], it['d']) for it in items),
+                         [('shop.example', '2026-10-25'), ('slow.example', '2026-10-26'), ('slow.example', '2026-11-05')])

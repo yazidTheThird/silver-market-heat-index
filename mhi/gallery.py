@@ -35,6 +35,9 @@ DEFAULTS = {
     "bulk_first_seen": 25,           # this many undated products "appearing" at one store
                                      # in one day = old catalogue being discovered
     "keep_pictures_extra_days": 30,  # pictures are kept a little longer than the window
+    "catchup_days": 10,              # stores read page by page (platform: generic) take
+                                     # days to work through their old catalogue; undated
+                                     # products first seen in that time are not launches
 }
 
 
@@ -110,21 +113,32 @@ def _first_seen(row: dict) -> str:
 
 def _launches(rows: list[dict], cfg: dict, today: dt.date, days: int):
     """(row, when, dated_by_store) for every launch in the last `days` days."""
-    threshold = settings(cfg)["bulk_first_seen"]
-    found, batch = [], collections.Counter()
+    s = settings(cfg)
+    threshold = s["bulk_first_seen"]
+    page_by_page = {st["url"].rstrip("/") for st in ((cfg or {}).get("drops") or {}).get("stores", [])
+                    if st.get("platform") == "generic"}
+    found, batch, started = [], collections.Counter(), {}
     for row in rows:
+        store = _s(row.get("store"))
+        day = _day(row.get("first_seen"))
+        if day and (store not in started or day < started[store]):
+            started[store] = day
         launch = launch_of(row)
         if not launch:
             continue
         found.append((row, launch[0], launch[1]))
         if not launch[1]:
-            batch[(_s(row.get("store")), launch[0][:10])] += 1
+            batch[(store, launch[0][:10])] += 1
     first, last = today - dt.timedelta(days=days), today + dt.timedelta(days=1)
     for row, when, dated in found:
         day = _day(when)
         if day is None or not first <= day <= last:
             continue
-        if not dated and batch[(_s(row.get("store")), when[:10])] >= threshold:
+        store = _s(row.get("store"))
+        if not dated and batch[(store, when[:10])] >= threshold:
+            continue
+        if (not dated and store in page_by_page and store in started
+                and (day - started[store]).days < s["catchup_days"]):
             continue
         yield row, when, dated
 
@@ -214,6 +228,8 @@ def releases(rows: list[dict], cfg: dict, today: dt.date,
             "z": tag["size"], "f": tag["finish"], "me": tag["metal"],
             "i": pics.get("images") or [],
             "h": pics.get("thumb") or "",
+            "ps": 1 if pics.get("presale") else None,
+            "sh": pics.get("ships") or "",
         }
         items.append({k: v for k, v in item.items() if v not in (None, "", [])})
     items.sort(key=lambda it: it["t"])
@@ -342,7 +358,18 @@ main { padding-bottom: 28px; min-height: 50vh; }
 .blank { position: absolute; inset: 20%; border-radius: 50%; border: 2px solid var(--blank);
   box-shadow: inset 0 0 0 7px var(--photo), inset 0 0 0 8px var(--blank); }
 .new-dot { position: absolute; top: 8px; right: 8px; width: 12px; height: 12px; border-radius: 50%;
-  background: var(--bill); box-shadow: 0 0 0 2px var(--photo); }
+  background: #2a6df4; box-shadow: 0 0 0 2px #fff; }
+.pre { position: absolute; top: 0; left: 0; padding: 4px 9px 4px 8px; border-radius: 0 0 8px 0;
+  background: var(--bill); color: var(--on-bill); font-size: 11px; font-weight: 700; line-height: 1.25;
+  box-shadow: 0 1px 0 rgba(0,0,0,.12); }
+.pre small { display: block; font-size: 10px; font-weight: 600; opacity: .8; }
+.tile.is-pre .ph { border: 2px solid var(--bill); }
+body.wall .pre small { display: none; }
+.chip.pre-chip[aria-pressed="true"] { background: var(--bill); border-color: var(--bill); color: var(--on-bill); }
+.chip.pre-chip .badge { background: var(--ink); color: var(--frost); }
+.chip.pre-chip[aria-pressed="true"] .badge { background: var(--on-bill); color: var(--bill); }
+.d-pre { display: inline-block; margin: 0 0 10px; padding: 4px 10px; border-radius: 6px;
+  background: var(--bill); color: var(--on-bill); font-size: 13px; font-weight: 700; }
 .out { position: absolute; left: 6px; bottom: 6px; padding: 2px 8px; border-radius: 10px;
   background: var(--shade); color: #fff; font-size: 11px; font-weight: 500; }
 .tt { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
@@ -447,6 +474,7 @@ a.go[aria-disabled="true"] { opacity: .4; pointer-events: none; }
     <button class="chip" type="button" id="open-filters">Filters <span class="badge" id="filter-count" hidden></span></button>
     <div class="seg" id="period" role="group" aria-label="How far back"></div>
     <button class="chip" type="button" id="only-new" aria-pressed="false" hidden>New <span class="badge" id="new-count"></span></button>
+    <button class="chip pre-chip" type="button" id="presale" aria-pressed="false" hidden>Presale <span class="badge" id="pre-count"></span></button>
     <button class="chip" type="button" id="colorized" aria-pressed="false">Colorized</button>
     <button class="chip" type="button" id="wall-mode" aria-pressed="false">Photos only</button>
   </div>
@@ -481,6 +509,7 @@ a.go[aria-disabled="true"] { opacity: .4; pointer-events: none; }
       <p class="d-turn" id="d-turn" aria-live="polite"></p>
     </div>
     <div class="d-info">
+      <span class="d-pre" id="d-pre" hidden></span>
       <h2 id="d-title"></h2>
       <dl id="d-facts"></dl>
       <h3>More like this</h3>
@@ -560,7 +589,7 @@ const S = {
   sort: SORTS[prefs.sort] ? prefs.sort : "new",
   colorized: prefs.colorized === true, older: prefs.older === true,
   hideOut: prefs.hideOut === true, wall: prefs.wall === true,
-  onlyNew: false, q: "",
+  onlyNew: false, presale: false, q: "",
 };
 const F = { s: new Set(), me: new Set(), b: new Set(), th: new Set(), f: new Set(), z: new Set() };
 function remember() {
@@ -574,6 +603,7 @@ function inPeriod(skip) {           // period + switches; facet counts come from
     && (!S.colorized || it.c)
     && (skip === "older" || S.older || isCurrent(it))
     && (!S.hideOut || it.a !== 0)
+    && (skip === "pre" || !S.presale || it.ps)
     && (skip === "new" || !S.onlyNew || it.isNew));
 }
 function matches(it) {
@@ -595,6 +625,11 @@ const watcher = "IntersectionObserver" in window
 function render() {
   const fresh = inPeriod("new").filter(matches).filter(it => it.isNew).length;
   if (!fresh) S.onlyNew = false;
+  const pres = inPeriod("pre").filter(matches).filter(it => it.ps).length;
+  if (!pres) S.presale = false;
+  $("presale").hidden = !pres;
+  $("presale").setAttribute("aria-pressed", String(S.presale));
+  $("pre-count").textContent = count(pres);
   list = inPeriod().filter(matches).sort(SORTS[S.sort][1]);
   dayCounts = {};
   for (const it of list) { const k = dayKey(it.ts); dayCounts[k] = (dayCounts[k] || 0) + 1; }
@@ -621,7 +656,8 @@ function more() {
   }
 }
 function tile(it, pos) {
-  const b = el("button", "tile"); b.type = "button"; b.dataset.pos = pos; b.setAttribute("aria-label", it.t);
+  const b = el("button", "tile" + (it.ps ? " is-pre" : "")); b.type = "button"; b.dataset.pos = pos;
+  b.setAttribute("aria-label", (it.ps ? "Presale: " : "") + it.t);
   const ph = el("span", "ph"), src = thumbOf(it);
   if (src) {
     const img = new Image(); img.loading = "lazy"; img.decoding = "async"; img.alt = "";
@@ -629,6 +665,7 @@ function tile(it, pos) {
     if (it.i[0] && it.i[0] !== src) img.dataset.alt = it.i[0];
     img.src = src; ph.append(img);
   } else ph.append(el("span", "blank"));
+  if (it.ps) { const tag = el("span", "pre", "Presale"); if (it.sh) tag.append(el("small", "", "Ships " + it.sh)); ph.append(tag); }
   if (it.isNew) { const dot = el("span", "new-dot"); dot.title = "New since your last visit"; ph.append(dot); }
   if (it.a === 0) ph.append(el("span", "out", "Unavailable"));
   const meta = el("span", "tm");
@@ -651,7 +688,7 @@ function emptyState() {
     box.append(el("p", "", "No releases recorded yet. This page fills in after the tracker's next run."));
     return box;
   }
-  const filtered = facetCount() || S.colorized || S.hideOut || S.onlyNew;
+  const filtered = facetCount() || S.colorized || S.hideOut || S.onlyNew || S.presale;
   box.append(el("p", "", filtered ? "Nothing matches these filters in the last " + S.days + " days."
                                  : "Nothing new in the last " + S.days + " days."));
   if (filtered) {
@@ -706,7 +743,7 @@ function drawSummary() {
 }
 function clearAll() {
   for (const key in F) F[key].clear();
-  S.q = ""; $("q").value = ""; S.onlyNew = false;
+  S.q = ""; $("q").value = ""; S.onlyNew = false; S.presale = false;
   S.colorized = false; S.hideOut = false; S.older = false; S.sort = "new";
   remember();
 }
@@ -717,7 +754,7 @@ for (const d of PERIODS) {
   $("period").append(b);
 }
 const flip = (id, key) => $(id).addEventListener("click", () => { S[key] = !S[key]; remember(); render(); });
-flip("colorized", "colorized"); flip("wall-mode", "wall"); flip("only-new", "onlyNew");
+flip("colorized", "colorized"); flip("wall-mode", "wall"); flip("only-new", "onlyNew"); flip("presale", "presale");
 
 // ----------------------------------------------------------------- filters
 const filters = $("filters");
@@ -790,6 +827,8 @@ function showListing(pos) {
   $("d-prev").disabled = pos === 0;
   $("d-next").disabled = pos === list.length - 1;
   $("d-title").textContent = it.t;
+  $("d-pre").hidden = !it.ps;
+  $("d-pre").textContent = it.ps ? "Presale" + (it.sh ? " · ships " + it.sh : "") : "";
   $("d-photo").classList.remove("turning");
   showPicture(it, 0);
 
@@ -804,7 +843,9 @@ function showListing(pos) {
        it.k ? "" : "This store gives no release date, so this is when the tracker first saw it.");
   fact("Price", it.p == null ? "Not shown" : money(it.p, st.cur) + (st.cur !== "USD" && it.usd ? " (about " + money(it.usd, "USD") + " US)" : ""));
   if (it.m) fact("Mintage", count(it.m), "Read from the listing text. Check the store page.");
-  fact("Status", it.a === 1 ? "Available" : it.a === 0 ? "Unavailable at this store" : "Not checked recently");
+  fact("Status", it.ps ? (it.a === 0 ? "Presale, unavailable at this store" : "Presale: order now, ships later")
+    : it.a === 1 ? "Available" : it.a === 0 ? "Unavailable at this store" : "Not checked recently",
+    it.ps ? "Marked from the store's pre-order or presale wording. Check the ship date on the store page." : "");
 
   const like = $("d-like"); like.textContent = "";
   const suggest = (label, apply) => {
@@ -927,6 +968,7 @@ function ago(ms) {
   const down = D.stores.filter(s => s.ok === false).map(s => s.n);
   foot.append(el("p", "", "Listings first seen in the last " + D.meta.window + " days at the stores the tracker reads. A listing is not a sale, and unavailable does not mean sold."));
   if (down.length) foot.append(el("p", "", "Not readable on the last check: " + down.join(", ") + "."));
+  foot.append(el("p", "", "Yellow “Presale” tag: the store takes orders now and ships later. Blue dot: new since your last visit."));
   foot.append(el("p", "", "Pictures load from each store's own site."));
 })();
 

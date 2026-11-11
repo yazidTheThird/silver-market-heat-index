@@ -5,9 +5,12 @@ This module keeps the pictures that belong to recent launches in a separate
 file, data/media.csv, so the availability evidence and its columns stay as
 they are.
 
-One row per product: store, product_id, thumb, images
-  images  up to MAX_IMAGES full-size picture addresses, separated by a space
-  thumb   a small version of the first picture, when the store offers one
+One row per product: store, product_id, thumb, images, presale, ships
+  images   up to MAX_IMAGES full-size picture addresses, separated by a space
+  thumb    a small version of the first picture, when the store offers one
+  presale  1 when the store sells it ahead of shipping (pre-order / presale /
+           backorder), as of the last time the product was read
+  ships    the ship date the listing gives, as written ("Dec 15, 2026"), if any
 
 Only addresses are saved. The gallery shows each picture straight from the
 store's own server; nothing is downloaded or copied into this repository.
@@ -22,7 +25,7 @@ from urllib.parse import urljoin, urlparse
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 PATH = os.path.join(ROOT, "data", "media.csv")
-COLS = ["store", "product_id", "thumb", "images"]
+COLS = ["store", "product_id", "thumb", "images", "presale", "ships"]
 MAX_IMAGES = 3
 
 # Stand-in pictures a store shows when a product has no photo yet.
@@ -74,6 +77,35 @@ def pick(urls, base: str = "", limit: int = MAX_IMAGES) -> list[str]:
     return out
 
 
+# ------------------------------------------------------------------ presale
+# Words a store uses for "pay now, ships later". Checked in titles, tags,
+# categories, stock labels and product descriptions.
+PRESALE = re.compile(r"\bpre[- ]?order(?:s|ing)?\b|\bpre[- ]?sales?\b|\bpresales?\b|"
+                     r"\bexpected (?:to )?ship|\bships? (?:on or )?(?:around|after|by|starting|beginning)\b|"
+                     r"\bestimated (?:ship|shipping|delivery) date", re.I)
+_MONTH = r"(?:jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)[a-z]*\.?"
+SHIPS = re.compile(r"(?:expected (?:to )?ship(?:ping)?|ships?|shipping|estimated (?:ship|shipping|delivery)(?: date)?|"
+                   r"release date|available)\s*(?:date)?\s*(?:on or )?(?:around|after|by|on|in|from|starting|beginning)?"
+                   r"\s*[:\-]?\s*((?:early |mid[- ]?|late |end of )?" + _MONTH + r"(?:\s+\d{1,2}(?:st|nd|rd|th)?(?!\d))?(?:,?\s*\d{4})?"
+                   r"|\d{1,2}/\d{1,2}/\d{2,4}|q[1-4]\s*\d{4})", re.I)
+_TAGS = re.compile(r"<[^>]+>")
+
+
+def presale_in(*texts) -> tuple[bool, str]:
+    """(is presale, ship date as written) from any number of text fields."""
+    found, ships = False, ""
+    for text in texts:
+        if not isinstance(text, str) or not text:
+            continue
+        text = " ".join(_TAGS.sub(" ", text).split())
+        if PRESALE.search(text):
+            found = True
+            m = SHIPS.search(text)
+            if m and not ships:
+                ships = m.group(1).strip(" ,.")[:24]
+    return found, ships if found else ""
+
+
 # ------------------------------------------------------------ reading a store
 def _optional(reader):
     """Pictures are a convenience. Whatever a store sends, reading them must
@@ -97,6 +129,19 @@ def from_shopify(product: dict) -> dict:
     if not urls and isinstance(product.get("image"), dict):
         urls = [product["image"].get("src")]
     return {"images": pick(urls), "thumb": ""}
+
+
+def presale_shopify(product: dict) -> dict:
+    """Presale from a Shopify product: title, tags and type; then the
+    description, which may be ignored later if a store repeats it everywhere."""
+    try:
+        tags = product.get("tags")
+        tags = " ".join(tags) if isinstance(tags, list) else str(tags or "")
+        strong, ships = presale_in(product.get("title"), tags, product.get("product_type"))
+        weak, ships2 = presale_in(product.get("body_html"))
+        return {"presale": strong, "presale_text": weak and not strong, "ships": ships or ships2}
+    except Exception:  # noqa: BLE001
+        return {"presale": False, "presale_text": False, "ships": ""}
 
 
 def _grid_size(srcset, least: int = 480, most: int = 1100) -> str:
@@ -123,6 +168,21 @@ def from_woocommerce(product: dict) -> dict:
     if full and clean(images[0].get("src")) == full[0]:
         thumb = clean(_grid_size(images[0].get("srcset"))) or clean(images[0].get("thumbnail"))
     return {"images": full, "thumb": "" if full and thumb == full[0] else thumb}
+
+
+def presale_woocommerce(product: dict) -> dict:
+    """Presale from a WooCommerce product: a pre-order stock label, title,
+    category or tag; then the description (weaker). "On backorder" is not
+    presale: several stores use it for ordinary restocking."""
+    try:
+        label = (product.get("stock_availability") or {}).get("text", "")
+        names = " ".join(x.get("name", "") for key in ("categories", "tags")
+                         for x in (product.get(key) or []) if isinstance(x, dict))
+        strong, ships = presale_in(product.get("name"), label, names)
+        weak, ships2 = presale_in(product.get("short_description"), product.get("description"))
+        return {"presale": strong, "presale_text": weak and not strong, "ships": ships or ships2}
+    except Exception:  # noqa: BLE001
+        return {"presale": False, "presale_text": False, "ships": ""}
 
 
 def _ld_urls(value) -> list:
@@ -169,9 +229,11 @@ def load(path: str | None = None) -> dict:
     with open(path, newline="", encoding="utf-8") as fh:
         for row in csv.DictReader(fh):
             images = pick((row.get("images") or "").split())
-            if row.get("store") and row.get("product_id") and images:
+            presale = (row.get("presale") or "").strip() == "1"
+            if row.get("store") and row.get("product_id") and (images or presale):
                 media[(row["store"], row["product_id"])] = {
-                    "thumb": clean(row.get("thumb") or ""), "images": images}
+                    "thumb": clean(row.get("thumb") or ""), "images": images,
+                    "presale": presale, "ships": (row.get("ships") or "").strip()[:24]}
     return media
 
 
@@ -183,7 +245,8 @@ def save(media: dict, path: str | None = None) -> None:
         writer = csv.writer(fh, lineterminator="\n")
         writer.writerow(COLS)
         for (store, product_id), m in sorted(media.items()):
-            writer.writerow([store, product_id, m.get("thumb", ""), " ".join(m["images"])])
+            writer.writerow([store, product_id, m.get("thumb", ""), " ".join(m.get("images") or []),
+                             "1" if m.get("presale") else "", m.get("ships", "") if m.get("presale") else ""])
     os.replace(temp, path)
 
 
@@ -193,16 +256,31 @@ def update(media: dict, store: str, items: list[dict], keep: set | None = None) 
     Products the read did not cover, or returned without a picture, keep what
     was saved before. With `keep`, only those (store, product_id) are recorded.
     """
+    items = [it for it in items or [] if keep is None or (store, str(it.get("product_id", ""))) in keep]
+    # A presale phrase found only in descriptions counts unless the store puts it
+    # in most of its descriptions (shipping boilerplate), where it means nothing.
+    text_only = [it for it in items if it.get("presale_text")]
+    trust_text = len(text_only) < max(3, 0.4 * len(items))
     changed = 0
-    for it in items or []:
+    for it in items:
         key = (store, str(it.get("product_id", "")))
-        if keep is not None and key not in keep:
+        if not it.get("checked", True):
             continue
-        images = pick(it.get("images"))
-        if not images:
+        old = media.get(key)
+        if "presale" in it:
+            presale = bool(it.get("presale")) or (trust_text and bool(it.get("presale_text")))
+            ships = (it.get("ships") or "")[:24] if presale else ""
+        else:                       # carried forward without a fresh read: keep what we knew
+            presale, ships = bool((old or {}).get("presale")), (old or {}).get("ships", "")
+        images = pick(it.get("images")) or (old or {}).get("images") or []
+        thumb = clean(it.get("thumb") or "") if pick(it.get("images")) else (old or {}).get("thumb", "")
+        if not images and not presale:
+            if old:
+                del media[key]
+                changed += 1
             continue
-        entry = {"thumb": clean(it.get("thumb") or ""), "images": images}
-        if media.get(key) != entry:
+        entry = {"thumb": thumb, "images": images, "presale": presale, "ships": ships}
+        if old != entry:
             media[key] = entry
             changed += 1
     return changed

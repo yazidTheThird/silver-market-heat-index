@@ -37,7 +37,7 @@ tracking:
 
 # Rough exchange rates for stores that don't price in USD (used for price bands and
 # premium over spot only). Update now and then.
-fx_to_usd: {AUD: 0.65, CAD: 0.72, GBP: 1.30, EUR: 1.10}
+fx_to_usd: {AUD: 0.65, CAD: 0.72, GBP: 1.30, EUR: 1.10, NZD: 0.59}
 
 # What counts as a colorized product (checked against titles, types and tags).
 colorized_pattern: "coloriz|colouriz|colorised|colourised|colou?red\\b|full[- ]colou?r|\\bcolou?r in\\b|chromatic|enamel"
@@ -132,10 +132,121 @@ drops:
       listing_is_collectible: true
       product_link_pattern: "/silver-coins/[^/]+/[^/]+/?$"
 
+    # ---- Added 11 Nov 2026 after a reachability test from GitHub's servers ----
+    # Public product feeds (whole catalogue read cheaply, every run)
+    - url: "https://www.moderncoinmart.com"     # big US collector dealer, has a Presale category
+      platform: woocommerce
+    - url: "https://www.pinehurstcoins.com"     # US graded/new releases, "Silver Presale" category
+      platform: woocommerce
+    - url: "https://www.intagliomint.com"       # private mint (US)
+      platform: woocommerce
+    - url: "https://www.libertycoin.com"        # US
+      platform: woocommerce
+    - url: "https://www.goldsilver.com"         # US
+      platform: woocommerce
+    - url: "https://www.libertymint.com"        # US private mint
+      platform: woocommerce
+    - url: "https://www.summitmetals.com"       # US (mostly bullion; plain bullion is skipped)
+      platform: shopify
+    - url: "https://www.highlandmint.com"       # US private mint
+      platform: shopify
+    - url: "https://www.numiscollect.eu"        # EU collector coins
+      platform: woocommerce
+      currency: EUR
+    - url: "https://www.downies.com"            # Australia
+      platform: shopify
+      currency: AUD
+    - url: "https://www.melbournecoins.com.au"  # Australia
+      platform: shopify
+      currency: AUD
+    - url: "https://www.goldstackers.com.au"    # Australia
+      platform: woocommerce
+      currency: AUD
+    - url: "https://www.nzmint.com"             # New Zealand Mint
+      platform: shopify
+      currency: NZD
+    - url: "https://www.bullionmart.ca"         # Canada
+      platform: woocommerce
+      currency: CAD
+
+    # Read page by page from the sitemap, newest first (slower; the first ~10 days
+    # are spent working through old catalogue, which the gallery leaves out)
+    - url: "https://www.goldenstatemint.com"    # US private mint (copper/silver rounds)
+      platform: generic
+      sitemap_url: "https://www.goldenstatemint.com/sitemap.xml"
+      sitemap_max_age_days: 365
+      product_link_pattern: "\\.html$"
+    - url: "https://www.mintstategold.com"      # US
+      platform: generic
+      sitemap_url: "https://www.mintstategold.com/sitemap.xml"
+      sitemap_max_age_days: 180
+      product_link_pattern: "-\\d{3,6}\\.html$"
+    - url: "https://www.texmetals.com"          # US (Texas Precious Metals)
+      platform: generic
+      sitemap_url: "https://www.texmetals.com/sitemap.xml"
+      sitemap_max_age_days: 365
+      product_link_pattern: "^/p/"
+    - url: "https://www.boldpreciousmetals.com" # US
+      platform: generic
+      sitemap_url: "https://www.boldpreciousmetals.com/sitemap.xml"
+      sitemap_child_pattern: "/products\\.xml"
+      sitemap_max_age_days: 365
+      product_link_pattern: "^/product/\\d+/"
+    - url: "https://www.govmint.com"            # US
+      platform: generic
+      sitemap_url: "https://www.govmint.com/sitemap.xml"
+      sitemap_child_pattern: "sitemap-\\d"
+      sitemap_max_age_days: 180
+      product_link_pattern: "^/[a-z0-9]+(?:-[a-z0-9]+){3,}$"
+    - url: "https://www.perthmint.com"          # Perth Mint (Australia)
+      platform: generic
+      currency: AUD
+      sitemap_url: "https://www.perthmint.com/sitemap.xml"
+      sitemap_max_age_days: 365
+      product_link_pattern: "^/shop/(?!jewellery|gifts)[^/]+/.+/"
+    - url: "https://www.thecoinshop.com.au"     # Australia
+      platform: generic
+      currency: AUD
+      sitemap_url: "https://www.thecoinshop.com.au/sitemap.xml"
+      product_link_pattern: "^/product/"
+    - url: "https://www.royalmint.com"          # Royal Mint (UK)
+      platform: generic
+      currency: GBP
+      sitemap_url: "https://www.royalmint.com/sitemap.xml"
+      sitemap_child_pattern: "bundle=commerce"
+      sitemap_max_age_days: 365
+      product_link_pattern: "^/[a-z-]+/[^/]+/.+"
+    - url: "https://www.chards.co.uk"           # UK
+      platform: generic
+      currency: GBP
+      sitemap_url: "https://www.chards.co.uk/sitemap.xml"
+      sitemap_child_pattern: "/products\\.xml"
+      sitemap_max_age_days: 180
+      product_link_pattern: "/\\d{3,6}/?$"
+    - url: "https://www.mdm.de"                 # Germany (MDM)
+      platform: generic
+      currency: EUR
+      sitemap_url: "https://www.mdm.de/sitemap-product.xml"
+      sitemap_child_pattern: "sitemap-product"
+      sitemap_max_age_days: 180
+      product_link_pattern: "^/[a-z0-9-]{12,}$"
+    - url: "https://www.emk.com"                # Germany (Emporium Hamburg)
+      platform: generic
+      currency: EUR
+      sitemap_url: "https://www.emk.com/sitemap.xml"
+      sitemap_child_pattern: "sitemap_"
+      sitemap_max_age_days: 180
+      product_link_pattern: "^/en-us/.+/[^/]+-\\d+$|^/en-us/.+/[^/]{25,}$"
+
     # Removed after the first runs:
     #   JM Bullion, BGASC, Silver.com — block automated visitors (HTTP 401)
     #   Littleton — product pages don't show stock status
     #   Scottsdale Mint — page times out even in a headless browser
+    # Tested 11 Nov 2026 and left out (block automated visitors, or no readable
+    # stock on product pages): BGASC, JM Bullion, Silver.com, BullionMax, Money
+    # Metals, BullionByPost, SilverGoldBull, Monument Metals, Golden Eagle Coins,
+    # US Mint, Royal Canadian Mint, Royal Australian Mint, Germania Mint, CIT,
+    # Pobjoy, Powercoin, Westminster, SilverTowne, Littleton, Coinworks
   fast_window_days: 7             # fast checker re-checks launches from the last 7 days
   fast_max_checks_per_store: 40   # page fetches per store per fast check (non-feed stores)
   recent_days: 30                 # "recent launches" = launched in the last 30 days
