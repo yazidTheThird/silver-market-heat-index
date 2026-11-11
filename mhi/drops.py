@@ -339,9 +339,16 @@ def read_sitemap(url: str, f: Fetcher, pattern: re.Pattern, depth: int = 0,
         cutoff = (dt.datetime.now(dt.timezone.utc) - dt.timedelta(days=int(max_age_days))).date().isoformat()
         entries = [e for e in entries if not e[1] or e[1] >= cutoff]
         entries.sort(key=lambda e: e[1] or "", reverse=True)
-    out = []
+    # Many sitemaps carry no dates. A product URL naming this year or next is
+    # almost always a current release, so those are checked first.
+    this_year = dt.date.today().year
+    recent = re.compile(rf"(?<!\d)(?:{this_year - 1}|{this_year}|{this_year + 1})(?!\d)")
+    entries.sort(key=lambda e: 0 if recent.search(urlparse(e[0]).path) else 1)
+    out, seen = [], set()
     for u, _ in entries:
-        if u not in out:
+        u = u.split("#")[0]
+        if u not in seen:
+            seen.add(u)
             out.append(u)
     return out
 

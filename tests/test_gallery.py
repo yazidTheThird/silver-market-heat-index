@@ -385,3 +385,20 @@ class MoreStores(unittest.TestCase):
         items, stores = gallery.releases(rows, cfg, TODAY)
         self.assertEqual(sorted((stores[it['s']]['n'], it['d']) for it in items),
                          [('shop.example', '2026-10-25'), ('slow.example', '2026-10-26'), ('slow.example', '2026-11-05')])
+
+
+class SitemapOrder(unittest.TestCase):
+    def test_current_years_first_and_fragments_merged(self):
+        y = dt.date.today().year
+        xml = ('<urlset>' + ''.join(f'<url><loc>https://s.example/p/{slug}</loc></url>' for slug in
+               ['1872-sovereign/5934#child=1', '1872-sovereign/5934#child=2', f'{y}-dragon-1oz/9001',
+                'kangaroo-proof/12', f'{y + 1}-goat/9002', f'1oz-{y}0101-bar/7']) + '</urlset>')
+
+        class Fake:
+            def get(self, url, **kw):
+                return 200, xml
+
+        got = drops.read_sitemap('https://s.example/sm.xml', Fake(), re.compile('^/p/'))
+        self.assertEqual(got, [f'https://s.example/p/{y}-dragon-1oz/9001', f'https://s.example/p/{y + 1}-goat/9002',
+                               'https://s.example/p/1872-sovereign/5934', 'https://s.example/p/kangaroo-proof/12',
+                               f'https://s.example/p/1oz-{y}0101-bar/7'])

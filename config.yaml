@@ -33,7 +33,8 @@ lookback_days: 90
 # The heat index itself is always computed from the colorized products.
 tracking:
   mode: collectible
-  # exclude_pattern: "goldback|banknote"     # anything else you never want tracked
+  # anything never worth tracking: die-cast models and jewellery some coin shops also sell
+  exclude_pattern: "die-?cast|\\b1:(?:12|18|24|43|64)\\b|\\bf1 team\\b|\\bnecklace|\\bpendant|\\bearrings?\\b|\\bbracelet"
 
 # Rough exchange rates for stores that don't price in USD (used for price bands and
 # premium over spot only). Update now and then.
@@ -176,11 +177,6 @@ drops:
       sitemap_url: "https://www.goldenstatemint.com/sitemap.xml"
       sitemap_max_age_days: 365
       product_link_pattern: "\\.html$"
-    - url: "https://www.mintstategold.com"      # US
-      platform: generic
-      sitemap_url: "https://www.mintstategold.com/sitemap.xml"
-      sitemap_max_age_days: 180
-      product_link_pattern: "-\\d{3,6}\\.html$"
     - url: "https://www.texmetals.com"          # US (Texas Precious Metals)
       platform: generic
       sitemap_url: "https://www.texmetals.com/sitemap.xml"
@@ -230,13 +226,6 @@ drops:
       sitemap_child_pattern: "sitemap-product"
       sitemap_max_age_days: 180
       product_link_pattern: "^/[a-z0-9-]{12,}$"
-    - url: "https://www.emk.com"                # Germany (Emporium Hamburg)
-      platform: generic
-      currency: EUR
-      sitemap_url: "https://www.emk.com/sitemap.xml"
-      sitemap_child_pattern: "sitemap_"
-      sitemap_max_age_days: 180
-      product_link_pattern: "^/en-us/.+/[^/]+-\\d+$|^/en-us/.+/[^/]{25,}$"
 
     # Removed after the first runs:
     #   JM Bullion, BGASC, Silver.com — block automated visitors (HTTP 401)
@@ -246,7 +235,8 @@ drops:
     # stock on product pages): BGASC, JM Bullion, Silver.com, BullionMax, Money
     # Metals, BullionByPost, SilverGoldBull, Monument Metals, Golden Eagle Coins,
     # US Mint, Royal Canadian Mint, Royal Australian Mint, Germania Mint, CIT,
-    # Pobjoy, Powercoin, Westminster, SilverTowne, Littleton, Coinworks
+    # Pobjoy, Powercoin, Westminster, SilverTowne, Littleton, Coinworks,
+    # Mint State Gold (sitemap months out of date), Emporium Hamburg (sitemap layout)
   fast_window_days: 7             # fast checker re-checks launches from the last 7 days
   fast_max_checks_per_store: 40   # page fetches per store per fast check (non-feed stores)
   recent_days: 30                 # "recent launches" = launched in the last 30 days
