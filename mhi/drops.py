@@ -105,7 +105,7 @@ def read_shopify(base: str, f: Fetcher, cfg: dict) -> list[dict] | None:
                         "available": (any(v.get("available") is True for v in variants) if all(isinstance(v.get("available"), bool) for v in variants) else None),
                         "colorized": colored, "price": _num(variants[0].get("price")),
                         "mintage": find_mintage(f'{p.get("title","")} {body}'),
-                        **media.from_shopify(p)})
+                        **media.from_shopify(p), **media.presale_shopify(p)})
         if len(batch) < 250:
             break
         time.sleep(1)
@@ -139,7 +139,7 @@ def read_woocommerce(base: str, f: Fetcher, cfg: dict) -> list[dict] | None:
                         "available": (p.get("is_in_stock") if isinstance(p.get("is_in_stock"), bool) else None),
                         "colorized": colored, "price": price,
                         "mintage": find_mintage(f'{p.get("name","")} {desc}'),
-                        **media.from_woocommerce(p)})
+                        **media.from_woocommerce(p), **media.presale_woocommerce(p)})
         if len(batch) < 100:
             break
         time.sleep(1)
@@ -236,7 +236,8 @@ def read_generic(store: dict, f: Fetcher, cfg: dict, known: pd.DataFrame,
                     "published": info["published"], "available": info["available"],
                     "checked": True, "colorized": colored, "price": info["price"],
                     "mintage": find_mintage(f'{title} {info["description"]}'),
-                    "images": info["images"]})
+                    "images": info["images"], "presale": info["presale"],
+                    "ships": info["ships"]})
         time.sleep(store.get("delay_seconds", 1.5))
     _save_ignore(ignore)
     log.info("drops: %s -> %d product links, %d pages fetched, HTTP errors %s, "
@@ -321,11 +322,39 @@ def discover_links(store: dict, f: Fetcher, skip_sitemap: bool = False) -> list[
             time.sleep(1)
 
     if store.get("sitemap_url") and not (skip_sitemap and links):
-        links.extend(u for u in read_sitemap(store["sitemap_url"], f, pattern) if u not in links)
+        found = read_sitemap(store["sitemap_url"], f, pattern,
+                             child=store.get("sitemap_child_pattern"),
+                             max_age_days=store.get("sitemap_max_age_days"))
+        links.extend(u for u in found if u not in links)
     return links
 
 
-def read_sitemap(url: str, f: Fetcher, pattern: re.Pattern, depth: int = 0) -> list[str]:
+def read_sitemap(url: str, f: Fetcher, pattern: re.Pattern, depth: int = 0,
+                 child: str | None = None, max_age_days: int | None = None) -> list[str]:
+    """Product URLs from a sitemap. With max_age_days, entries whose <lastmod> is
+    older are dropped and the rest come newest first, so new releases are
+    checked before old catalogue."""
+    entries = _sitemap_entries(url, f, pattern, depth, child)
+    if max_age_days:
+        cutoff = (dt.datetime.now(dt.timezone.utc) - dt.timedelta(days=int(max_age_days))).date().isoformat()
+        entries = [e for e in entries if not e[1] or e[1] >= cutoff]
+        entries.sort(key=lambda e: e[1] or "", reverse=True)
+    # Many sitemaps carry no dates. A product URL naming this year or next is
+    # almost always a current release, so those are checked first.
+    this_year = dt.date.today().year
+    recent = re.compile(rf"(?<!\d)(?:{this_year - 1}|{this_year}|{this_year + 1})(?!\d)")
+    entries.sort(key=lambda e: 0 if recent.search(urlparse(e[0]).path) else 1)
+    out, seen = [], set()
+    for u, _ in entries:
+        u = u.split("#")[0]
+        if u not in seen:
+            seen.add(u)
+            out.append(u)
+    return out
+
+
+def _sitemap_entries(url: str, f: Fetcher, pattern: re.Pattern, depth: int = 0,
+                     child: str | None = None) -> list[tuple[str, str]]:
     try:
         code, xml = f.get(url)
     except Exception as e:  # noqa: BLE001
@@ -334,14 +363,22 @@ def read_sitemap(url: str, f: Fetcher, pattern: re.Pattern, depth: int = 0) -> l
     if code != 200:
         log.warning("drops: sitemap %s -> HTTP %s", url, code)
         return []
-    locs = [html_lib.unescape(u) for u in re.findall(r"<loc>\s*([^<]+?)\s*</loc>", xml)]
     if "<sitemapindex" in xml and depth < 2:
+        locs = [html_lib.unescape(u) for u in re.findall(r"<loc>\s*([^<]+?)\s*</loc>", xml)]
         out = []
         for sm in locs:
-            if re.search(r"product|\bitems?\b|shop", sm, re.I):
-                out.extend(read_sitemap(sm, f, pattern, depth + 1))
+            if re.search(child or r"product|\bitems?\b|shop", sm, re.I):
+                out.extend(_sitemap_entries(sm, f, pattern, depth + 1, child))
         return out
-    return [u for u in locs if pattern.search(urlparse(u).path)]
+    out = []
+    for block in re.findall(r"<url>(.*?)</url>", xml, re.S) or []:
+        loc = re.search(r"<loc>\s*([^<]+?)\s*</loc>", block)
+        mod = re.search(r"<lastmod>\s*([^<]+?)\s*</lastmod>", block)
+        if loc:
+            u = html_lib.unescape(loc.group(1))
+            if pattern.search(urlparse(u).path):
+                out.append((u, mod.group(1)[:10] if mod else ""))
+    return out
 
 
 # ------------------------------------------------------------- product pages
@@ -360,6 +397,7 @@ def parse_product_page(html: str, base: str = "") -> dict:
     price, description = None, ""
     objects = _jsonld(soup)
     images = media.from_page(soup, objects, base)["images"]   # for the release gallery
+    states_seen = []                                          # raw availability values
 
     for obj in objects:
         if not isinstance(obj, dict):
@@ -384,6 +422,7 @@ def parse_product_page(html: str, base: str = "") -> dict:
                 price = _num(o.get("price") or o.get("lowPrice"))
         states = [str(o.get("availability", "")) for o in offers if isinstance(o, dict)]
         states = [s for s in states if s]
+        states_seen += states
         if states:
             parsed = [stock_value(s) for s in states]
             avail = True if True in parsed else (False if all(x is False for x in parsed) else None)
@@ -420,9 +459,28 @@ def parse_product_page(html: str, base: str = "") -> dict:
     if not description:
         meta = soup.find("meta", attrs={"name": "description"})
         description = meta.get("content", "") if meta else ""
+    presale, ships = _page_presale(soup, states_seen, title, description)
     return {"title": title[:150], "available": available, "published": published,
             "category": category, "price": price, "description": description,
-            "images": images}
+            "images": images, "presale": presale, "ships": ships}
+
+
+def _page_presale(soup, states: list, title: str, description: str) -> tuple[bool, str]:
+    """Presale on a product page: schema.org PreOrder/BackOrder, the buy button,
+    or a ship-date line near it. Never affects the stock reading."""
+    try:
+        raw = {re.sub(r"[ _-]", "", s.rsplit("/", 1)[-1]).lower() for s in states}
+        strong = bool(raw & {"preorder", "presale"})
+        buy = " ".join(b.get_text(" ", strip=True) if b.name != "input" else b.get("value", "")
+                       for b in soup.find_all(["button", "input"])[:40])
+        area = " ".join(t.get_text(" ", strip=True) for t in soup.find_all(
+            class_=re.compile(r"ship|stock|availability|presale|pre-?order|release", re.I))[:20])
+        found, ships = media.presale_in(title, buy, area)
+        if not ships and (strong or found):
+            ships = media.presale_in("pre-order " + description)[1]
+        return strong or found, ships if (strong or found) else ""
+    except Exception:  # noqa: BLE001
+        return False, ""
 
 
 def _jsonld(soup: BeautifulSoup) -> list:
@@ -588,8 +646,9 @@ def _save_pictures(state: pd.DataFrame, pictures: list, cfg: dict, today: dt.dat
         changed = sum(media.update(saved, base, items, keep) for base, items in pictures)
         dropped = media.prune(saved, keep)
         media.save(saved)
-        log.info("gallery pictures: %d recent launches, %d with a picture "
-                 "(%d new or changed, %d aged out)", len(keep), len(saved), changed, dropped)
+        log.info("gallery pictures: %d recent launches, %d saved, %d presale "
+                 "(%d new or changed, %d aged out)", len(keep), len(saved),
+                 sum(1 for m in saved.values() if m.get("presale")), changed, dropped)
     except Exception as e:  # noqa: BLE001
         log.warning("gallery pictures: skipped — %s", e)
 
