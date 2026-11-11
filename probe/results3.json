@@ -1,0 +1,919 @@
+[
+ {
+  "store": "https://www.moderncoinmart.com",
+  "platform": "woocommerce",
+  "items": 1045,
+  "readable": 1045,
+  "pictures": 1045,
+  "presale": 617,
+  "presale_text": 0,
+  "sample": [
+   [
+    "Presale &#8211; 2026 Diamond Field $1 Morgan and Peace Dolla",
+    true,
+    true,
+    true,
+    "12/04/2026"
+   ],
+   [
+    "Presale &#8211; 2026 Diamond Field $1 Morgan and Peace Dolla",
+    true,
+    true,
+    true,
+    "12/04/2026"
+   ],
+   [
+    "Presale &#8211; 2026-S $1 American Innovation Clad Dollar Re",
+    true,
+    true,
+    true,
+    "11/20/2026"
+   ],
+   [
+    "Presale &#8211; 2026-S $1 American Innovation Clad Dollar Re",
+    true,
+    true,
+    true,
+    "11/20/2026"
+   ]
+  ],
+  "presale_examples": [
+   [
+    "Presale &#8211; 2026 Diamond Field $1 Morgan and Peace Dolla",
+    "12/04/2026"
+   ],
+   [
+    "Presale &#8211; 2026 Diamond Field $1 Morgan and Peace Dolla",
+    "12/04/2026"
+   ],
+   [
+    "Presale &#8211; 2026-S $1 American Innovation Clad Dollar Re",
+    "11/20/2026"
+   ],
+   [
+    "Presale &#8211; 2026-S $1 American Innovation Clad Dollar Re",
+    "11/20/2026"
+   ]
+  ],
+  "seconds": 85
+ },
+ {
+  "store": "https://www.pinehurstcoins.com",
+  "platform": "woocommerce",
+  "items": 1035,
+  "readable": 1035,
+  "pictures": 1035,
+  "presale": 626,
+  "presale_text": 0,
+  "sample": [
+   [
+    "Presale &#8211; 2027 $25 American Gold Eagle 1/2 oz PCGS MS7",
+    true,
+    true,
+    true,
+    "1/29/2027"
+   ],
+   [
+    "Presale &#8211; 2027 $10 American Gold Eagle 1/4 oz PCGS MS7",
+    true,
+    true,
+    true,
+    "1/29/2027"
+   ],
+   [
+    "Presale &#8211; 2027 $5 American Gold Eagle 1/10 oz PCGS MS7",
+    true,
+    true,
+    true,
+    "1/29/2027"
+   ],
+   [
+    "Presale &#8211; 2027 $1 Australia Silver Kangaroo 1 oz NGC M",
+    true,
+    true,
+    true,
+    "11/27/2026"
+   ]
+  ],
+  "presale_examples": [
+   [
+    "Presale &#8211; 2027 $25 American Gold Eagle 1/2 oz PCGS MS7",
+    "1/29/2027"
+   ],
+   [
+    "Presale &#8211; 2027 $10 American Gold Eagle 1/4 oz PCGS MS7",
+    "1/29/2027"
+   ],
+   [
+    "Presale &#8211; 2027 $5 American Gold Eagle 1/10 oz PCGS MS7",
+    "1/29/2027"
+   ],
+   [
+    "Presale &#8211; 2027 $1 Australia Silver Kangaroo 1 oz NGC M",
+    "11/27/2026"
+   ]
+  ],
+  "seconds": 85
+ },
+ {
+  "store": "https://www.intagliomint.com",
+  "platform": "woocommerce",
+  "items": 608,
+  "readable": 608,
+  "pictures": 558,
+  "presale": 0,
+  "presale_text": 0,
+  "sample": [
+   [
+    "1876 SEASHORE DOLLAR PATTERN TRIBUTE \u2013 1 AVDP OUNCE \u2013 .999 F",
+    true,
+    true,
+    false,
+    ""
+   ],
+   [
+    "1876 SEASHORE DOLLAR PATTERN TRIBUTE \u2013 1 TROY OUNCE &#8211; ",
+    true,
+    true,
+    false,
+    ""
+   ],
+   [
+    "VERITAS NUMISMA SERIES &#8211; ENDURING LATIN MAXIMS &#8211;",
+    true,
+    true,
+    false,
+    ""
+   ],
+   [
+    "VERITAS NUMISMA SERIES \u2013 ENDURING LATIN MAXIMS \u2013 PER ASPERA ",
+    true,
+    true,
+    false,
+    ""
+   ]
+  ],
+  "presale_examples": [],
+  "seconds": 19
+ },
+ {
+  "store": "https://www.libertycoin.com",
+  "platform": "woocommerce",
+  "items": 384,
+  "readable": 384,
+  "pictures": 384,
+  "presale": 0,
+  "presale_text": 0,
+  "sample": [
+   [
+    "2027 P Australia Platinum Lunar Series III Year of the Goat ",
+    true,
+    true,
+    false,
+    ""
+   ],
+   [
+    "2027 P Australia Silver Kangaroo 1 oz $1 BU &#8211; 1 Box 25",
+    false,
+    true,
+    false,
+    ""
+   ],
+   [
+    "1903 US Morgan Silver Dollar $1 &#8211; NGC MS 64",
+    false,
+    true,
+    false,
+    ""
+   ],
+   [
+    "1903 US Morgan Silver Dollar $1 &#8211; NGC MS 63",
+    false,
+    true,
+    false,
+    ""
+   ]
+  ],
+  "presale_examples": [],
+  "seconds": 30
+ },
+ {
+  "store": "https://www.goldsilver.com",
+  "platform": "woocommerce",
+  "items": 6,
+  "readable": 6,
+  "pictures": 6,
+  "presale": 0,
+  "presale_text": 0,
+  "sample": [
+   [
+    "1 oz Silver Kangaroo",
+    true,
+    true,
+    false,
+    ""
+   ],
+   [
+    "100 oz Silver Bar",
+    true,
+    true,
+    false,
+    ""
+   ],
+   [
+    "1/10 oz Gold Maple",
+    true,
+    true,
+    false,
+    ""
+   ],
+   [
+    "1 oz Gold Krugerrand",
+    true,
+    true,
+    false,
+    ""
+   ]
+  ],
+  "presale_examples": [],
+  "seconds": 1
+ },
+ {
+  "store": "https://www.libertymint.com",
+  "platform": "woocommerce",
+  "items": 0,
+  "readable": 0,
+  "pictures": 0,
+  "presale": 0,
+  "presale_text": 0,
+  "sample": [],
+  "presale_examples": [],
+  "seconds": 0
+ },
+ {
+  "store": "https://www.summitmetals.com",
+  "platform": "shopify",
+  "items": 69,
+  "readable": 69,
+  "pictures": 69,
+  "presale": 0,
+  "presale_text": 0,
+  "sample": [
+   [
+    "Germania Mint 5 oz Copper Cast Bar",
+    true,
+    true,
+    false,
+    ""
+   ],
+   [
+    "2 oz Silver Vikings Coin \u2013 Niue 5 Dollars (T&S Coin)",
+    true,
+    true,
+    false,
+    ""
+   ],
+   [
+    "2 oz Silver Don Quixote de la Mancha Coin \u2013 Niue 5 Dollars (",
+    true,
+    true,
+    false,
+    ""
+   ],
+   [
+    "2 oz Silver Amazons Coin \u2013 Niue 5 Dollars (T&S Coin)",
+    true,
+    true,
+    false,
+    ""
+   ]
+  ],
+  "presale_examples": [],
+  "seconds": 2
+ },
+ {
+  "store": "https://www.highlandmint.com",
+  "platform": "shopify",
+  "items": 105,
+  "readable": 105,
+  "pictures": 105,
+  "presale": 0,
+  "presale_text": 0,
+  "sample": [
+   [
+    "Sal Stewart 2026 National League Rookie of the Year Bronze C",
+    true,
+    true,
+    false,
+    ""
+   ],
+   [
+    "Kyle Larson 3x NASCAR Cup Series Champion Bronze Coin Photo ",
+    true,
+    true,
+    false,
+    ""
+   ],
+   [
+    "Kyle Larson 3x NASCAR Cup Series Champion Silver Color Coin",
+    true,
+    true,
+    false,
+    ""
+   ],
+   [
+    "Chicago Blackhawks 2026-27 Signature Rink & Silver Plated Co",
+    true,
+    true,
+    false,
+    ""
+   ]
+  ],
+  "presale_examples": [],
+  "seconds": 3
+ },
+ {
+  "store": "https://www.numiscollect.eu",
+  "platform": "woocommerce",
+  "items": 1173,
+  "readable": 1173,
+  "pictures": 1173,
+  "presale": 5,
+  "presale_text": 0,
+  "sample": [
+   [
+    "Cook Islands &#8211; 2026 &#8211; 5 Dollars &#8211; Leopard ",
+    true,
+    true,
+    false,
+    ""
+   ],
+   [
+    "Cook Islands &#8211; 2026 &#8211; 5 Dollars &#8211; Leopard ",
+    true,
+    true,
+    true,
+    ""
+   ],
+   [
+    "Cook Islands &#8211; 2026 &#8211; 5 Dollars &#8211; Lion (Bl",
+    true,
+    true,
+    false,
+    ""
+   ],
+   [
+    "Cook Islands &#8211; 2026 &#8211; 5 Dollars &#8211; Parrot 1",
+    true,
+    true,
+    false,
+    ""
+   ]
+  ],
+  "presale_examples": [
+   [
+    "Cook Islands &#8211; 2026 &#8211; 5 Dollars &#8211; Leopard ",
+    ""
+   ],
+   [
+    "Cook Islands &#8211; 2026 &#8211; 10 Dollars &#8211; 3 Level",
+    ""
+   ],
+   [
+    "Cook Islands &#8211; 2026 &#8211; 10 Dollars &#8211; Forging",
+    ""
+   ],
+   [
+    "Cook Islands &#8211; 2026 &#8211; 10 Dollars &#8211; Hoover ",
+    ""
+   ]
+  ],
+  "seconds": 47
+ },
+ {
+  "store": "https://www.downies.com",
+  "platform": "shopify",
+  "items": 286,
+  "readable": 286,
+  "pictures": 255,
+  "presale": 33,
+  "presale_text": 0,
+  "sample": [
+   [
+    "Australia Last Post 2026 $2 Colour Aluminium-Bronze Uncircul",
+    true,
+    true,
+    false,
+    ""
+   ],
+   [
+    "Australia Last Post & Dawn Service 2026 $2 Colour Aluminium-",
+    true,
+    true,
+    false,
+    ""
+   ],
+   [
+    "Australia The Last Post 2026 $2 C Mintmark Colour Aluminium-",
+    true,
+    true,
+    false,
+    ""
+   ],
+   [
+    "Australia The Last Post 2026 $2 Colour Aluminium-Bronze Unci",
+    true,
+    true,
+    false,
+    ""
+   ]
+  ],
+  "presale_examples": [
+   [
+    "MERCEDES-AMG PETRONAS F1 TEAM W17 - K. ANTONELLI - WORLD CHA",
+    ""
+   ],
+   [
+    "MERCEDES-AMG PETRONAS F1 TEAM W17 - K. ANTONELLI - WORLD CHA",
+    ""
+   ],
+   [
+    "MERCEDES-AMG PETRONAS F1 TEAM W17 - K. ANTONELLI - WORLD CHA",
+    ""
+   ],
+   [
+    "MERCEDES-AMG PETRONAS F1 TEAM W17 - K. ANTONELLI - WORLD CHA",
+    ""
+   ]
+  ],
+  "seconds": 3
+ },
+ {
+  "store": "https://www.melbournecoins.com.au",
+  "platform": "shopify",
+  "items": 205,
+  "readable": 205,
+  "pictures": 204,
+  "presale": 0,
+  "presale_text": 17,
+  "sample": [
+   [
+    "2026 Canada Marvel's Wolverine 1oz Silver Proof Medal",
+    true,
+    true,
+    false,
+    ""
+   ],
+   [
+    "2026 Canada Marvel's Deadpool 1oz Silver Proof Medal",
+    true,
+    true,
+    false,
+    ""
+   ],
+   [
+    "2026 Tuvalu $1 Queen - A Kind of Magic Stamp & Coin Cover",
+    true,
+    true,
+    false,
+    ""
+   ],
+   [
+    "Batman the Movie (1989) - Batman, Joker, Joker's Goon 5 Poin",
+    true,
+    true,
+    false,
+    ""
+   ]
+  ],
+  "presale_examples": [],
+  "seconds": 3
+ },
+ {
+  "store": "https://www.goldstackers.com.au",
+  "platform": "woocommerce",
+  "items": 11,
+  "readable": 11,
+  "pictures": 0,
+  "presale": 0,
+  "presale_text": 0,
+  "sample": [
+   [
+    "50g &#8211; PAMP Fortuna Gold Bar",
+    true,
+    false,
+    false,
+    ""
+   ],
+   [
+    "1oz \u2013 Perth Mint Lunar Goat Platinum Coin (Year 2027)",
+    true,
+    false,
+    false,
+    ""
+   ],
+   [
+    "1 oz &#8211; Perth Mint Lunar Goat Gold Coin (Year 2027)",
+    true,
+    false,
+    false,
+    ""
+   ],
+   [
+    "1oz &#8211; Perth Mint Lunar Goat Silver Coin (Year 2027 &#8",
+    true,
+    false,
+    false,
+    ""
+   ]
+  ],
+  "presale_examples": [],
+  "seconds": 2
+ },
+ {
+  "store": "https://www.nzmint.com",
+  "platform": "shopify",
+  "items": 17,
+  "readable": 17,
+  "pictures": 17,
+  "presale": 0,
+  "presale_text": 0,
+  "sample": [
+   [
+    "1kg Silver Bar Perth Mint",
+    true,
+    true,
+    false,
+    ""
+   ],
+   [
+    "20g Gold Minted Bar Perth Mint",
+    true,
+    true,
+    false,
+    ""
+   ],
+   [
+    "100g Gold Minted Bar Perth Mint",
+    true,
+    true,
+    false,
+    ""
+   ],
+   [
+    "50g Gold Minted Bar Perth Mint",
+    true,
+    true,
+    false,
+    ""
+   ]
+  ],
+  "presale_examples": [],
+  "seconds": 1
+ },
+ {
+  "store": "https://www.bullionmart.ca",
+  "platform": "woocommerce",
+  "items": 595,
+  "readable": 595,
+  "pictures": 595,
+  "presale": 1,
+  "presale_text": 2,
+  "sample": [
+   [
+    "2025 1 oz Gold Bar &#8211; PAMP Lunar Legends White Snake (I",
+    false,
+    true,
+    false,
+    ""
+   ],
+   [
+    "Set of 4 Montreal Olympic Sterling Silver Coins | Royal Cana",
+    true,
+    true,
+    false,
+    ""
+   ],
+   [
+    "1 oz 2021 Congo World&#8217;s Wildlife: Bald Eagle Gold Coin",
+    true,
+    true,
+    false,
+    ""
+   ],
+   [
+    "2023 $5 The Majestic Polar Bear and Cubs &#8211; Pure Gold C",
+    true,
+    true,
+    false,
+    ""
+   ]
+  ],
+  "presale_examples": [
+   [
+    "1/2 Oz Gold Pamp Suisse Rosa Bar (IN ASSAY)",
+    ""
+   ]
+  ],
+  "seconds": 53
+ },
+ {
+  "store": "https://www.goldenstatemint.com",
+  "platform": "generic",
+  "links": 411,
+  "first_links": [
+   "https://www.goldenstatemint.com/MiniMintage-by-Silver-Shield-exclusively-at-GSM.html",
+   "https://www.goldenstatemint.com/1-oz-incuse-indian-silver-round.html",
+   "https://www.goldenstatemint.com/1-2-oz-incuse-indian-fractional-silver-round.html"
+  ],
+  "items": 0,
+  "readable": 0,
+  "pictures": 0,
+  "presale": 0,
+  "presale_text": 0,
+  "sample": [],
+  "presale_examples": [],
+  "seconds": 2
+ },
+ {
+  "store": "https://www.mintstategold.com",
+  "platform": "generic",
+  "links": 0,
+  "first_links": [],
+  "items": 0,
+  "readable": 0,
+  "pictures": 0,
+  "presale": 0,
+  "presale_text": 0,
+  "sample": [],
+  "presale_examples": [],
+  "seconds": 2
+ },
+ {
+  "store": "https://www.texmetals.com",
+  "platform": "generic",
+  "links": 522,
+  "first_links": [
+   "https://texmetals.com/p/1-10-oz-american-gold-eagle-coin",
+   "https://texmetals.com/p/1-10-oz-australian-battle-coral-sea",
+   "https://texmetals.com/p/1-10-oz-australian-gold-kangaroos"
+  ],
+  "items": 0,
+  "readable": 0,
+  "pictures": 0,
+  "presale": 0,
+  "presale_text": 0,
+  "sample": [],
+  "presale_examples": [],
+  "seconds": 3
+ },
+ {
+  "store": "https://www.boldpreciousmetals.com",
+  "platform": "generic",
+  "links": 894,
+  "first_links": [
+   "https://www.boldpreciousmetals.com/product/9424/2026-1-oz-british-st-george-and-the-dragon-gold-coin",
+   "https://www.boldpreciousmetals.com/product/9422/2027-1-4-oz-british-silver-britannia-coin",
+   "https://www.boldpreciousmetals.com/product/9421/2027-1-10-oz-british-silver-britannia-coin"
+  ],
+  "items": 0,
+  "readable": 0,
+  "pictures": 0,
+  "presale": 0,
+  "presale_text": 0,
+  "sample": [],
+  "presale_examples": [],
+  "seconds": 5
+ },
+ {
+  "store": "https://www.govmint.com",
+  "platform": "generic",
+  "links": 16398,
+  "first_links": [
+   "https://www.govmint.com/2024-p-1-1-oz-american-silver-eagle-w-star-privy-bu",
+   "https://www.govmint.com/1991-d-1-dollar-silver-uso-pcgs-ms69-mercanti-signed",
+   "https://www.govmint.com/1991-s-1-dollar-silver-uso-proof-pcgs-pr70-mercanti-signed"
+  ],
+  "items": 6,
+  "readable": 6,
+  "pictures": 6,
+  "presale": 0,
+  "presale_text": 0,
+  "sample": [
+   [
+    "2024(P) $1 1-oz Silver Eagle w/Star Privy Mark BU",
+    false,
+    true,
+    false,
+    ""
+   ],
+   [
+    "1991-D 1 Dollar Silver USO PCGS MS69 Mercanti Signed",
+    false,
+    true,
+    false,
+    ""
+   ],
+   [
+    "1991-S 1 Dollar Silver USO Proof PCGS PR70 Mercanti Signed",
+    false,
+    true,
+    false,
+    ""
+   ],
+   [
+    "1995-D 1 Dollar Olympic Cycling PCGS MS69 Mercanti Signed",
+    false,
+    true,
+    false,
+    ""
+   ]
+  ],
+  "presale_examples": [],
+  "seconds": 19
+ },
+ {
+  "store": "https://www.perthmint.com",
+  "platform": "generic",
+  "links": 642,
+  "first_links": [
+   "https://www.perthmint.com/shop/collector-coins/coins/australian-lunar-series-iii-2027-year-of-the-goat-1oz-silver-gilded-coin-in-capsule/",
+   "https://www.perthmint.com/shop/collector-coins/coins/australian-lunar-series-iii-2027-year-of-the-goat-1oz-silver-gilded-coin/",
+   "https://www.perthmint.com/shop/collector-coins/coins/baby-goat-2027-1-2oz-silver-proof-coloured-coin/"
+  ],
+  "items": 3,
+  "readable": 3,
+  "pictures": 3,
+  "presale": 0,
+  "presale_text": 0,
+  "sample": [
+   [
+    "Australian Lunar Series III 2027 Year of the Goat 1oz Silver",
+    true,
+    true,
+    false,
+    ""
+   ],
+   [
+    "Australian Lunar Series III 2027 Year of the Goat 1oz Silver",
+    true,
+    true,
+    false,
+    ""
+   ],
+   [
+    "Baby Goat 2027 1/2oz Silver Proof Coloured Coin",
+    true,
+    true,
+    false,
+    ""
+   ]
+  ],
+  "presale_examples": [],
+  "seconds": 25
+ },
+ {
+  "store": "https://www.thecoinshop.com.au",
+  "platform": "generic",
+  "links": 146,
+  "first_links": [
+   "https://thecoinshop.com.au/product/2026-set-of-5-x-2026-first-strikes-coin-roll-collection-royal-canadian-mint-price279-00/",
+   "https://thecoinshop.com.au/product/the-80th-anniversary-of-the-phantom-2016-1oz-silver-medallion-from-the-perth-mint/",
+   "https://thecoinshop.com.au/product/2017-50c-unc-sir-jack-brabham-coloured-50-cent-coin-carded/"
+  ],
+  "items": 5,
+  "readable": 5,
+  "pictures": 5,
+  "presale": 0,
+  "presale_text": 0,
+  "sample": [
+   [
+    "2026 Set of 5 x 2026 First Strikes Coin Roll Collection | Ro",
+    true,
+    true,
+    false,
+    ""
+   ],
+   [
+    "The 80th Anniversary of The Phantom 2016 1oz Silver Medallio",
+    true,
+    true,
+    false,
+    ""
+   ],
+   [
+    "2017 50c Unc Sir Jack Brabham Coloured 50 Cent Coin Carded",
+    true,
+    true,
+    false,
+    ""
+   ],
+   [
+    "2023 50 Cent \u2013 50th Anniversary of the Sydney Opera House Co",
+    true,
+    true,
+    false,
+    ""
+   ]
+  ],
+  "presale_examples": [],
+  "seconds": 5
+ },
+ {
+  "store": "https://www.royalmint.com",
+  "platform": "generic",
+  "links": 7498,
+  "first_links": [
+   "https://www.royalmint.com/annual-sets/2022/the-2022-united-kingdom-brilliant-uncirculated-annual-coin-set/",
+   "https://www.royalmint.com/annual-sets/2022/the-2022-united-kingdom-brilliant-uncirculated-definitive-coin-set/",
+   "https://www.royalmint.com/annual-sets/2022/the-2022-united-kingdom-gold-proof-commemorative-coin-set/"
+  ],
+  "items": 6,
+  "readable": 6,
+  "pictures": 6,
+  "presale": 0,
+  "presale_text": 0,
+  "sample": [
+   [
+    "The 2022 United Kingdom Brilliant Uncirculated Annual Coin S",
+    false,
+    true,
+    false,
+    ""
+   ],
+   [
+    "The 2022 United Kingdom Brilliant Uncirculated Definitive Co",
+    false,
+    true,
+    false,
+    ""
+   ],
+   [
+    "The 2022 United Kingdom Gold Proof Commemorative Coin Set",
+    false,
+    true,
+    false,
+    ""
+   ],
+   [
+    "The 2022 United Kingdom Premium Proof Coin Set",
+    false,
+    true,
+    false,
+    ""
+   ]
+  ],
+  "presale_examples": [],
+  "seconds": 108
+ },
+ {
+  "store": "https://www.chards.co.uk",
+  "platform": "generic",
+  "links": 7100,
+  "first_links": [
+   "https://www.chards.co.uk/1872-gold-sovereign-victoria-young-head-st-george-london/5934#child=1",
+   "https://www.chards.co.uk/1872-gold-sovereign-victoria-young-head-st-george-london/5934#child=2",
+   "https://www.chards.co.uk/1872-gold-sovereign-victoria-young-head-st-george-london/5934#child=3"
+  ],
+  "items": 0,
+  "readable": 0,
+  "pictures": 0,
+  "presale": 0,
+  "presale_text": 0,
+  "sample": [],
+  "presale_examples": [],
+  "seconds": 38
+ },
+ {
+  "store": "https://www.mdm.de",
+  "platform": "generic",
+  "links": 2711,
+  "first_links": [
+   "https://www.mdm.de/3-mark-friedrich-ii",
+   "https://www.mdm.de/1-dollar-goldmuenze-der-usa",
+   "https://www.mdm.de/die-einzigen-10-und-20-franken-vreneli"
+  ],
+  "items": 0,
+  "readable": 0,
+  "pictures": 0,
+  "presale": 0,
+  "presale_text": 0,
+  "sample": [],
+  "presale_examples": [],
+  "seconds": 11
+ },
+ {
+  "store": "https://www.emk.com",
+  "platform": "generic",
+  "links": 0,
+  "first_links": [],
+  "items": 0,
+  "readable": 0,
+  "pictures": 0,
+  "presale": 0,
+  "presale_text": 0,
+  "sample": [],
+  "presale_examples": [],
+  "seconds": 6
+ }
+]
