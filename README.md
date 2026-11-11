@@ -90,6 +90,18 @@ The dashboard shows fresh readable stores, fresh listing counts and cohort denom
 
 The generic collector's boolean/function name collision is fixed. This does not remove a website's 401/403 access restrictions. Those failures remain visible. A successful workflow can still contain partial collection failures.
 
+## New releases gallery
+
+`docs/releases.html` shows every new listing at the tracked stores as pictures, newest first, on one screen. Every run rebuilds it, so it follows the three-hourly check. Open it from the link under the dashboard title, or put `releases.html` at the end of the dashboard address.
+
+* **What is on it.** Listings a store published in the last 90 days, plus, for stores that give no date, listings the tracker first saw in that time. The detail view says which one applies: "Listed" is the store's own date, "First spotted" is the tracker's. When an undated store suddenly shows 25 or more "new" products in one day, that is old catalogue being discovered, and those are left off.
+* **Older-dated coins start hidden.** An 1885 Morgan listed today is a new listing, not a new release. Titles whose latest year is before last year stay hidden until you turn on "Older-dated coins too" in Filters. Titles with no year are shown.
+* **Finding things.** Period, colorized only, theme, store, base coin, metal, finish, size, title search, and sorting by mintage or price. The groups reuse the tags in `mhi/tags.py`. "Photos only" turns the page into a dense wall. Tapping a coin opens it; tapping the picture turns it over when the store has more than one. A yellow dot marks listings that appeared since your last visit on that device.
+* **Pictures.** The collector saves the picture addresses of recent launches in `data/media.csv`: from the Shopify and WooCommerce feeds, or from the product page's schema.org or `og:image` data on other platforms. Only addresses are saved; the page loads each picture from the store's own site. A listing shows an empty coin outline until its store has been read once with this version, or when the store refuses to serve the picture to another site.
+* **Same caution as the dashboard.** A listing is not a sale and "Unavailable" is not "sold". Mintage is read from listing text and can be wrong.
+
+Settings are under `gallery:` in `config.yaml`. `python run.py --rebuild` rebuilds the page from saved data with no network access. The page never changes the availability evidence: pictures live in their own file, and a failure in the gallery is logged and skipped.
+
 ## Running
 
 Python 3.12 is used in GitHub Actions:

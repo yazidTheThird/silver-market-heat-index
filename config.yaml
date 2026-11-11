@@ -191,3 +191,13 @@ hot_groups:
   mature_days: 7          # a launch counts toward "share sold out" after 7 days on sale
   fast_hours: 48          # a sell-out within 48 h counts as fast
   digest_weekday: 0       # weekly digest in the Telegram message: 0 = Monday
+
+# ------------------------------------------------------- New releases gallery
+# docs/releases.html: every new listing at the stores above as pictures, newest
+# first. Rebuilt on every run (daily and the 3-hourly check). Any store you add
+# to `drops.stores` shows up there too. These are the defaults; change if needed.
+gallery:
+  window_days: 90        # how far back the page goes
+  bulk_first_seen: 25    # for stores that give no release date: this many "new"
+                         # products at one store in one day is the tracker finding
+                         # old catalogue, not a launch day, so they are left off
