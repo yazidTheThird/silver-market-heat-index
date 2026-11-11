@@ -27,6 +27,7 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
+from . import media
 from .util import BROWSER_HEADERS, log
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -103,7 +104,8 @@ def read_shopify(base: str, f: Fetcher, cfg: dict) -> list[dict] | None:
                         "published_at": p.get("published_at") or p.get("created_at") or "",
                         "available": (any(v.get("available") is True for v in variants) if all(isinstance(v.get("available"), bool) for v in variants) else None),
                         "colorized": colored, "price": _num(variants[0].get("price")),
-                        "mintage": find_mintage(f'{p.get("title","")} {body}')})
+                        "mintage": find_mintage(f'{p.get("title","")} {body}'),
+                        **media.from_shopify(p)})
         if len(batch) < 250:
             break
         time.sleep(1)
@@ -136,7 +138,8 @@ def read_woocommerce(base: str, f: Fetcher, cfg: dict) -> list[dict] | None:
                         "url": p.get("permalink", ""), "published": "",
                         "available": (p.get("is_in_stock") if isinstance(p.get("is_in_stock"), bool) else None),
                         "colorized": colored, "price": price,
-                        "mintage": find_mintage(f'{p.get("name","")} {desc}')})
+                        "mintage": find_mintage(f'{p.get("name","")} {desc}'),
+                        **media.from_woocommerce(p)})
         if len(batch) < 100:
             break
         time.sleep(1)
@@ -213,7 +216,7 @@ def read_generic(store: dict, f: Fetcher, cfg: dict, known: pd.DataFrame,
             if prev is not None:
                 carry_forward(prev, url, checked=True)
             continue
-        info = parse_product_page(html)
+        info = parse_product_page(html, url)
         title = info["title"] or (prev.title if prev is not None else "")
         keep, colored = classify(f'{title} {info["category"]} {url}', cfg)
         if store.get("listing_is_colorized"):
@@ -232,7 +235,8 @@ def read_generic(store: dict, f: Fetcher, cfg: dict, known: pd.DataFrame,
         out.append({"product_id": url, "title": title, "url": url,
                     "published": info["published"], "available": info["available"],
                     "checked": True, "colorized": colored, "price": info["price"],
-                    "mintage": find_mintage(f'{title} {info["description"]}')})
+                    "mintage": find_mintage(f'{title} {info["description"]}'),
+                    "images": info["images"]})
         time.sleep(store.get("delay_seconds", 1.5))
     _save_ignore(ignore)
     log.info("drops: %s -> %d product links, %d pages fetched, HTTP errors %s, "
@@ -350,12 +354,14 @@ def stock_value(value):
     return None
 
 
-def parse_product_page(html: str) -> dict:
+def parse_product_page(html: str, base: str = "") -> dict:
     soup = BeautifulSoup(html, "html.parser")
     title, available, published, category = "", None, "", ""
     price, description = None, ""
+    objects = _jsonld(soup)
+    images = media.from_page(soup, objects, base)["images"]   # for the release gallery
 
-    for obj in _jsonld(soup):
+    for obj in objects:
         if not isinstance(obj, dict):
             continue
         types = obj.get("@type")
@@ -415,7 +421,8 @@ def parse_product_page(html: str) -> dict:
         meta = soup.find("meta", attrs={"name": "description"})
         description = meta.get("content", "") if meta else ""
     return {"title": title[:150], "available": available, "published": published,
-            "category": category, "price": price, "description": description}
+            "category": category, "price": price, "description": description,
+            "images": images}
 
 
 def _jsonld(soup: BeautifulSoup) -> list:
@@ -521,6 +528,7 @@ def run_tracker(cfg: dict, today: dt.date, fast: bool = False
     f = Fetcher()
     stores_ok, notes = 0, []
     health = []
+    pictures = []           # (store, items) of every store read this run
     broad = _read_set(BROAD)
     try:
         for store in cfg["drops"]["stores"]:
@@ -558,6 +566,7 @@ def run_tracker(cfg: dict, today: dt.date, fast: bool = False
             first_broad = base not in broad
             state = _merge(state, base, items, today, first_run=known.empty, now=now,
                            baseline_noncolor=first_broad)
+            pictures.append((base, items))
             broad.add(base)
     finally:
         f.close()
@@ -565,7 +574,24 @@ def run_tracker(cfg: dict, today: dt.date, fast: bool = False
     state[STATE_COLS].to_csv(STATE, index=False)
     pd.DataFrame(health).to_csv(os.path.join(ROOT, "data", "collection_health.csv"), index=False)
     _write_set(BROAD, broad)
+    _save_pictures(state, pictures, cfg, today)
     return state, stores_ok, notes
+
+
+def _save_pictures(state: pd.DataFrame, pictures: list, cfg: dict, today: dt.date) -> None:
+    """Keep the picture addresses of recent launches for the release gallery
+    (data/media.csv). Pictures are a convenience: a problem here never stops the tracker."""
+    try:
+        from . import gallery
+        keep = gallery.recent_keys(state.to_dict("records"), cfg, today)
+        saved = media.load()
+        changed = sum(media.update(saved, base, items, keep) for base, items in pictures)
+        dropped = media.prune(saved, keep)
+        media.save(saved)
+        log.info("gallery pictures: %d recent launches, %d with a picture "
+                 "(%d new or changed, %d aged out)", len(keep), len(saved), changed, dropped)
+    except Exception as e:  # noqa: BLE001
+        log.warning("gallery pictures: skipped — %s", e)
 
 
 BROAD = os.path.join(ROOT, "data", "broad_stores.txt")

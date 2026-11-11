@@ -236,6 +236,7 @@ legend {font-weight:600;padding:0 6px;}
 <main>
   <h1>Blackbird Market Monitor</h1>
   <p class="sub">Release decisions from comparable sales · inventory and pricing context below</p>
+  <p class="sub"><a href="releases.html" style="color:var(--series-1)">See new releases as pictures</a></p>
 
   <section class="card" id="readiness"></section>
   <section class="card hero" id="hero"></section>

@@ -4,6 +4,8 @@ and (optionally) send a Telegram message.
     python run.py          # daily run
     python run.py --fast   # every few hours: re-check new launches only, for hour-level
                            # sell-out timing (no index, no Telegram)
+
+Every mode also rebuilds docs/releases.html, the new-releases picture gallery.
 """
 from __future__ import annotations
 
@@ -85,6 +87,16 @@ def refresh_groups(cfg: dict, today: dt.date) -> pd.DataFrame:
         return pd.DataFrame()
 
 
+def build_gallery(cfg: dict) -> None:
+    """Rebuild the new-releases picture page. It is a convenience on top of the
+    tracker, so a problem here is logged and never stops a run."""
+    try:
+        from mhi import gallery
+        gallery.build(cfg)
+    except Exception as e:  # noqa: BLE001
+        log.warning("gallery: not rebuilt — %s", e)
+
+
 def main() -> None:
     here = os.path.dirname(os.path.abspath(__file__))
     with open(os.path.join(here, "config.yaml"), encoding="utf-8") as f:
@@ -96,6 +108,7 @@ def main() -> None:
         hist = load_history()
         groups = refresh_groups(cfg, today)
         dashboard.build(hist, cfg, groups)
+        build_gallery(cfg)
         return
 
     if "--fast" in sys.argv:
@@ -106,6 +119,7 @@ def main() -> None:
         hist = load_history()
         if not hist.empty:
             dashboard.build(hist, cfg, groups)
+        build_gallery(cfg)
         return
 
     out = compute(cfg)
@@ -113,6 +127,7 @@ def main() -> None:
     groups = refresh_groups(cfg, today)
     path = dashboard.build(hist, cfg, groups)
     log.info("dashboard written to %s", path)
+    build_gallery(cfg)
     weekday = (cfg.get("hot_groups") or {}).get("digest_weekday", 0)   # 0 = Monday
     extra = tags.digest(groups) if today.weekday() == weekday else ""
     notify(out["row"], extra)
