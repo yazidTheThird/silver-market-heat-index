@@ -55,9 +55,9 @@
       "confidence": "Insufficient evidence"
     }
   ],
-  "fresh_stores": 10,
+  "fresh_stores": 8,
   "configured_stores": 14,
-  "fresh_listings": 14103,
+  "fresh_listings": 14035,
   "tracked_listings": 14380,
   "horizon_days": 7,
   "note": "Store-listing availability; not unit sales. Same product at different stores counts as separate listings.",
@@ -68,11 +68,11 @@
   "snapshot": {
     "colorized_tracked": 2594,
     "tracked": 14380,
-    "available": 3455,
-    "unavailable": 10648,
-    "unknown": 277,
-    "colorized_available": 948,
-    "colorized_unavailable": 1614
+    "available": 3423,
+    "unavailable": 10612,
+    "unknown": 345,
+    "colorized_available": 920,
+    "colorized_unavailable": 1576
   },
   "collectors": [
     {
@@ -93,7 +93,7 @@
     {
       "store": "https://bullionsharks.com",
       "tracked": 55,
-      "fresh": 55
+      "fresh": 0
     },
     {
       "store": "https://popcoins.store",
@@ -113,7 +113,7 @@
     {
       "store": "https://cdncoin.com",
       "tracked": 904,
-      "fresh": 808
+      "fresh": 806
     },
     {
       "store": "https://www.apmex.com",
@@ -128,7 +128,7 @@
     {
       "store": "https://bullionexchanges.com",
       "tracked": 14,
-      "fresh": 11
+      "fresh": 0
     },
     {
       "store": "https://www.providentmetals.com",
