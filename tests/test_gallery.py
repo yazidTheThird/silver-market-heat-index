@@ -8,7 +8,7 @@ from unittest.mock import patch
 
 import pandas as pd
 
-from mhi import drops, gallery, media
+from mhi import drops, gallery, media, news
 
 TODAY = dt.date(2026, 11, 11)
 NOW = dt.datetime(2026, 11, 11, 18, 0, tzinfo=dt.timezone.utc)
@@ -402,3 +402,57 @@ class SitemapOrder(unittest.TestCase):
         self.assertEqual(got, [f'https://s.example/p/{y}-dragon-1oz/9001', f'https://s.example/p/{y + 1}-goat/9002',
                                'https://s.example/p/1872-sovereign/5934', 'https://s.example/p/kangaroo-proof/12',
                                f'https://s.example/p/1oz-{y}0101-bar/7'])
+
+
+class News(unittest.TestCase):
+    POSTS = [{"id": 83210, "date_gmt": "2026-11-12T13:21:21",
+              "link": "https://agaunews.com/one-eyed-monster-are-nothing-mate-check-out-snakey-here/",
+              "title": {"rendered": "Fantasy comes to the fore with the tale of Perseus &#038; Medusa, plus Sinbad as the latest &#8216;Fabulous Stories&#8217; coin"},
+              "yoast_head_json": {"og_image": [{"width": 2000, "url": "https://agaunews.com/wp-content/uploads/2026/11/2026-TS-Perseus-FEAT.jpg"}]}},
+             {"id": 1, "date_gmt": "2026-06-01T10:00:00", "link": "https://agaunews.com/old/", "title": {"rendered": "Old post"}},
+             {"id": 2, "date_gmt": "", "link": "https://agaunews.com/x/", "title": {"rendered": "No date"}},
+             "junk"]
+    CFG = {**CFG, 'news': {'window_days': 90, 'sources': [{'url': 'https://agaunews.com', 'name': 'AgAuNEWS'}]}}
+
+    def test_wordpress_posts(self):
+        got = news.from_wp_posts(self.POSTS)
+        self.assertEqual(len(got), 2)
+        self.assertEqual(got[0], {'id': '83210', 'date': '2026-11-12T13:21:21Z',
+                                  'title': 'Fantasy comes to the fore with the tale of Perseus & Medusa, plus Sinbad as the latest ‘Fabulous Stories’ coin',
+                                  'link': 'https://agaunews.com/one-eyed-monster-are-nothing-mate-check-out-snakey-here/',
+                                  'image': 'https://agaunews.com/wp-content/uploads/2026/11/2026-TS-Perseus-FEAT.jpg'})
+        self.assertEqual(news.from_wp_posts(None), [])
+
+    def test_rss_fallback(self):
+        xml = ('<rss><channel><item><title><![CDATA[Royal Mint Frankenstein]]></title>'
+               '<link>https://agaunews.com/who-stitched-me-up/</link><pubDate>Tue, 10 Nov 2026 22:54:13 +0000</pubDate>'
+               '<content:encoded><![CDATA[<p><img src="https://agaunews.com/wp-content/uploads/f.jpg" /></p>]]></content:encoded>'
+               '</item></channel></rss>')
+        self.assertEqual(news.from_rss(xml), [{'id': 'https://agaunews.com/who-stitched-me-up/', 'date': '2026-11-10T22:54:13Z',
+                                               'title': 'Royal Mint Frankenstein', 'link': 'https://agaunews.com/who-stitched-me-up/',
+                                               'image': 'https://agaunews.com/wp-content/uploads/f.jpg'}])
+
+    def test_collect_keeps_window_and_survives_a_dead_site(self):
+        calls = []
+
+        def get(url, params=None):
+            calls.append(url)
+            return (200, json.dumps(self.POSTS)) if url.endswith('/posts') else (404, '')
+
+        with tempfile.TemporaryDirectory() as tmp:
+            path = str(Path(tmp) / 'news.csv')
+            self.assertEqual(news.collect(self.CFG, get, NOW, path), 1)          # the June post is outside 90 days
+            self.assertEqual(news.collect(self.CFG, lambda u, params=None: (503, ''), NOW, path), 1)  # site down: kept
+            self.assertEqual(news.load(path)[0]['source'], 'https://agaunews.com')
+        self.assertEqual(news.collect({}, get, NOW), 0)
+
+    def test_posts_on_the_wall(self):
+        items, stores = [], []
+        posts = [{'source': 'https://agaunews.com', 'id': '1', 'date': '2026-11-12T13:21:21Z',
+                  'title': '2026 Niue Colorized Dragon 1 oz silver coin', 'link': 'https://agaunews.com/a/', 'image': ''},
+                 {'source': 'https://agaunews.com', 'id': '2', 'date': '2026-11-11T10:00:00Z',
+                  'title': 'Bad link', 'link': 'javascript:x', 'image': ''}]
+        gallery.add_news(items, stores, posts, self.CFG, TODAY, 90)
+        self.assertEqual(len(items), 1)
+        self.assertEqual((items[0]['nw'], items[0]['k'], items[0]['c'], items[0]['y']), (1, 1, 1, 2026))
+        self.assertEqual(stores, [{'n': 'AgAuNEWS', 'u': 'https://agaunews.com', 'cur': 'USD', 'news': 1}])

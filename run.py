@@ -87,11 +87,17 @@ def refresh_groups(cfg: dict, today: dt.date) -> pd.DataFrame:
         return pd.DataFrame()
 
 
-def build_gallery(cfg: dict) -> None:
-    """Rebuild the new-releases picture page. It is a convenience on top of the
-    tracker, so a problem here is logged and never stops a run."""
+def build_gallery(cfg: dict, fetch_news: bool = True) -> None:
+    """Rebuild the new-releases picture page (and, online, refresh the news posts
+    shown on it). A convenience on top of the tracker: a problem here is logged
+    and never stops a run."""
     try:
-        from mhi import gallery
+        from mhi import gallery, news
+        if fetch_news:
+            try:
+                news.collect(cfg)
+            except Exception as e:  # noqa: BLE001
+                log.warning("news: not refreshed — %s", e)
         gallery.build(cfg)
     except Exception as e:  # noqa: BLE001
         log.warning("gallery: not rebuilt — %s", e)
@@ -108,7 +114,7 @@ def main() -> None:
         hist = load_history()
         groups = refresh_groups(cfg, today)
         dashboard.build(hist, cfg, groups)
-        build_gallery(cfg)
+        build_gallery(cfg, fetch_news=False)
         return
 
     if "--fast" in sys.argv:

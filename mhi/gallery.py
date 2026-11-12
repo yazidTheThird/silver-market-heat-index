@@ -22,7 +22,7 @@ import json
 import os
 import re
 
-from . import media, tags
+from . import media, news, tags
 from .util import log
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -237,6 +237,38 @@ def releases(rows: list[dict], cfg: dict, today: dt.date,
     return items, stores
 
 
+def add_news(items: list, stores: list, posts: list, cfg: dict, today: dt.date, days: int) -> None:
+    """News posts about new releases go on the same wall, marked as news."""
+    names = {s["url"].rstrip("/"): s.get("name") for s in ((cfg or {}).get("news") or {}).get("sources", [])}
+    rules = tags._rules(cfg)
+    color = re.compile((cfg or {}).get("colorized_pattern") or r"coloriz|colouriz", re.I)
+    first, last = (today - dt.timedelta(days=days)).isoformat(), (today + dt.timedelta(days=1)).isoformat()
+    index = {}
+    for p in posts:
+        src = _s(p.get("source")).rstrip("/")
+        when = _s(p.get("date"))
+        if not src or not when or not first <= when[:10] <= last:
+            continue
+        if src not in index:
+            index[src] = len(stores)
+            stores.append({"n": names.get(src) or re.sub(r"^https?://(www\.)?", "", src), "u": src,
+                           "cur": "USD", "news": 1})
+        title = _s(p.get("title"))[:160]
+        link = _s(p.get("link"))
+        if not title or not link.startswith("https://"):
+            continue
+        tag = tags.tag(title, rules)
+        image = media.clean(_s(p.get("image")))
+        item = {"t": title, "u": link, "s": index[src], "d": when, "k": 1, "nw": 1,
+                "c": 1 if color.search(title) else None, "y": issue_year(title, today),
+                "th": [t for t in tag["themes"] if t != "Other"],
+                "b": "Other" if tag["base_coin"].startswith("Other") else tag["base_coin"],
+                "z": tag["size"], "f": tag["finish"], "me": tag["metal"],
+                "i": [image] if image else []}
+        items.append({k: v for k, v in item.items() if v not in (None, "", [])})
+    items.sort(key=lambda it: (it["d"][:10], it["d"]), reverse=True)
+
+
 # --------------------------------------------------------------------- page
 def _read_state() -> list[dict]:
     if not os.path.exists(STATE):
@@ -250,6 +282,7 @@ def build(cfg: dict, now: dt.datetime | None = None) -> str:
     today = now.date()
     s = settings(cfg)
     items, stores = releases(_read_state(), cfg, today, media.load(), _health())
+    add_news(items, stores, news.load(), cfg, today, s["window_days"])
     payload = {
         "meta": {"generated": _stamp(now), "window": s["window_days"],
                  "min_year": today.year - 1,
@@ -364,6 +397,8 @@ main { padding-bottom: 28px; min-height: 50vh; }
   box-shadow: 0 1px 0 rgba(0,0,0,.12); }
 .pre small { display: block; font-size: 10px; font-weight: 600; opacity: .8; }
 .tile.is-pre .ph { border: 2px solid var(--bill); }
+.news { position: absolute; top: 0; left: 0; padding: 4px 9px 4px 8px; border-radius: 0 0 8px 0;
+  background: #131a22; color: #fff; font-size: 11px; font-weight: 700; }
 body.wall .pre small { display: none; }
 .chip.pre-chip[aria-pressed="true"] { background: var(--bill); border-color: var(--bill); color: var(--on-bill); }
 .chip.pre-chip .badge { background: var(--ink); color: var(--frost); }
@@ -589,11 +624,11 @@ const S = {
   sort: SORTS[prefs.sort] ? prefs.sort : "new",
   colorized: prefs.colorized === true, older: prefs.older === true,
   hideOut: prefs.hideOut === true, wall: prefs.wall === true,
-  onlyNew: false, presale: false, q: "",
+  onlyNew: false, presale: false, q: "", noNews: prefs.noNews === true,
 };
 const F = { s: new Set(), me: new Set(), b: new Set(), th: new Set(), f: new Set(), z: new Set() };
 function remember() {
-  saved.set("prefs", { days: S.days, sort: S.sort, colorized: S.colorized, older: S.older, hideOut: S.hideOut, wall: S.wall });
+  saved.set("prefs", { days: S.days, sort: S.sort, colorized: S.colorized, older: S.older, hideOut: S.hideOut, wall: S.wall, noNews: S.noNews });
 }
 
 const isCurrent = it => it.y == null || it.y >= D.meta.min_year;
@@ -604,6 +639,7 @@ function inPeriod(skip) {           // period + switches; facet counts come from
     && (skip === "older" || S.older || isCurrent(it))
     && (!S.hideOut || it.a !== 0)
     && (skip === "pre" || !S.presale || it.ps)
+    && (!S.noNews || !it.nw)
     && (skip === "new" || !S.onlyNew || it.isNew));
 }
 function matches(it) {
@@ -657,7 +693,7 @@ function more() {
 }
 function tile(it, pos) {
   const b = el("button", "tile" + (it.ps ? " is-pre" : "")); b.type = "button"; b.dataset.pos = pos;
-  b.setAttribute("aria-label", (it.ps ? "Presale: " : "") + it.t);
+  b.setAttribute("aria-label", (it.ps ? "Presale: " : it.nw ? "News: " : "") + it.t);
   const ph = el("span", "ph"), src = thumbOf(it);
   if (src) {
     const img = new Image(); img.loading = "lazy"; img.decoding = "async"; img.alt = "";
@@ -665,6 +701,7 @@ function tile(it, pos) {
     if (it.i[0] && it.i[0] !== src) img.dataset.alt = it.i[0];
     img.src = src; ph.append(img);
   } else ph.append(el("span", "blank"));
+  if (it.nw) ph.append(el("span", "news", "News"));
   if (it.ps) { const tag = el("span", "pre", "Presale"); if (it.sh) tag.append(el("small", "", "Ships " + it.sh)); ph.append(tag); }
   if (it.isNew) { const dot = el("span", "new-dot"); dot.title = "New since your last visit"; ph.append(dot); }
   if (it.a === 0) ph.append(el("span", "out", "Unavailable"));
@@ -715,7 +752,7 @@ function drawBar(fresh) {
   $("only-new").hidden = !fresh;
   $("only-new").setAttribute("aria-pressed", String(S.onlyNew));
   $("new-count").textContent = count(fresh);
-  const active = facetCount() + (S.older ? 1 : 0) + (S.hideOut ? 1 : 0) + (S.sort !== "new" ? 1 : 0);
+  const active = facetCount() + (S.older ? 1 : 0) + (S.hideOut ? 1 : 0) + (S.noNews ? 1 : 0) + (S.sort !== "new" ? 1 : 0);
   $("filter-count").hidden = !active;
   $("filter-count").textContent = active;
   $("f-done").textContent = "Show " + count(list.length) + (list.length === 1 ? " listing" : " listings");
@@ -744,7 +781,7 @@ function drawSummary() {
 function clearAll() {
   for (const key in F) F[key].clear();
   S.q = ""; $("q").value = ""; S.onlyNew = false; S.presale = false;
-  S.colorized = false; S.hideOut = false; S.older = false; S.sort = "new";
+  S.colorized = false; S.hideOut = false; S.older = false; S.noNews = false; S.sort = "new";
   remember();
 }
 
@@ -781,6 +818,7 @@ function drawFilters() {
   group("Show", [
     ["Older-dated coins too", older, S.older, () => { S.older = !S.older; remember(); }],
     ["Hide unavailable", null, S.hideOut, () => { S.hideOut = !S.hideOut; remember(); }],
+    ...(ITEMS.some(it => it.nw) ? [["Hide news articles", null, S.noNews, () => { S.noNews = !S.noNews; remember(); }]] : []),
   ]);
   const pool = inPeriod();
   for (const [key, title, values, name] of FACETS) {
@@ -838,6 +876,10 @@ function showListing(pos) {
     if (note) dd.append(el("small", "", note));
     facts.append(el("dt", "", name), dd);
   };
+  if (it.nw) {
+    fact("Source", st.n, "News article about a release. Price and stock are on the mint's or dealer's site.");
+    fact("Published", stamp(it));
+  } else {
   fact("Store", st.n);
   fact(it.k ? "Listed" : "First spotted", stamp(it),
        it.k ? "" : "This store gives no release date, so this is when the tracker first saw it.");
@@ -846,6 +888,7 @@ function showListing(pos) {
   fact("Status", it.ps ? (it.a === 0 ? "Presale, unavailable at this store" : "Presale: order now, ships later")
     : it.a === 1 ? "Available" : it.a === 0 ? "Unavailable at this store" : "Not checked recently",
     it.ps ? "Marked from the store's pre-order or presale wording. Check the ship date on the store page." : "");
+  }
 
   const like = $("d-like"); like.textContent = "";
   const suggest = (label, apply) => {
@@ -858,10 +901,10 @@ function showListing(pos) {
   if (it.f && it.f !== "Standard finish") suggest(it.f, () => F.f.add(it.f));
   if (it.z && it.z !== "Other") suggest(it.z, () => F.z.add(it.z));
   if (it.me && it.me !== "Unknown") suggest(it.me, () => F.me.add(it.me));
-  suggest("Everything at " + st.n, () => F.s.add(it.s));
+  suggest((it.nw ? "All posts from " : "Everything at ") + st.n, () => F.s.add(it.s));
 
   const go = $("d-go"), ok = /^https?:\/\//i.test(it.u);
-  go.textContent = "Open at " + st.n;
+  go.textContent = (it.nw ? "Read on " : "Open at ") + st.n;
   if (ok) { go.href = it.u; go.removeAttribute("aria-disabled"); }
   else { go.removeAttribute("href"); go.setAttribute("aria-disabled", "true"); }
   $("d-scroll").scrollTop = 0;
@@ -968,7 +1011,7 @@ function ago(ms) {
   const down = D.stores.filter(s => s.ok === false).map(s => s.n);
   foot.append(el("p", "", "Listings first seen in the last " + D.meta.window + " days at the stores the tracker reads. A listing is not a sale, and unavailable does not mean sold."));
   if (down.length) foot.append(el("p", "", "Not readable on the last check: " + down.join(", ") + "."));
-  foot.append(el("p", "", "Yellow “Presale” tag: the store takes orders now and ships later. Blue dot: new since your last visit."));
+  foot.append(el("p", "", "Yellow “Presale” tag: the store takes orders now and ships later. Dark “News” tag: an article about a release, not a store listing. Blue dot: new since your last visit."));
   foot.append(el("p", "", "Pictures load from each store's own site."));
 })();
 
