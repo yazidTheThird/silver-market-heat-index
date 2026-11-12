@@ -302,3 +302,13 @@ gallery:
   bulk_first_seen: 25    # for stores that give no release date: this many "new"
                          # products at one store in one day is the tracker finding
                          # old catalogue, not a launch day, so they are left off
+
+# ---------------------------------------------------------- Release news
+# Coin news sites whose posts appear on the gallery wall with a "News" tag
+# (WordPress sites; the RSS feed is used if the post list is closed).
+# Never part of the tracker evidence or the index.
+news:
+  window_days: 90
+  sources:
+    - url: "https://agaunews.com"
+      name: "AgAuNEWS"
