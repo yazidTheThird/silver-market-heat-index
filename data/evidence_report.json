@@ -55,10 +55,10 @@
       "confidence": "Insufficient evidence"
     }
   ],
-  "fresh_stores": 32,
+  "fresh_stores": 29,
   "configured_stores": 37,
-  "fresh_listings": 29301,
-  "tracked_listings": 30462,
+  "fresh_listings": 26576,
+  "tracked_listings": 30535,
   "horizon_days": 7,
   "note": "Store-listing availability; not unit sales. Same product at different stores counts as separate listings.",
   "sales": [],
@@ -66,13 +66,13 @@
   "as_of": "2026-11-13",
   "methodology_version": 2,
   "snapshot": {
-    "colorized_tracked": 2904,
-    "tracked": 30462,
-    "available": 13355,
-    "unavailable": 15946,
-    "unknown": 1161,
-    "colorized_available": 980,
-    "colorized_unavailable": 1681
+    "colorized_tracked": 2918,
+    "tracked": 30535,
+    "available": 12340,
+    "unavailable": 14236,
+    "unknown": 3959,
+    "colorized_available": 953,
+    "colorized_unavailable": 1677
   },
   "collectors": [
     {
@@ -93,7 +93,7 @@
     {
       "store": "https://bullionsharks.com",
       "tracked": 55,
-      "fresh": 17
+      "fresh": 0
     },
     {
       "store": "https://popcoins.store",
@@ -102,8 +102,8 @@
     },
     {
       "store": "https://www.mycollectables.com.au",
-      "tracked": 4287,
-      "fresh": 4277
+      "tracked": 4297,
+      "fresh": 4287
     },
     {
       "store": "https://www.directcoins.com.au",
@@ -118,7 +118,7 @@
     {
       "store": "https://www.apmex.com",
       "tracked": 190,
-      "fresh": 40
+      "fresh": 41
     },
     {
       "store": "https://sdbullion.com",
@@ -128,7 +128,7 @@
     {
       "store": "https://bullionexchanges.com",
       "tracked": 14,
-      "fresh": 11
+      "fresh": 0
     },
     {
       "store": "https://www.providentmetals.com",
@@ -188,7 +188,7 @@
     {
       "store": "https://www.numiscollect.eu",
       "tracked": 2771,
-      "fresh": 2771
+      "fresh": 0
     },
     {
       "store": "https://www.downies.com",
@@ -217,8 +217,8 @@
     },
     {
       "store": "https://www.goldenstatemint.com",
-      "tracked": 33,
-      "fresh": 33
+      "tracked": 36,
+      "fresh": 36
     },
     {
       "store": "https://www.texmetals.com",
@@ -232,8 +232,8 @@
     },
     {
       "store": "https://www.govmint.com",
-      "tracked": 214,
-      "fresh": 32
+      "tracked": 245,
+      "fresh": 63
     },
     {
       "store": "https://www.perthmint.com",
@@ -247,18 +247,18 @@
     },
     {
       "store": "https://www.royalmint.com",
-      "tracked": 54,
-      "fresh": 26
+      "tracked": 68,
+      "fresh": 40
     },
     {
       "store": "https://www.chards.co.uk",
-      "tracked": 79,
-      "fresh": 23
+      "tracked": 89,
+      "fresh": 33
     },
     {
       "store": "https://www.mdm.de",
-      "tracked": 54,
-      "fresh": 8
+      "tracked": 59,
+      "fresh": 13
     }
   ],
   "market": {
