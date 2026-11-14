@@ -55,10 +55,10 @@
       "confidence": "Insufficient evidence"
     }
   ],
-  "fresh_stores": 30,
+  "fresh_stores": 32,
   "configured_stores": 37,
-  "fresh_listings": 30225,
-  "tracked_listings": 31657,
+  "fresh_listings": 30294,
+  "tracked_listings": 31687,
   "horizon_days": 7,
   "note": "Store-listing availability; not unit sales. Same product at different stores counts as separate listings.",
   "sales": [],
@@ -66,13 +66,13 @@
   "as_of": "2026-11-14",
   "methodology_version": 2,
   "snapshot": {
-    "colorized_tracked": 2977,
-    "tracked": 31657,
-    "available": 14257,
-    "unavailable": 15968,
-    "unknown": 1432,
-    "colorized_available": 1099,
-    "colorized_unavailable": 1733
+    "colorized_tracked": 2981,
+    "tracked": 31687,
+    "available": 14294,
+    "unavailable": 16000,
+    "unknown": 1393,
+    "colorized_available": 1122,
+    "colorized_unavailable": 1740
   },
   "collectors": [
     {
@@ -93,7 +93,7 @@
     {
       "store": "https://bullionsharks.com",
       "tracked": 55,
-      "fresh": 0
+      "fresh": 17
     },
     {
       "store": "https://popcoins.store",
@@ -128,7 +128,7 @@
     {
       "store": "https://bullionexchanges.com",
       "tracked": 14,
-      "fresh": 0
+      "fresh": 11
     },
     {
       "store": "https://www.providentmetals.com",
@@ -148,12 +148,12 @@
     {
       "store": "https://www.moderncoinmart.com",
       "tracked": 2834,
-      "fresh": 2754
+      "fresh": 2757
     },
     {
       "store": "https://www.pinehurstcoins.com",
       "tracked": 2657,
-      "fresh": 2584
+      "fresh": 2592
     },
     {
       "store": "https://www.intagliomint.com",
@@ -232,8 +232,8 @@
     },
     {
       "store": "https://www.govmint.com",
-      "tracked": 338,
-      "fresh": 223
+      "tracked": 358,
+      "fresh": 243
     },
     {
       "store": "https://www.perthmint.com",
@@ -252,13 +252,13 @@
     },
     {
       "store": "https://www.chards.co.uk",
-      "tracked": 107,
-      "fresh": 105
+      "tracked": 113,
+      "fresh": 111
     },
     {
       "store": "https://www.mdm.de",
-      "tracked": 123,
-      "fresh": 102
+      "tracked": 127,
+      "fresh": 106
     }
   ],
   "market": {
