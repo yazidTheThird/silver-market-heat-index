@@ -1,58 +1,58 @@
 scope,dimension,group,tracked,snapshot_soldout_share,launches,launch_soldout_share,sellouts_timed,median_hours_to_sellout,fast_share,heat,confidence
-all,Base coin,Bar,395,0.667,0,,0,,,,Catalog only
+all,Base coin,Bar,395,0.668,0,,0,,,,Catalog only
 all,Base coin,Britannia,73,0.562,0,,0,,,,Catalog only
-all,Base coin,Half dollar,292,0.86,0,,1,18.6,,,Catalog only
-all,Base coin,Kangaroo/Koala/Kookaburra,417,0.616,0,,0,,,,Catalog only
+all,Base coin,Half dollar,292,0.855,0,,1,18.6,,,Catalog only
+all,Base coin,Kangaroo/Koala/Kookaburra,417,0.619,0,,0,,,,Catalog only
 all,Base coin,Krugerrand,23,0.667,0,,0,,,,Catalog only
-all,Base coin,Libertad,167,0.858,0,,0,,,,Catalog only
-all,Base coin,Maple Leaf,255,0.785,0,,0,,,,Catalog only
-all,Base coin,"Other mint coins (Niue, Cook Is., Cameroon…)",9406,0.656,0,,10,14.2,,,Catalog only
-all,Base coin,Panda,53,0.865,0,,0,,,,Catalog only
-all,Base coin,Perth Lunar,350,0.759,0,,0,,,,Catalog only
+all,Base coin,Libertad,167,0.86,0,,0,,,,Catalog only
+all,Base coin,Maple Leaf,255,0.789,0,,0,,,,Catalog only
+all,Base coin,"Other mint coins (Niue, Cook Is., Cameroon…)",9439,0.656,0,,10,14.2,,,Catalog only
+all,Base coin,Panda,53,0.849,0,,0,,,,Catalog only
+all,Base coin,Perth Lunar,350,0.754,0,,0,,,,Catalog only
 all,Base coin,Philharmonic,6,0.167,0,,0,,,,Catalog only
-all,Base coin,Round/medal,698,0.473,0,,0,,,,Catalog only
-all,Base coin,Silver Eagle,4805,0.194,0,,3,13.2,,,Catalog only
-all,Finish,Antiqued / high relief,1075,0.788,0,,0,,,,Catalog only
+all,Base coin,Round/medal,711,0.465,0,,0,,,,Catalog only
+all,Base coin,Silver Eagle,4805,0.197,0,,3,13.2,,,Catalog only
+all,Finish,Antiqued / high relief,1077,0.786,0,,0,,,,Catalog only
 all,Finish,Black proof / ruthenium,148,0.803,0,,1,19.0,,,Catalog only
 all,Finish,Diamond dust,25,0.68,0,,0,,,,Catalog only
-all,Finish,Gem / crystal inlay,137,0.719,0,,1,7.3,,,Catalog only
+all,Finish,Gem / crystal inlay,137,0.721,0,,1,7.3,,,Catalog only
 all,Finish,Gilded / gold-plated,507,0.711,0,,0,,,,Catalog only
-all,Finish,Glow / special ink,52,0.706,0,,0,,,,Catalog only
+all,Finish,Glow / special ink,52,0.712,0,,0,,,,Catalog only
 all,Finish,Holographic / iridescent,27,0.833,0,,0,,,,Catalog only
-all,Finish,Standard finish,14969,0.495,0,,12,14.2,,,Catalog only
-all,Mintage,"1,001–5,000",1196,0.717,0,,1,19.0,,,Catalog only
+all,Finish,Standard finish,15013,0.496,0,,12,14.2,,,Catalog only
+all,Mintage,"1,001–5,000",1197,0.719,0,,1,19.0,,,Catalog only
 all,Mintage,250 or less,690,0.691,0,,1,17.5,,,Catalog only
-all,Mintage,"251–1,000",1686,0.69,0,,3,7.3,,,Catalog only
-all,Mintage,"5,000+",1116,0.828,0,,3,13.6,,,Catalog only
-all,Premium,1.5–2.5× spot,5116,0.423,0,,0,,,,Catalog only
-all,Premium,2.5–4× spot,3472,0.548,0,,3,7.3,,,Catalog only
-all,Premium,4×+ spot,6676,0.535,0,,11,14.9,,,Catalog only
-all,Premium,Under 1.5× spot,1529,0.796,0,,0,,,,Catalog only
-all,Price,$100–200,5148,0.524,0,,6,16.2,,,Catalog only
-all,Price,$200–500,3751,0.537,0,,2,13.5,,,Catalog only
-all,Price,$500+,1609,0.705,0,,6,13.4,,,Catalog only
-all,Price,$50–100,5071,0.425,0,,0,,,,Catalog only
-all,Price,Under $50,1214,0.705,0,,0,,,,Catalog only
-all,Size,1 oz,9385,0.443,0,,4,12.4,,,Catalog only
-all,Size,1/2 oz,565,0.535,0,,0,,,,Catalog only
-all,Size,10 oz+,146,0.845,0,,0,,,,Catalog only
-all,Size,2–3 oz,1880,0.678,0,,0,,,,Catalog only
-all,Size,5 oz,413,0.801,0,,0,,,,Catalog only
-all,Size,Half dollar,393,0.895,0,,4,15.8,,,Catalog only
-all,Size,Kilo,163,0.781,0,,0,,,,Catalog only
-all,Size,Other,3620,0.557,0,,5,13.6,,,Catalog only
-all,Size,Under 1/2 oz,375,0.597,0,,1,17.9,,,Catalog only
-all,Store,apmex.com,149,0.0,0,,0,,,,Catalog only
-all,Store,boldpreciousmetals.com,77,0.442,0,,0,,,,Catalog only
-all,Store,bullionexchanges.com,14,,0,,0,,,,Catalog only
+all,Mintage,"251–1,000",1686,0.692,0,,3,7.3,,,Catalog only
+all,Mintage,"5,000+",1119,0.829,0,,3,13.6,,,Catalog only
+all,Premium,1.5–2.5× spot,5130,0.423,0,,0,,,,Catalog only
+all,Premium,2.5–4× spot,3478,0.549,0,,3,7.3,,,Catalog only
+all,Premium,4×+ spot,6687,0.535,0,,11,14.9,,,Catalog only
+all,Premium,Under 1.5× spot,1543,0.793,0,,0,,,,Catalog only
+all,Price,$100–200,5160,0.526,0,,6,16.2,,,Catalog only
+all,Price,$200–500,3759,0.538,0,,2,13.5,,,Catalog only
+all,Price,$500+,1611,0.704,0,,6,13.4,,,Catalog only
+all,Price,$50–100,5088,0.425,0,,0,,,,Catalog only
+all,Price,Under $50,1220,0.704,0,,0,,,,Catalog only
+all,Size,1 oz,9405,0.443,0,,4,12.4,,,Catalog only
+all,Size,1/2 oz,571,0.54,0,,0,,,,Catalog only
+all,Size,10 oz+,148,0.847,0,,0,,,,Catalog only
+all,Size,2–3 oz,1883,0.678,0,,0,,,,Catalog only
+all,Size,5 oz,416,0.8,0,,0,,,,Catalog only
+all,Size,Half dollar,393,0.89,0,,4,15.8,,,Catalog only
+all,Size,Kilo,164,0.782,0,,0,,,,Catalog only
+all,Size,Other,3630,0.558,0,,5,13.6,,,Catalog only
+all,Size,Under 1/2 oz,376,0.598,0,,1,17.9,,,Catalog only
+all,Store,apmex.com,151,0.0,0,,0,,,,Catalog only
+all,Store,boldpreciousmetals.com,98,0.561,0,,0,,,,Catalog only
+all,Store,bullionexchanges.com,14,0.182,0,,0,,,,Catalog only
 all,Store,bullionmart.ca,1093,0.819,0,,0,,,,Catalog only
-all,Store,bullionsharks.com,42,,0,,0,,,,Catalog only
+all,Store,bullionsharks.com,42,0.857,0,,0,,,,Catalog only
 all,Store,cdncoin.com,313,0.469,0,,1,14.9,,,Catalog only
 all,Store,chards.co.uk,44,0.795,0,,0,,,,Catalog only
 all,Store,coinstv.net,2269,0.913,0,,13,13.6,,,Catalog only
 all,Store,directcoins.com.au,420,0.512,0,,0,,,,Catalog only
 all,Store,downies.com,693,0.582,0,,0,,,,Catalog only
-all,Store,goldenstatemint.com,19,0.0,0,,0,,,,Catalog only
+all,Store,goldenstatemint.com,23,0.0,0,,0,,,,Catalog only
 all,Store,goldsilver.com,2,0.0,0,,0,,,,Catalog only
 all,Store,goldstackers.com.au,3,0.0,0,,0,,,,Catalog only
 all,Store,govmint.com,229,0.965,0,,0,,,,Catalog only
@@ -69,127 +69,127 @@ all,Store,numiscollect.eu,813,0.376,0,,0,,,,Catalog only
 all,Store,nzmint.com,4,0.0,0,,0,,,,Catalog only
 all,Store,perthmint.com,87,0.287,0,,0,,,,Catalog only
 all,Store,pinehurstcoins.com,2228,0.0,0,,0,,,,Catalog only
-all,Store,royalmint.com,52,0.462,0,,0,,,,Catalog only
-all,Store,sdbullion.com,88,0.388,0,,0,,,,Catalog only
+all,Store,royalmint.com,60,0.5,0,,0,,,,Catalog only
+all,Store,sdbullion.com,89,0.354,0,,0,,,,Catalog only
 all,Store,summitmetals.com,48,0.542,0,,0,,,,Catalog only
-all,Store,texmetals.com,42,0.0,0,,0,,,,Catalog only
+all,Store,texmetals.com,52,0.0,0,,0,,,,Catalog only
 all,Store,thecoinshop.com.au,23,0.0,0,,0,,,,Catalog only
 all,Sub-theme,Alien & sci-fi,87,0.647,0,,0,,,,Catalog only
 all,Sub-theme,Anime & games,61,0.705,0,,0,,,,Catalog only
-all,Sub-theme,Art masterpieces,185,0.415,0,,0,,,,Catalog only
+all,Sub-theme,Art masterpieces,185,0.418,0,,0,,,,Catalog only
 all,Sub-theme,Asian myth & samurai,211,0.72,0,,2,7.3,,,Catalog only
 all,Sub-theme,"Aztec, Maya & Inca",49,0.592,0,,0,,,,Catalog only
-all,Sub-theme,Bears,235,0.705,0,,0,,,,Catalog only
+all,Sub-theme,Bears,235,0.702,0,,0,,,,Catalog only
 all,Sub-theme,Big cats,503,0.688,0,,1,19.0,,,Catalog only
-all,Sub-theme,Birthdays & gifts,394,0.244,0,,0,,,,Catalog only
-all,Sub-theme,Brands & logos,55,0.833,0,,0,,,,Catalog only
-all,Sub-theme,"Cars, trains & machines",156,0.527,0,,0,,,,Catalog only
-all,Sub-theme,Christmas & holidays,140,0.693,0,,0,,,,Catalog only
+all,Sub-theme,Birthdays & gifts,394,0.243,0,,0,,,,Catalog only
+all,Sub-theme,Brands & logos,55,0.818,0,,0,,,,Catalog only
+all,Sub-theme,"Cars, trains & machines",156,0.536,0,,0,,,,Catalog only
+all,Sub-theme,Christmas & holidays,140,0.691,0,,0,,,,Catalog only
 all,Sub-theme,Day of the Dead,26,0.885,0,,1,17.5,,,Catalog only
 all,Sub-theme,"Deer, elk & bison",285,0.679,0,,0,,,,Catalog only
-all,Sub-theme,Dinosaurs,51,0.451,0,,0,,,,Catalog only
+all,Sub-theme,Dinosaurs,52,0.462,0,,0,,,,Catalog only
 all,Sub-theme,Disney & cartoons,178,0.812,0,,0,,,,Catalog only
-all,Sub-theme,Dragons,388,0.856,0,,2,7.3,,,Catalog only
-all,Sub-theme,Eagles & birds of prey,570,0.545,0,,0,,,,Catalog only
-all,Sub-theme,Egyptian,99,0.742,0,,0,,,,Catalog only
-all,Sub-theme,Faith & religion,256,0.642,0,,0,,,,Catalog only
-all,Sub-theme,Fantasy & magic,148,0.738,0,,0,,,,Catalog only
-all,Sub-theme,Flags & states,869,0.118,0,,0,,,,Catalog only
+all,Sub-theme,Dragons,391,0.858,0,,2,7.3,,,Catalog only
+all,Sub-theme,Eagles & birds of prey,571,0.546,0,,0,,,,Catalog only
+all,Sub-theme,Egyptian,99,0.753,0,,0,,,,Catalog only
+all,Sub-theme,Faith & religion,256,0.639,0,,0,,,,Catalog only
+all,Sub-theme,Fantasy & magic,149,0.741,0,,0,,,,Catalog only
+all,Sub-theme,Flags & states,869,0.119,0,,0,,,,Catalog only
 all,Sub-theme,Flowers & plants,158,0.804,0,,0,,,,Catalog only
 all,Sub-theme,Greek & Roman myth,178,0.711,0,,0,,,,Catalog only
-all,Sub-theme,History & landmarks,371,0.713,0,,0,,,,Catalog only
+all,Sub-theme,History & landmarks,371,0.716,0,,0,,,,Catalog only
 all,Sub-theme,Horror & monsters,99,0.68,0,,0,,,,Catalog only
-all,Sub-theme,Horses,239,0.72,0,,2,7.3,,,Catalog only
-all,Sub-theme,Love & weddings,153,0.676,0,,0,,,,Catalog only
+all,Sub-theme,Horses,240,0.722,0,,2,7.3,,,Catalog only
+all,Sub-theme,Love & weddings,153,0.682,0,,0,,,,Catalog only
 all,Sub-theme,Luck & fortune,84,0.583,0,,0,,,,Catalog only
-all,Sub-theme,Lunar New Year,925,0.746,0,,0,,,,Catalog only
-all,Sub-theme,Marvel & DC,401,0.597,0,,0,,,,Catalog only
-all,Sub-theme,Military & veterans,256,0.289,0,,0,,,,Catalog only
+all,Sub-theme,Lunar New Year,925,0.743,0,,0,,,,Catalog only
+all,Sub-theme,Marvel & DC,401,0.595,0,,0,,,,Catalog only
+all,Sub-theme,Military & veterans,256,0.298,0,,0,,,,Catalog only
 all,Sub-theme,Money & crypto,46,0.63,0,,0,,,,Catalog only
-all,Sub-theme,"Moon, sun & stars",807,0.452,0,,0,,,,Catalog only
-all,Sub-theme,Movies & TV,325,0.666,0,,0,,,,Catalog only
-all,Sub-theme,Music,64,0.656,0,,0,,,,Catalog only
+all,Sub-theme,"Moon, sun & stars",807,0.459,0,,0,,,,Catalog only
+all,Sub-theme,Movies & TV,332,0.671,0,,0,,,,Catalog only
+all,Sub-theme,Music,69,0.681,0,,0,,,,Catalog only
 all,Sub-theme,Norse myth & vikings,120,0.765,0,,0,,,,Catalog only
-all,Sub-theme,Other,7585,0.482,0,,10,14.2,,,Catalog only
-all,Sub-theme,Other birds,364,0.605,0,,0,,,,Catalog only
+all,Sub-theme,Other,7612,0.482,0,,10,14.2,,,Catalog only
+all,Sub-theme,Other birds,365,0.607,0,,0,,,,Catalog only
 all,Sub-theme,Pirates & treasure,69,0.797,0,,0,,,,Catalog only
-all,Sub-theme,Presidents & politics,474,0.437,0,,0,,,,Catalog only
-all,Sub-theme,Reptiles & insects,395,0.756,0,,0,,,,Catalog only
-all,Sub-theme,Sea life,183,0.76,0,,0,,,,Catalog only
-all,Sub-theme,Seasons & landscapes,134,0.672,0,,0,,,,Catalog only
+all,Sub-theme,Presidents & politics,474,0.432,0,,0,,,,Catalog only
+all,Sub-theme,Reptiles & insects,395,0.753,0,,0,,,,Catalog only
+all,Sub-theme,Sea life,183,0.756,0,,0,,,,Catalog only
+all,Sub-theme,Seasons & landscapes,134,0.68,0,,0,,,,Catalog only
 all,Sub-theme,Skulls & reapers,42,0.683,0,,0,,,,Catalog only
-all,Sub-theme,Space & planets,156,0.711,0,,0,,,,Catalog only
-all,Sub-theme,Sports,209,0.42,0,,0,,,,Catalog only
-all,Sub-theme,Star Wars,189,0.789,0,,0,,,,Catalog only
+all,Sub-theme,Space & planets,156,0.721,0,,0,,,,Catalog only
+all,Sub-theme,Sports,209,0.422,0,,0,,,,Catalog only
+all,Sub-theme,Star Wars,189,0.79,0,,0,,,,Catalog only
 all,Sub-theme,Tarot & occult,61,0.689,0,,0,,,,Catalog only
-all,Sub-theme,USA 250 & founding,151,0.446,0,,0,,,,Catalog only
-all,Sub-theme,Warriors & knights,187,0.578,0,,0,,,,Catalog only
+all,Sub-theme,USA 250 & founding,151,0.447,0,,0,,,,Catalog only
+all,Sub-theme,Warriors & knights,187,0.581,0,,0,,,,Catalog only
 all,Sub-theme,Western zodiac,142,0.599,0,,0,,,,Catalog only
 all,Sub-theme,Wolves & dogs,100,0.763,0,,0,,,,Catalog only
-all,Theme,Art & history,254,0.464,0,,0,,,,Catalog only
-all,Theme,Dragons,388,0.856,0,,2,7.3,,,Catalog only
-all,Theme,Faith,290,0.597,0,,0,,,,Catalog only
-all,Theme,Flowers & nature,233,0.75,0,,0,,,,Catalog only
-all,Theme,Holidays,129,0.68,0,,0,,,,Catalog only
+all,Theme,Art & history,254,0.466,0,,0,,,,Catalog only
+all,Theme,Dragons,391,0.858,0,,2,7.3,,,Catalog only
+all,Theme,Faith,290,0.595,0,,0,,,,Catalog only
+all,Theme,Flowers & nature,233,0.752,0,,0,,,,Catalog only
+all,Theme,Holidays,129,0.677,0,,0,,,,Catalog only
 all,Theme,Luck & fortune,65,0.646,0,,0,,,,Catalog only
-all,Theme,Lunar & zodiac,1078,0.727,0,,0,,,,Catalog only
-all,Theme,Mythology & gods,491,0.728,0,,2,7.3,,,Catalog only
-all,Theme,Other,6524,0.667,0,,10,14.2,,,Catalog only
-all,Theme,Patriotic & USA 250,4861,0.16,0,,0,,,,Catalog only
-all,Theme,Pop culture & brands,1088,0.682,0,,0,,,,Catalog only
+all,Theme,Lunar & zodiac,1078,0.725,0,,0,,,,Catalog only
+all,Theme,Mythology & gods,491,0.73,0,,2,7.3,,,Catalog only
+all,Theme,Other,6565,0.666,0,,10,14.2,,,Catalog only
+all,Theme,Patriotic & USA 250,4861,0.161,0,,0,,,,Catalog only
+all,Theme,Pop culture & brands,1088,0.68,0,,0,,,,Catalog only
 all,Theme,Skulls & horror,193,0.714,0,,1,17.5,,,Catalog only
-all,Theme,Space & celestial,864,0.473,0,,0,,,,Catalog only
-all,Theme,Sports,203,0.432,0,,0,,,,Catalog only
-all,Theme,Warriors,213,0.639,0,,0,,,,Catalog only
-all,Theme,Wildlife,2063,0.702,0,,3,7.3,,,Catalog only
-all,Type,Colorized,2096,0.696,0,,4,12.4,,,Catalog only
-all,Type,Not colorized,14844,0.502,0,,10,14.2,,,Catalog only
-colorized,Base coin,Bar,116,0.595,0,,0,,,,Catalog only
+all,Theme,Space & celestial,864,0.479,0,,0,,,,Catalog only
+all,Theme,Sports,203,0.435,0,,0,,,,Catalog only
+all,Theme,Warriors,213,0.641,0,,0,,,,Catalog only
+all,Theme,Wildlife,2065,0.701,0,,3,7.3,,,Catalog only
+all,Type,Colorized,2098,0.696,0,,4,12.4,,,Catalog only
+all,Type,Not colorized,14888,0.502,0,,10,14.2,,,Catalog only
+colorized,Base coin,Bar,116,0.602,0,,0,,,,Catalog only
 colorized,Base coin,Britannia,5,0.8,0,,0,,,,Catalog only
-colorized,Base coin,Half dollar,13,0.1,0,,0,,,,Catalog only
-colorized,Base coin,Kangaroo/Koala/Kookaburra,61,0.483,0,,0,,,,Catalog only
-colorized,Base coin,Libertad,85,0.901,0,,0,,,,Catalog only
-colorized,Base coin,Maple Leaf,90,0.675,0,,0,,,,Catalog only
-colorized,Base coin,"Other mint coins (Niue, Cook Is., Cameroon…)",1331,0.76,0,,4,12.4,,,Catalog only
-colorized,Base coin,Panda,7,0.667,0,,0,,,,Catalog only
-colorized,Base coin,Perth Lunar,90,0.862,0,,0,,,,Catalog only
-colorized,Base coin,Round/medal,177,0.306,0,,0,,,,Catalog only
-colorized,Base coin,Silver Eagle,121,0.53,0,,0,,,,Catalog only
-colorized,Finish,Antiqued / high relief,174,0.812,0,,0,,,,Catalog only
+colorized,Base coin,Half dollar,13,0.154,0,,0,,,,Catalog only
+colorized,Base coin,Kangaroo/Koala/Kookaburra,61,0.492,0,,0,,,,Catalog only
+colorized,Base coin,Libertad,85,0.904,0,,0,,,,Catalog only
+colorized,Base coin,Maple Leaf,90,0.69,0,,0,,,,Catalog only
+colorized,Base coin,"Other mint coins (Niue, Cook Is., Cameroon…)",1332,0.757,0,,4,12.4,,,Catalog only
+colorized,Base coin,Panda,7,0.571,0,,0,,,,Catalog only
+colorized,Base coin,Perth Lunar,90,0.852,0,,0,,,,Catalog only
+colorized,Base coin,Round/medal,178,0.308,0,,0,,,,Catalog only
+colorized,Base coin,Silver Eagle,121,0.595,0,,0,,,,Catalog only
+colorized,Finish,Antiqued / high relief,174,0.803,0,,0,,,,Catalog only
 colorized,Finish,Black proof / ruthenium,35,0.857,0,,1,19.0,,,Catalog only
 colorized,Finish,Diamond dust,11,0.727,0,,0,,,,Catalog only
-colorized,Finish,Gem / crystal inlay,20,0.579,0,,1,7.3,,,Catalog only
+colorized,Finish,Gem / crystal inlay,20,0.6,0,,1,7.3,,,Catalog only
 colorized,Finish,Gilded / gold-plated,65,0.754,0,,0,,,,Catalog only
-colorized,Finish,Glow / special ink,23,0.818,0,,0,,,,Catalog only
+colorized,Finish,Glow / special ink,23,0.826,0,,0,,,,Catalog only
 colorized,Finish,Holographic / iridescent,2,0.5,0,,0,,,,Catalog only
-colorized,Finish,Standard finish,1766,0.678,0,,2,12.4,,,Catalog only
-colorized,Mintage,"1,001–5,000",314,0.694,0,,1,19.0,,,Catalog only
-colorized,Mintage,250 or less,227,0.747,0,,1,17.5,,,Catalog only
-colorized,Mintage,"251–1,000",451,0.758,0,,2,7.3,,,Catalog only
-colorized,Mintage,"5,000+",114,0.761,0,,0,,,,Catalog only
+colorized,Finish,Standard finish,1768,0.68,0,,2,12.4,,,Catalog only
+colorized,Mintage,"1,001–5,000",314,0.701,0,,1,19.0,,,Catalog only
+colorized,Mintage,250 or less,227,0.744,0,,1,17.5,,,Catalog only
+colorized,Mintage,"251–1,000",451,0.765,0,,2,7.3,,,Catalog only
+colorized,Mintage,"5,000+",114,0.772,0,,0,,,,Catalog only
 colorized,Premium,1.5–2.5× spot,625,0.882,0,,0,,,,Catalog only
 colorized,Premium,2.5–4× spot,710,0.635,0,,3,7.3,,,Catalog only
-colorized,Premium,4×+ spot,472,0.582,0,,1,17.5,,,Catalog only
-colorized,Premium,Under 1.5× spot,211,0.762,0,,0,,,,Catalog only
-colorized,Price,$100–200,890,0.685,0,,4,12.4,,,Catalog only
-colorized,Price,$200–500,421,0.737,0,,0,,,,Catalog only
-colorized,Price,$500+,76,0.833,0,,0,,,,Catalog only
-colorized,Price,$50–100,500,0.728,0,,0,,,,Catalog only
-colorized,Price,Under $50,131,0.685,0,,0,,,,Catalog only
-colorized,Size,1 oz,1312,0.681,0,,4,12.4,,,Catalog only
+colorized,Premium,4×+ spot,473,0.586,0,,1,17.5,,,Catalog only
+colorized,Premium,Under 1.5× spot,212,0.766,0,,0,,,,Catalog only
+colorized,Price,$100–200,890,0.686,0,,4,12.4,,,Catalog only
+colorized,Price,$200–500,421,0.735,0,,0,,,,Catalog only
+colorized,Price,$500+,76,0.822,0,,0,,,,Catalog only
+colorized,Price,$50–100,502,0.733,0,,0,,,,Catalog only
+colorized,Price,Under $50,131,0.677,0,,0,,,,Catalog only
+colorized,Size,1 oz,1313,0.683,0,,4,12.4,,,Catalog only
 colorized,Size,1/2 oz,183,0.632,0,,0,,,,Catalog only
 colorized,Size,10 oz+,4,1.0,0,,0,,,,Catalog only
-colorized,Size,2–3 oz,313,0.852,0,,0,,,,Catalog only
+colorized,Size,2–3 oz,313,0.847,0,,0,,,,Catalog only
 colorized,Size,5 oz,54,0.944,0,,0,,,,Catalog only
-colorized,Size,Half dollar,13,0.1,0,,0,,,,Catalog only
+colorized,Size,Half dollar,13,0.154,0,,0,,,,Catalog only
 colorized,Size,Kilo,11,1.0,0,,0,,,,Catalog only
-colorized,Size,Other,98,0.511,0,,0,,,,Catalog only
-colorized,Size,Under 1/2 oz,108,0.589,0,,0,,,,Catalog only
-colorized,Store,apmex.com,97,0.0,0,,0,,,,Catalog only
-colorized,Store,boldpreciousmetals.com,33,0.394,0,,0,,,,Catalog only
-colorized,Store,bullionexchanges.com,14,,0,,0,,,,Catalog only
+colorized,Size,Other,98,0.531,0,,0,,,,Catalog only
+colorized,Size,Under 1/2 oz,109,0.593,0,,0,,,,Catalog only
+colorized,Store,apmex.com,98,0.0,0,,0,,,,Catalog only
+colorized,Store,boldpreciousmetals.com,34,0.412,0,,0,,,,Catalog only
+colorized,Store,bullionexchanges.com,14,0.182,0,,0,,,,Catalog only
 colorized,Store,bullionmart.ca,53,0.811,0,,0,,,,Catalog only
-colorized,Store,bullionsharks.com,42,,0,,0,,,,Catalog only
+colorized,Store,bullionsharks.com,42,0.857,0,,0,,,,Catalog only
 colorized,Store,cdncoin.com,19,0.158,0,,0,,,,Catalog only
 colorized,Store,chards.co.uk,11,0.455,0,,0,,,,Catalog only
 colorized,Store,coinstv.net,214,0.594,0,,4,12.4,,,Catalog only
@@ -211,70 +211,70 @@ colorized,Store,texmetals.com,3,0.0,0,,0,,,,Catalog only
 colorized,Store,thecoinshop.com.au,1,0.0,0,,0,,,,Catalog only
 colorized,Sub-theme,Alien & sci-fi,14,0.692,0,,0,,,,Catalog only
 colorized,Sub-theme,Anime & games,35,0.914,0,,0,,,,Catalog only
-colorized,Sub-theme,Art masterpieces,29,0.821,0,,0,,,,Catalog only
+colorized,Sub-theme,Art masterpieces,29,0.828,0,,0,,,,Catalog only
 colorized,Sub-theme,Asian myth & samurai,49,0.837,0,,2,7.3,,,Catalog only
 colorized,Sub-theme,"Aztec, Maya & Inca",22,0.636,0,,0,,,,Catalog only
-colorized,Sub-theme,Bears,35,0.529,0,,0,,,,Catalog only
+colorized,Sub-theme,Bears,35,0.514,0,,0,,,,Catalog only
 colorized,Sub-theme,Big cats,85,0.694,0,,1,19.0,,,Catalog only
 colorized,Sub-theme,Birthdays & gifts,48,0.511,0,,0,,,,Catalog only
-colorized,Sub-theme,Brands & logos,17,0.75,0,,0,,,,Catalog only
-colorized,Sub-theme,"Cars, trains & machines",30,0.481,0,,0,,,,Catalog only
-colorized,Sub-theme,Christmas & holidays,50,0.745,0,,0,,,,Catalog only
+colorized,Sub-theme,Brands & logos,17,0.706,0,,0,,,,Catalog only
+colorized,Sub-theme,"Cars, trains & machines",30,0.533,0,,0,,,,Catalog only
+colorized,Sub-theme,Christmas & holidays,50,0.735,0,,0,,,,Catalog only
 colorized,Sub-theme,Day of the Dead,19,1.0,0,,1,17.5,,,Catalog only
 colorized,Sub-theme,"Deer, elk & bison",29,0.643,0,,0,,,,Catalog only
-colorized,Sub-theme,Dinosaurs,6,0.833,0,,0,,,,Catalog only
+colorized,Sub-theme,Dinosaurs,7,0.857,0,,0,,,,Catalog only
 colorized,Sub-theme,Disney & cartoons,45,0.909,0,,0,,,,Catalog only
-colorized,Sub-theme,Dragons,103,0.78,0,,2,7.3,,,Catalog only
-colorized,Sub-theme,Eagles & birds of prey,38,0.583,0,,0,,,,Catalog only
-colorized,Sub-theme,Egyptian,26,0.857,0,,0,,,,Catalog only
-colorized,Sub-theme,Faith & religion,59,0.491,0,,0,,,,Catalog only
-colorized,Sub-theme,Fantasy & magic,35,0.848,0,,0,,,,Catalog only
-colorized,Sub-theme,Flags & states,32,0.194,0,,0,,,,Catalog only
+colorized,Sub-theme,Dragons,103,0.782,0,,2,7.3,,,Catalog only
+colorized,Sub-theme,Eagles & birds of prey,38,0.605,0,,0,,,,Catalog only
+colorized,Sub-theme,Egyptian,26,0.88,0,,0,,,,Catalog only
+colorized,Sub-theme,Faith & religion,59,0.483,0,,0,,,,Catalog only
+colorized,Sub-theme,Fantasy & magic,35,0.853,0,,0,,,,Catalog only
+colorized,Sub-theme,Flags & states,32,0.219,0,,0,,,,Catalog only
 colorized,Sub-theme,Flowers & plants,28,0.679,0,,0,,,,Catalog only
 colorized,Sub-theme,Greek & Roman myth,13,0.846,0,,0,,,,Catalog only
-colorized,Sub-theme,History & landmarks,103,0.677,0,,0,,,,Catalog only
+colorized,Sub-theme,History & landmarks,103,0.69,0,,0,,,,Catalog only
 colorized,Sub-theme,Horror & monsters,35,0.8,0,,0,,,,Catalog only
 colorized,Sub-theme,Horses,56,0.709,0,,2,7.3,,,Catalog only
-colorized,Sub-theme,Love & weddings,37,0.618,0,,0,,,,Catalog only
+colorized,Sub-theme,Love & weddings,37,0.649,0,,0,,,,Catalog only
 colorized,Sub-theme,Luck & fortune,15,0.533,0,,0,,,,Catalog only
-colorized,Sub-theme,Lunar New Year,178,0.787,0,,0,,,,Catalog only
-colorized,Sub-theme,Marvel & DC,61,0.93,0,,0,,,,Catalog only
-colorized,Sub-theme,Military & veterans,32,0.621,0,,0,,,,Catalog only
+colorized,Sub-theme,Lunar New Year,178,0.779,0,,0,,,,Catalog only
+colorized,Sub-theme,Marvel & DC,61,0.914,0,,0,,,,Catalog only
+colorized,Sub-theme,Military & veterans,32,0.656,0,,0,,,,Catalog only
 colorized,Sub-theme,Money & crypto,22,0.636,0,,0,,,,Catalog only
-colorized,Sub-theme,"Moon, sun & stars",113,0.667,0,,0,,,,Catalog only
-colorized,Sub-theme,Movies & TV,98,0.588,0,,0,,,,Catalog only
+colorized,Sub-theme,"Moon, sun & stars",113,0.696,0,,0,,,,Catalog only
+colorized,Sub-theme,Movies & TV,98,0.582,0,,0,,,,Catalog only
 colorized,Sub-theme,Music,18,0.611,0,,0,,,,Catalog only
 colorized,Sub-theme,Norse myth & vikings,8,1.0,0,,0,,,,Catalog only
-colorized,Sub-theme,Other,566,0.666,0,,0,,,,Catalog only
-colorized,Sub-theme,Other birds,54,0.577,0,,0,,,,Catalog only
+colorized,Sub-theme,Other,567,0.662,0,,0,,,,Catalog only
+colorized,Sub-theme,Other birds,54,0.585,0,,0,,,,Catalog only
 colorized,Sub-theme,Pirates & treasure,6,1.0,0,,0,,,,Catalog only
-colorized,Sub-theme,Presidents & politics,11,0.7,0,,0,,,,Catalog only
-colorized,Sub-theme,Reptiles & insects,75,0.833,0,,0,,,,Catalog only
-colorized,Sub-theme,Sea life,56,0.709,0,,0,,,,Catalog only
-colorized,Sub-theme,Seasons & landscapes,30,0.778,0,,0,,,,Catalog only
+colorized,Sub-theme,Presidents & politics,11,0.636,0,,0,,,,Catalog only
+colorized,Sub-theme,Reptiles & insects,75,0.822,0,,0,,,,Catalog only
+colorized,Sub-theme,Sea life,56,0.696,0,,0,,,,Catalog only
+colorized,Sub-theme,Seasons & landscapes,30,0.8,0,,0,,,,Catalog only
 colorized,Sub-theme,Skulls & reapers,18,0.706,0,,0,,,,Catalog only
-colorized,Sub-theme,Space & planets,55,0.714,0,,0,,,,Catalog only
-colorized,Sub-theme,Sports,40,0.59,0,,0,,,,Catalog only
-colorized,Sub-theme,Star Wars,37,0.857,0,,0,,,,Catalog only
+colorized,Sub-theme,Space & planets,55,0.741,0,,0,,,,Catalog only
+colorized,Sub-theme,Sports,40,0.6,0,,0,,,,Catalog only
+colorized,Sub-theme,Star Wars,37,0.861,0,,0,,,,Catalog only
 colorized,Sub-theme,Tarot & occult,33,0.788,0,,0,,,,Catalog only
-colorized,Sub-theme,USA 250 & founding,16,0.429,0,,0,,,,Catalog only
-colorized,Sub-theme,Warriors & knights,24,0.913,0,,0,,,,Catalog only
+colorized,Sub-theme,USA 250 & founding,16,0.438,0,,0,,,,Catalog only
+colorized,Sub-theme,Warriors & knights,24,0.917,0,,0,,,,Catalog only
 colorized,Sub-theme,Western zodiac,47,0.936,0,,0,,,,Catalog only
 colorized,Sub-theme,Wolves & dogs,24,0.792,0,,0,,,,Catalog only
-colorized,Theme,Art & history,39,0.73,0,,0,,,,Catalog only
-colorized,Theme,Dragons,103,0.78,0,,2,7.3,,,Catalog only
-colorized,Theme,Faith,59,0.491,0,,0,,,,Catalog only
-colorized,Theme,Flowers & nature,49,0.766,0,,0,,,,Catalog only
-colorized,Theme,Holidays,49,0.711,0,,0,,,,Catalog only
+colorized,Theme,Art & history,39,0.737,0,,0,,,,Catalog only
+colorized,Theme,Dragons,103,0.782,0,,2,7.3,,,Catalog only
+colorized,Theme,Faith,59,0.483,0,,0,,,,Catalog only
+colorized,Theme,Flowers & nature,49,0.776,0,,0,,,,Catalog only
+colorized,Theme,Holidays,49,0.702,0,,0,,,,Catalog only
 colorized,Theme,Luck & fortune,13,0.462,0,,0,,,,Catalog only
-colorized,Theme,Lunar & zodiac,230,0.824,0,,0,,,,Catalog only
-colorized,Theme,Mythology & gods,120,0.737,0,,2,7.3,,,Catalog only
-colorized,Theme,Other,796,0.683,0,,0,,,,Catalog only
-colorized,Theme,Patriotic & USA 250,145,0.478,0,,0,,,,Catalog only
-colorized,Theme,Pop culture & brands,274,0.772,0,,0,,,,Catalog only
+colorized,Theme,Lunar & zodiac,230,0.817,0,,0,,,,Catalog only
+colorized,Theme,Mythology & gods,120,0.746,0,,2,7.3,,,Catalog only
+colorized,Theme,Other,798,0.682,0,,0,,,,Catalog only
+colorized,Theme,Patriotic & USA 250,145,0.493,0,,0,,,,Catalog only
+colorized,Theme,Pop culture & brands,274,0.767,0,,0,,,,Catalog only
 colorized,Theme,Skulls & horror,86,0.8,0,,1,17.5,,,Catalog only
-colorized,Theme,Space & celestial,133,0.746,0,,0,,,,Catalog only
-colorized,Theme,Sports,39,0.605,0,,0,,,,Catalog only
-colorized,Theme,Warriors,38,0.946,0,,0,,,,Catalog only
-colorized,Theme,Wildlife,358,0.7,0,,3,7.3,,,Catalog only
-colorized,Type,Colorized,2096,0.696,0,,4,12.4,,,Catalog only
+colorized,Theme,Space & celestial,133,0.763,0,,0,,,,Catalog only
+colorized,Theme,Sports,39,0.615,0,,0,,,,Catalog only
+colorized,Theme,Warriors,38,0.947,0,,0,,,,Catalog only
+colorized,Theme,Wildlife,358,0.695,0,,3,7.3,,,Catalog only
+colorized,Type,Colorized,2098,0.696,0,,4,12.4,,,Catalog only
