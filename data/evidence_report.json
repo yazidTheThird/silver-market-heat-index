@@ -55,10 +55,10 @@
       "confidence": "Insufficient evidence"
     }
   ],
-  "fresh_stores": 32,
+  "fresh_stores": 30,
   "configured_stores": 37,
-  "fresh_listings": 30308,
-  "tracked_listings": 31778,
+  "fresh_listings": 30271,
+  "tracked_listings": 31808,
   "horizon_days": 7,
   "note": "Store-listing availability; not unit sales. Same product at different stores counts as separate listings.",
   "sales": [],
@@ -67,12 +67,12 @@
   "methodology_version": 2,
   "snapshot": {
     "colorized_tracked": 2983,
-    "tracked": 31778,
-    "available": 14310,
-    "unavailable": 15998,
-    "unknown": 1470,
-    "colorized_available": 1120,
-    "colorized_unavailable": 1762
+    "tracked": 31808,
+    "available": 14291,
+    "unavailable": 15980,
+    "unknown": 1537,
+    "colorized_available": 1093,
+    "colorized_unavailable": 1723
   },
   "collectors": [
     {
@@ -93,7 +93,7 @@
     {
       "store": "https://bullionsharks.com",
       "tracked": 55,
-      "fresh": 55
+      "fresh": 0
     },
     {
       "store": "https://popcoins.store",
@@ -128,7 +128,7 @@
     {
       "store": "https://bullionexchanges.com",
       "tracked": 14,
-      "fresh": 11
+      "fresh": 0
     },
     {
       "store": "https://www.providentmetals.com",
@@ -152,7 +152,7 @@
     },
     {
       "store": "https://www.pinehurstcoins.com",
-      "tracked": 2663,
+      "tracked": 2666,
       "fresh": 2595
     },
     {
@@ -232,8 +232,8 @@
     },
     {
       "store": "https://www.govmint.com",
-      "tracked": 380,
-      "fresh": 186
+      "tracked": 402,
+      "fresh": 208
     },
     {
       "store": "https://www.perthmint.com",
@@ -248,7 +248,7 @@
     {
       "store": "https://www.royalmint.com",
       "tracked": 170,
-      "fresh": 155
+      "fresh": 157
     },
     {
       "store": "https://www.chards.co.uk",
@@ -257,8 +257,8 @@
     },
     {
       "store": "https://www.mdm.de",
-      "tracked": 136,
-      "fresh": 86
+      "tracked": 141,
+      "fresh": 91
     }
   ],
   "market": {
