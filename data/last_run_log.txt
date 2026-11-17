@@ -1,18 +1,18 @@
-INFO drops: https://www.coinstv.net via shopify -> 3908 collectible products (252 colorized)
+INFO drops: https://www.coinstv.net via shopify -> 3906 collectible products (252 colorized)
 INFO drops: https://www.herobullion.com via woocommerce -> 1397 collectible products (374 colorized)
 INFO drops: https://grreserve.com via woocommerce -> 2754 collectible products (1014 colorized)
-INFO drops: https://bullionsharks.com -> 18 product links, 1 pages fetched, HTTP errors none, 1 without readable stock status, 0 skipped (plain bullion)
-WARNING drops: https://bullionsharks.com: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
+INFO drops: https://bullionsharks.com -> 56 product links, 56 pages fetched, HTTP errors none, 1 without readable stock status, 0 skipped (plain bullion)
+INFO drops: https://bullionsharks.com via generic -> 55 collectible products (55 colorized)
 WARNING drops: https://popcoins.store: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
 INFO drops: https://www.mycollectables.com.au via shopify -> 4302 collectible products (617 colorized)
 INFO drops: https://www.directcoins.com.au via shopify -> 603 collectible products (121 colorized)
 INFO drops: https://cdncoin.com via shopify -> 817 collectible products (28 colorized)
-INFO drops: https://www.apmex.com -> 266 product links, 40 pages fetched, HTTP errors none, 0 without readable stock status, 0 skipped (plain bullion)
-INFO drops: https://www.apmex.com via generic -> 234 collectible products (105 colorized)
-INFO drops: https://sdbullion.com -> 177 product links, 40 pages fetched, HTTP errors {404: 1}, 27 without readable stock status, 0 skipped (plain bullion)
+INFO drops: https://www.apmex.com -> 266 product links, 150 pages fetched, HTTP errors none, 0 without readable stock status, 0 skipped (plain bullion)
+INFO drops: https://www.apmex.com via generic -> 256 collectible products (107 colorized)
+INFO drops: https://sdbullion.com -> 177 product links, 150 pages fetched, HTTP errors {404: 1}, 27 without readable stock status, 0 skipped (plain bullion)
 INFO drops: https://sdbullion.com via generic -> 142 collectible products (25 colorized)
-INFO drops: https://bullionexchanges.com -> 11 product links, 0 pages fetched, HTTP errors none, 0 without readable stock status, 0 skipped (plain bullion)
-WARNING drops: https://bullionexchanges.com: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
+INFO drops: https://bullionexchanges.com -> 11 product links, 11 pages fetched, HTTP errors none, 0 without readable stock status, 0 skipped (plain bullion)
+INFO drops: https://bullionexchanges.com via generic -> 11 collectible products (11 colorized)
 WARNING drops: listing https://www.providentmetals.com/2026-new-releases.html -> HTTP 401
 WARNING drops: https://www.providentmetals.com: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
 WARNING drops: listing https://www.moneymetals.com/buy/silver/colorized -> HTTP 403
@@ -21,39 +21,47 @@ WARNING drops: https://www.moneymetals.com: could not read products — add list
 WARNING drops: listing https://www.bullionbypost.co.uk/silver-coins/2026-silver-coins/ -> HTTP 403
 WARNING drops: https://www.bullionbypost.co.uk: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
 INFO drops: https://www.moderncoinmart.com via woocommerce -> 2775 collectible products (9 colorized)
-INFO drops: https://www.pinehurstcoins.com via woocommerce -> 2610 collectible products (10 colorized)
+INFO drops: https://www.pinehurstcoins.com via woocommerce -> 2614 collectible products (10 colorized)
 INFO drops: https://www.intagliomint.com via woocommerce -> 744 collectible products (1 colorized)
 INFO drops: https://www.libertycoin.com via woocommerce -> 926 collectible products (17 colorized)
 INFO drops: https://www.goldsilver.com via woocommerce -> 6 collectible products (0 colorized)
 WARNING drops: https://www.libertymint.com: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
 INFO drops: https://www.summitmetals.com via shopify -> 70 collectible products (0 colorized)
 INFO drops: https://www.highlandmint.com via shopify -> 489 collectible products (0 colorized)
-WARNING drops: https://www.numiscollect.eu -> ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
-WARNING drops: https://www.numiscollect.eu: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
+INFO drops: https://www.numiscollect.eu via woocommerce -> 2771 collectible products (17 colorized)
 INFO drops: https://www.downies.com via shopify -> 2502 collectible products (51 colorized)
 INFO drops: https://www.melbournecoins.com.au via shopify -> 624 collectible products (7 colorized)
 INFO drops: https://www.goldstackers.com.au via woocommerce -> 11 collectible products (0 colorized)
 INFO drops: https://www.nzmint.com via shopify -> 17 collectible products (0 colorized)
 INFO drops: https://www.bullionmart.ca via woocommerce -> 1606 collectible products (67 colorized)
-INFO drops: https://www.goldenstatemint.com -> 398 product links, 40 pages fetched, HTTP errors none, 1 without readable stock status, 0 skipped (plain bullion)
+INFO drops: https://www.goldenstatemint.com -> 398 product links, 60 pages fetched, HTTP errors none, 1 without readable stock status, 0 skipped (plain bullion)
 INFO drops: https://www.goldenstatemint.com via generic -> 59 collectible products (4 colorized)
-INFO drops: https://www.texmetals.com -> 522 product links, 40 pages fetched, HTTP errors none, 3 without readable stock status, 0 skipped (plain bullion)
-INFO drops: https://www.texmetals.com via generic -> 78 collectible products (3 colorized)
-INFO drops: https://www.boldpreciousmetals.com -> 890 product links, 40 pages fetched, HTTP errors none, 1 without readable stock status, 0 skipped (plain bullion)
-INFO drops: https://www.boldpreciousmetals.com via generic -> 134 collectible products (38 colorized)
-INFO drops: https://www.govmint.com -> 16545 product links, 40 pages fetched, HTTP errors {406: 40}, 0 without readable stock status, 0 skipped (plain bullion)
+INFO drops: https://www.texmetals.com -> 522 product links, 142 pages fetched, HTTP errors none, 25 without readable stock status, 30 skipped (plain bullion)
+INFO drops: https://www.texmetals.com via generic -> 87 collectible products (3 colorized)
+INFO drops: https://www.boldpreciousmetals.com -> 890 product links, 150 pages fetched, HTTP errors none, 1 without readable stock status, 5 skipped (plain bullion)
+INFO drops: https://www.boldpreciousmetals.com via generic -> 145 collectible products (39 colorized)
+INFO drops: https://www.govmint.com -> 16562 product links, 150 pages fetched, HTTP errors {406: 150}, 0 without readable stock status, 0 skipped (plain bullion)
 WARNING drops: https://www.govmint.com: could not read products — add listing_urls (colorized category page) or sitemap_url for this store, or try render: true
-INFO drops: https://www.perthmint.com -> 650 product links, 40 pages fetched, HTTP errors {404: 8}, 0 without readable stock status, 0 skipped (plain bullion)
+INFO drops: https://www.perthmint.com -> 650 product links, 150 pages fetched, HTTP errors {404: 8}, 0 without readable stock status, 0 skipped (plain bullion)
 INFO drops: https://www.perthmint.com via generic -> 151 collectible products (54 colorized)
-INFO drops: https://www.thecoinshop.com.au -> 153 product links, 40 pages fetched, HTTP errors none, 0 without readable stock status, 0 skipped (plain bullion)
+INFO drops: https://www.thecoinshop.com.au -> 153 product links, 74 pages fetched, HTTP errors none, 0 without readable stock status, 0 skipped (plain bullion)
 INFO drops: https://www.thecoinshop.com.au via generic -> 74 collectible products (15 colorized)
-INFO drops: https://www.royalmint.com -> 7536 product links, 40 pages fetched, HTTP errors none, 1 without readable stock status, 0 skipped (plain bullion)
+INFO drops: https://www.royalmint.com -> 7536 product links, 150 pages fetched, HTTP errors none, 1 without readable stock status, 0 skipped (plain bullion)
 INFO drops: https://www.royalmint.com via generic -> 170 collectible products (0 colorized)
-INFO drops: https://www.chards.co.uk -> 5694 product links, 40 pages fetched, HTTP errors none, 1 without readable stock status, 1 skipped (plain bullion)
+INFO drops: https://www.chards.co.uk -> 5697 product links, 150 pages fetched, HTTP errors none, 1 without readable stock status, 13 skipped (plain bullion)
 INFO drops: https://www.chards.co.uk via generic -> 138 collectible products (11 colorized)
-INFO drops: https://www.mdm.de -> 2704 product links, 40 pages fetched, HTTP errors none, 0 without readable stock status, 22 skipped (plain bullion)
-INFO drops: https://www.mdm.de via generic -> 176 collectible products (0 colorized)
-INFO gallery pictures: 2231 recent launches, 2220 saved, 109 presale (22 new or changed, 0 aged out)
-INFO fast check: 28 stores read
+INFO drops: https://www.mdm.de -> 2704 product links, 150 pages fetched, HTTP errors none, 0 without readable stock status, 63 skipped (plain bullion)
+INFO drops: https://www.mdm.de via generic -> 197 collectible products (0 colorized)
+INFO gallery pictures: 2212 recent launches, 2203 saved, 117 presale (27 new or changed, 41 aged out)
+WARNING reddit: 403 Client Error: Blocked for url: https://www.reddit.com/r/Silverbugs/search.json?q=colorized+OR+colourized+OR+colorised+OR+colourised&restrict_sr=1&sort=new&t=week&limit=100
+WARNING google trends: The request failed: Google returned a response with code 429
+INFO drops       None  Availability cohorts only; no inferred unit sales or composite score
+INFO ebay        None  Asking prices/listing supply only; completed purchases are reported separately
+INFO attention   None  attention: building history
+INFO silver      43.1  ok
+INFO calendar    78.7  ok
+INFO INDEX None (INSUFFICIENT EVIDENCE), coverage 0%
 INFO hot groups: 279 groups ranked -> data/hot_groups.csv
-INFO gallery: 1751 releases in the last 90 days, 1741 with a picture -> docs/releases.html
+INFO dashboard written to /home/runner/work/silver-market-heat-index/silver-market-heat-index/docs/index.html
+INFO gallery: 1732 releases in the last 90 days, 1724 with a picture -> docs/releases.html
+INFO telegram: message sent
