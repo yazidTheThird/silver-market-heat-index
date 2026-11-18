@@ -1645,9 +1645,12 @@ https://www.mdm.de/2-euro-frankreich-70-jahre-frieden-2015
 https://www.mdm.de/2-euro-gedenkmuenze-50-jahrestag-der-ernennung-jeans-zum-statthalter-2011-aus-luxemburg
 https://www.mdm.de/2-euro-gedenkmuenze-andorra-20-jahre-beitritt-europarat
 https://www.mdm.de/2-euro-gedenkmuenze-estland-2022-2-slava-ukraini
+https://www.mdm.de/2-euro-gedenkmuenze-estland-2024-nationalblume-blaue-kornblume
+https://www.mdm.de/2-euro-gedenkmuenze-frankreich-2024-olympische-spiele
 https://www.mdm.de/2-euro-gedenkmuenze-galileo-galilei-2005-aus-san-marino
 https://www.mdm.de/2-euro-gedenkmuenze-lettland-2016-vidzeme
 https://www.mdm.de/2-euro-gedenkmuenze-portugal-2016-olympische-spiele-1
+https://www.mdm.de/2-euro-gedenkmuenze-portugal-2024-olympische-spiele
 https://www.mdm.de/2-euro-gedenkmuenze-san-marino-2023-kupfer-nickel-perugino-1-1
 https://www.mdm.de/2-euro-gedenkmuenze-san-marino-2023-kupfer-nickel-signorelli-1-1
 https://www.mdm.de/2-euro-gedenkmuenze-vatikan-2023-kupfer-nickel-alessandro-manzoni-1-1
@@ -1681,6 +1684,7 @@ https://www.mdm.de/2-euro-italien-2014-200-jahrestag-carabinieri
 https://www.mdm.de/2-euro-italien-2014-galileo-galilei
 https://www.mdm.de/2-euro-italien-2015-expo
 https://www.mdm.de/2-euro-italien-2024-finanzpolizei
+https://www.mdm.de/2-euro-italien-2024-nobelpreistraegerin-levi-montalcini
 https://www.mdm.de/2-euro-italien-2025-weltreise-vespucci
 https://www.mdm.de/2-euro-italien-eu-verfassung-2005
 https://www.mdm.de/2-euro-italien-pinocchio-2026
@@ -1756,6 +1760,7 @@ https://www.mdm.de/2-euro-muenze-san-marino-2016-shakespeare
 https://www.mdm.de/2-euro-muenze-slowakei-2016
 https://www.mdm.de/2-euro-muenze-slowenien-2023-kupfer-nickel-josip-plemelj-1-1
 https://www.mdm.de/2-euro-muenze-slowenien-2025-miki-muster
+https://www.mdm.de/2-euro-muenze-spanien-2011-alhambra-in-granada
 https://www.mdm.de/2-euro-muenze-vatikan-2007-geburtstag-papst-benedikt
 https://www.mdm.de/2-euro-muenze-vatikan-2008-paulusjahr
 https://www.mdm.de/2-euro-muenze-vatikan-2013-sedisvakanz
@@ -1786,6 +1791,7 @@ https://www.mdm.de/2-euro-portugal-2013-glockenturm-clerigos-kirche
 https://www.mdm.de/2-euro-portugal-2014-40-agricultura-familiar
 https://www.mdm.de/2-euro-portugal-2014-40-jahrestag-nelkenrevolution
 https://www.mdm.de/2-euro-portugal-2015-gruendung-des-portugiesischen-roten-kreuzes
+https://www.mdm.de/2-euro-portugal-2024-50-jahre-nelkenrevolution-am-25-04-74
 https://www.mdm.de/2-euro-san-marino-2007-guiseppe-garibaldi
 https://www.mdm.de/2-euro-san-marino-2008-interkultureller-dialog
 https://www.mdm.de/2-euro-san-marino-2009-kreativitaet-innovation
@@ -1794,6 +1800,7 @@ https://www.mdm.de/2-euro-san-marino-2011-giorgio-vasari
 https://www.mdm.de/2-euro-san-marino-2012-10-jahre-euro
 https://www.mdm.de/2-euro-san-marino-2013-pinturicchio
 https://www.mdm.de/2-euro-san-marino-2016-donatello
+https://www.mdm.de/2-euro-san-marino-2024-50-jahre-erklaerung-der-buergerrechte
 https://www.mdm.de/2-euro-san-marino-2025-heiliges-jahr
 https://www.mdm.de/2-euro-san-marino-alighieri-2015
 https://www.mdm.de/2-euro-san-marino-bartolomeo-borghesi-2004
@@ -1824,6 +1831,8 @@ https://www.mdm.de/2-euro-spanien-2012-kathedrale-burgos
 https://www.mdm.de/2-euro-spanien-2013-schloss-escorial
 https://www.mdm.de/2-euro-spanien-2015-hoehle-von-altamira
 https://www.mdm.de/2-euro-spanien-2023-kupfer-nickel-spanischer-vorsitz-eu-1-1
+https://www.mdm.de/2-euro-spanien-2024-200-jahre-policia-national
+https://www.mdm.de/2-euro-spanien-2024-unesco-altstadt-von-sevilla-alcazar
 https://www.mdm.de/2-euro-spanien-2026-inklusion
 https://www.mdm.de/2-euro-spanien-don-quijote-2005
 https://www.mdm.de/2-euro-spanien-gaudi-2014
@@ -1870,6 +1879,7 @@ https://www.mdm.de/20-mark-goldmuenze-maerchenkoenig-ludwig
 https://www.mdm.de/2019-stahl-tresor-kavent-muenz-zubehoer
 https://www.mdm.de/2023-silber-maus-und-elefant
 https://www.mdm.de/2023-silber-terence-hill-don-matteo
+https://www.mdm.de/2024-die-deutschen-jubilaeumsausgaben-60-jahre-erste-liga
 https://www.mdm.de/2024-feingold-beckenbauer-1-1
 https://www.mdm.de/2024-gold-harry-potter-wands-at-the-ready
 https://www.mdm.de/2024-gold-sepp-herberger-70-jahre-wunder-von-bern
@@ -1900,7 +1910,10 @@ https://www.mdm.de/2oz-silbermuenze-suedafrika-2026-cheetah
 https://www.mdm.de/3-euro-muenze-oesterreich-2023-kupfer-nickel-steinkoralle-uv-lampe-muenzalbum
 https://www.mdm.de/3-euro-muenze-oesterreich-2026-basilisk
 https://www.mdm.de/3-euro-oersterreich-leuchtende-meereswelten
+https://www.mdm.de/3-euro-oesterreich-2024-3-blauer-doktorfisch-meereswelten
 https://www.mdm.de/3-euro-oesterreich-2026-fabelwesen-hippokamp
+https://www.mdm.de/3-groescher-preussen-1771-1786-silber-alten-fritz
+https://www.mdm.de/3-mark-deutsches-reich-1913-silber-jahrhundertfeier-der-befreiungskriege
 https://www.mdm.de/3-mark-friedrich-ii
 https://www.mdm.de/3-mark-vorzueglich-deutsches-reich-1910-grossherzog-ernst-ludwig
 https://www.mdm.de/3-reichsmark-100-todestag-goethes
@@ -1918,6 +1931,8 @@ https://www.mdm.de/4-euro-italien-2025-gedenkmuenze-campari
 https://www.mdm.de/4-euro-silbermuenze-italien-olympia-2026
 https://www.mdm.de/5-dm-1975-2001-cu-ni-bundesrepublik-deutschland
 https://www.mdm.de/5-dm-letzte-silbermuenzen
+https://www.mdm.de/5-dollar-cookinseln-2024-gold-greif
+https://www.mdm.de/5-dollar-cookinseln-2024-silber-weihnachtsstern-sternenhimmel-goldveredelt
 https://www.mdm.de/5-dollar-goldbarren-2025-brandenburger-tor
 https://www.mdm.de/5-euro-frankreich-2025-goldmuenze-justice-league
 https://www.mdm.de/5-euro-gedenkmuenze-2026-ariane-st-pp
@@ -1964,12 +1979,15 @@ https://www.mdm.de/70j-wunder-von-bern-fritz-walter-silberpraegung
 https://www.mdm.de/8-reales-piratenmuenze-philipp-iii
 https://www.mdm.de/adventskalender-2026-numismatisch
 https://www.mdm.de/african-bullion-goldbarren-1-200-oz
+https://www.mdm.de/altdeutsche-silbertaler-die-groessten-schoensten-deutschen-muenzen
 https://www.mdm.de/altdeutschland-haendlein-heller
 https://www.mdm.de/alu-muenzenkoffer-fuer-2-euro-schwarz-1
 https://www.mdm.de/alu-muenzenkoffer-klein-schwarz-silber-2-euro
 https://www.mdm.de/aluminium-muenzenkoffer
+https://www.mdm.de/andorra-2018-2-25-j-verfassung-st-1
 https://www.mdm.de/andorra-2025-2-euro-muenze-bartgeier
 https://www.mdm.de/antike-original-silbermuenze-augustus
+https://www.mdm.de/at-athen-grc-tetradr-490-220v-chr-vz
 https://www.mdm.de/au9999-diemaus-einmal-um-die-welt
 https://www.mdm.de/australien-2026-1oz-silber-outback-opal
 https://www.mdm.de/australien-2026-gold-sovereign
@@ -1980,6 +1998,7 @@ https://www.mdm.de/banknote-0-euro-offizieller-pokal-wm-2026
 https://www.mdm.de/banknote-5-rubel-1909
 https://www.mdm.de/banknoten-groenland-2026-souvenir
 https://www.mdm.de/banknoten-russland-100-und-500-rubel
+https://www.mdm.de/bash-in-berlin-wwe-2024-gedenkpraegung-silber
 https://www.mdm.de/baumwollhandschuhe-dunn-1paar
 https://www.mdm.de/bavaria-gold-barren
 https://www.mdm.de/bayern-luitpold-2-mark-1911-j-48
@@ -2088,6 +2107,7 @@ https://www.mdm.de/gja2025-wildtier-alpenschneehase-au
 https://www.mdm.de/gja2026-25j-abschied-d-mark-au-17mm-evk
 https://www.mdm.de/goetterdaemmerung-echte-roemische-muenze
 https://www.mdm.de/gold-1-unze-suedafrika-2026-big-five-buffalo
+https://www.mdm.de/gold-anlage-depot-einzelne-feingoldbarren
 https://www.mdm.de/gold-ehrenpraegung-franz-beckenbauer
 https://www.mdm.de/gold-euromuenze-olympia-2026
 https://www.mdm.de/gold-gedaenkbarren-kameradschaft-feuerwehr
@@ -2371,6 +2391,7 @@ https://www.mdm.de/suedafrika-rand-pfund
 https://www.mdm.de/syrakus-306-289-vor-christus-bronze-agathokles
 https://www.mdm.de/tafelbarren-gold-10x1g
 https://www.mdm.de/tafelbarren-valcambi-ag999-100-x-1g
+https://www.mdm.de/taler-mark-preussen-1740-1918-silber-friedrich-der-grosse-nachfolger
 https://www.mdm.de/teilverg-ag-muenze-rrs-discovery-schiff
 https://www.mdm.de/thrakien-istros-pfeilspitzengeld
 https://www.mdm.de/thrakien-olbia-delfingeld-5-jhdt-v-chr
