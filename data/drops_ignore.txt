@@ -492,6 +492,8 @@ https://thecoinshop.com.au/product/centenary-of-powered-flight-2010-pnc-1-coin/
 https://thecoinshop.com.au/product/legendary-warriors-julius-caesar-1oz-999-silver-229-95/
 https://thecoinshop.com.au/product/silver-legendary-warrior-leonidas-round-1oz-229-95/
 https://thecoinshop.com.au/product/wessex-mint-1-gram-silver-bar/
+https://www.boldpreciousmetals.com/product/1976/gold-american-buffalo-random-date-1-oz-no-plastic
+https://www.boldpreciousmetals.com/product/2002/gold-bar-credit-suisse-10-gram
 https://www.boldpreciousmetals.com/product/2017/silver-american-1-oz-eagle-bu-random-date-impaired
 https://www.boldpreciousmetals.com/product/2022/2016-silver-1-oz-australia-perth-kangaroo
 https://www.boldpreciousmetals.com/product/2026/2017-silver-1-oz-australia-perth-kangaroo
@@ -862,6 +864,7 @@ https://www.chards.co.uk/1929-gold-sovereign-george-v-perth/5987
 https://www.chards.co.uk/1930-gold-sovereign-george-v-south-africa/6008
 https://www.chards.co.uk/1931-gold-sovereign-george-v-perth/6005
 https://www.chards.co.uk/1931-gold-sovereign-george-v-south-africa/6006
+https://www.chards.co.uk/1966-gold-sovereign-elizabeth-ii/5999
 https://www.chards.co.uk/2000-gold-sovereign-elizabeth-ii-unc-london/312
 https://www.chards.co.uk/2008-gold-sovereign-elizabeth-ii-unc-london/313
 https://www.chards.co.uk/2010-gold-sovereign-elizabeth-ii-unc-london/314
@@ -869,6 +872,12 @@ https://www.chards.co.uk/2011-gold-sovereign-elizabeth-ii-unc-london/315
 https://www.chards.co.uk/2014-gold-sovereign-elizabeth-ii-unc-london/318
 https://www.chards.co.uk/2015-definitive-britannia-two-pounds-bu-coin/301
 https://www.chards.co.uk/2015-gold-sovereign-elizabeth-ii-unc-london/319
+https://www.chards.co.uk/2016-beatrix-potter-jemima-puddle-duck-50p-bu-coin/475
+https://www.chards.co.uk/2016-beatrix-potter-peter-rabbit-fifty-pence-bu-coin/471
+https://www.chards.co.uk/2016-beatrix-potter-squirrel-nutkin-fifty-pence-bu-coin/473
+https://www.chards.co.uk/2016-copper-eu-medallion-coin/447
+https://www.chards.co.uk/2016-gold-kangaroo-nugget-half-ounce-bullion-coin/457
+https://www.chards.co.uk/2016-gold-kangaroo-nugget-tenth-ounce-bullion-coin/462
 https://www.chards.co.uk/2016-gold-sovereign-elizabeth-ii-unc-london/320
 https://www.chards.co.uk/2025-1-ounce-platinum-tudor-beasts-panther-pre-owned/22920
 https://www.chards.co.uk/2025-1-ounce-silver-bullion-coin-eagle-us-mint-pre-owned/23372
@@ -1139,6 +1148,7 @@ https://www.goldenstatemint.com/1-4-oz-Buffalo-Copper-Bullion-Round-999-Fine.htm
 https://www.goldenstatemint.com/1-4-oz-Bull-Bear-Fractional-Silver-Round.html
 https://www.goldenstatemint.com/1-4-oz-GSM-Silver-Eagle-Round.html
 https://www.goldenstatemint.com/1-4-oz-Indian-Head-Copper-Bullion-Round-999-Fine.html
+https://www.goldenstatemint.com/1-4-oz-Random-Gold-Coin.html
 https://www.goldenstatemint.com/1-4-oz-buffalo-fractional-silver-round-999-fine.html
 https://www.goldenstatemint.com/1-4-oz-eagle-head-copper-bullion-round.html
 https://www.goldenstatemint.com/1-4-oz-incuse-indian-fractional-silver-round-999-fine.html
@@ -1167,6 +1177,7 @@ https://www.goldenstatemint.com/1-oz-Bitcoin-Silver-Bullion-Round.html
 https://www.goldenstatemint.com/1-oz-Bull-Bear-Silver-Bar.html
 https://www.goldenstatemint.com/1-oz-Bull-and-Bear-Copper-Round.html
 https://www.goldenstatemint.com/1-oz-Bull-and-Bear-Silver-Round.html
+https://www.goldenstatemint.com/1-oz-Canadian-Gold-Maple-Leaf-Random-Year-Abrasions.html
 https://www.goldenstatemint.com/1-oz-Canadian-Palladium-Maple-Leaf-Coin-BU-Random-Year.html
 https://www.goldenstatemint.com/1-oz-Canadian-Platinum-Maple-Leaf-Coin-BU-Random-Year.html
 https://www.goldenstatemint.com/1-oz-Cannabis-BU-Silver-Round-2026.html
@@ -1571,10 +1582,12 @@ https://www.mdm.de/10-mark-gold-muenze-preussen-friedrich-iii
 https://www.mdm.de/10-mark-goldmuenze-ludwig-ii-bayern-1874-1881
 https://www.mdm.de/10-mark-goldmuenze-preussen-wilhelm-i
 https://www.mdm.de/10-mark-goldmuenzen-die-letzten-deutschen-kaiser
+https://www.mdm.de/10-unzen-silber-layer-muenze-superman
 https://www.mdm.de/100-euro-goldmuenze-2026-judenbuche
 https://www.mdm.de/100-euro-goldmuenze-2027-koenig
 https://www.mdm.de/100-euro-muenzen-deutschland-2024-gold-zerbrochne-krug
 https://www.mdm.de/1000-jahre-muenze-chola-reich-indien-dynastie
+https://www.mdm.de/1001-nacht-muenze-von-harun-al-rashid
 https://www.mdm.de/10er-pack-leuchtturm-kapseln-ultra-26mm
 https://www.mdm.de/10euro-muenze-bulgarien-2026-strassenbahn
 https://www.mdm.de/10g-feingoldbarren-1975-jahre-koeln
@@ -1630,6 +1643,7 @@ https://www.mdm.de/2-euro-finnland-2014-tove-jansson
 https://www.mdm.de/2-euro-finnland-2015-jean-sibelius
 https://www.mdm.de/2-euro-finnland-2016-georg-henrik-wright
 https://www.mdm.de/2-euro-finnland-2023-kupfer-nickel-erstes-naturschutzgesetz
+https://www.mdm.de/2-euro-finnland-2024-ku-ni-finnische-architektur
 https://www.mdm.de/2-euro-finnland-2024-wahlen-demokratie
 https://www.mdm.de/2-euro-finnland-erweiterung-eu-2004
 https://www.mdm.de/2-euro-frankreich-2007-roemische-vertraege
@@ -1695,6 +1709,7 @@ https://www.mdm.de/2-euro-italien-pinocchio-2026
 https://www.mdm.de/2-euro-italien-welt-ernaehrungsprogramm-2004
 https://www.mdm.de/2-euro-italien-winterspiele-turin-2006
 https://www.mdm.de/2-euro-ivan-cankar-2026
+https://www.mdm.de/2-euro-kroatien-2024-ku-ni-altstadt-von-varazdin
 https://www.mdm.de/2-euro-kroatien-2025-kroenung-tomislav
 https://www.mdm.de/2-euro-lettland-2014-riga-kulturhauptstadt
 https://www.mdm.de/2-euro-lettland-2025-selija
@@ -1806,6 +1821,7 @@ https://www.mdm.de/2-euro-san-marino-2012-10-jahre-euro
 https://www.mdm.de/2-euro-san-marino-2013-pinturicchio
 https://www.mdm.de/2-euro-san-marino-2016-donatello
 https://www.mdm.de/2-euro-san-marino-2024-50-jahre-erklaerung-der-buergerrechte
+https://www.mdm.de/2-euro-san-marino-2024-530-todestag-ghirlandaio
 https://www.mdm.de/2-euro-san-marino-2025-heiliges-jahr
 https://www.mdm.de/2-euro-san-marino-alighieri-2015
 https://www.mdm.de/2-euro-san-marino-bartolomeo-borghesi-2004
@@ -1877,6 +1893,7 @@ https://www.mdm.de/20-euro-silber-muenzen-2024-pp
 https://www.mdm.de/20-euro-silbermuenze-125-jahre-otto-dix
 https://www.mdm.de/20-euro-silbermuenze-2016-nelly-sachs
 https://www.mdm.de/20-euro-silbermuenzen-2016
+https://www.mdm.de/20-francs-frankreich-1802-1804-napoleon-premier-consul
 https://www.mdm.de/20-francs-frankreich-1848-1849-gold-genius
 https://www.mdm.de/20-francs-goldmuenze-ludwig-xviii
 https://www.mdm.de/20-mark-goldmuenze-friedrich-august-koenig-sachsen
@@ -1936,6 +1953,7 @@ https://www.mdm.de/35-euro-gedenkmuenze-2027-tamara-danz-st-pp-1
 https://www.mdm.de/3d-pyramiden-gizeh-silberbarren
 https://www.mdm.de/4-euro-italien-2025-gedenkmuenze-campari
 https://www.mdm.de/4-euro-silbermuenze-italien-olympia-2026
+https://www.mdm.de/5-britische-banknoten
 https://www.mdm.de/5-dm-1975-2001-cu-ni-bundesrepublik-deutschland
 https://www.mdm.de/5-dm-letzte-silbermuenzen
 https://www.mdm.de/5-dollar-cookinseln-2024-gold-greif
@@ -1969,7 +1987,9 @@ https://www.mdm.de/50-euro-goldmuenze-2017-lutherrose
 https://www.mdm.de/50-euro-goldmuenze-2027-bauen
 https://www.mdm.de/50-euro-silber-muenze-2026-stille-nacht-heilige-nacht-st-pp
 https://www.mdm.de/50-euro-silber-muenze-2027-alle-jahre-wieder-st-pp
+https://www.mdm.de/50-jahre-elefant-goldpraegung
 https://www.mdm.de/50-millionen-mark-1923-westfalen-notgeld
+https://www.mdm.de/50-muenzen-aus-50-laendern
 https://www.mdm.de/50-pence-gedenkmuenze-grossbritannien-2023-kroenung-charles-iii
 https://www.mdm.de/50-pesos-mexiko-1982-1984-mondgoettin
 https://www.mdm.de/5g-goldbarren-sandmaennchen-und-seine-freunde
@@ -2003,6 +2023,8 @@ https://www.mdm.de/australien-2026-silbermuenze-one-love
 https://www.mdm.de/australien-silbermuenze-jahr-des-pferdes
 https://www.mdm.de/banknote-0-euro-offizieller-pokal-wm-2026
 https://www.mdm.de/banknote-5-rubel-1909
+https://www.mdm.de/banknote-bahamas-queen-elizabeth-ii
+https://www.mdm.de/banknote-guerilla-money-mac-arthur
 https://www.mdm.de/banknoten-groenland-2026-souvenir
 https://www.mdm.de/banknoten-russland-100-und-500-rubel
 https://www.mdm.de/bash-in-berlin-wwe-2024-gedenkpraegung-silber
@@ -2016,6 +2038,7 @@ https://www.mdm.de/britisch-westafrika-1-10-penny-1912-1936
 https://www.mdm.de/britische-gedenkmuenze-50-jahre-iron-maiden
 https://www.mdm.de/bronze-gedenkpraegung-super-bowl-2026
 https://www.mdm.de/bronze-norse-compass-halskette-vegvisir
+https://www.mdm.de/bronzedrachme-der-elymais
 https://www.mdm.de/bronzemuenze-apollon-athena-griechenland
 https://www.mdm.de/bronzemuenze-constantius-ii
 https://www.mdm.de/bronzemuenze-kaiser-claudius-gothicus
@@ -2053,15 +2076,18 @@ https://www.mdm.de/deutschland-10-euro-2026-rettungsdienste-st-pp
 https://www.mdm.de/deutschland-4-muenzen-aus-4-epochen
 https://www.mdm.de/deutschland-5-10-dm-komplettsatz
 https://www.mdm.de/deutschland-5-dm-germanisches-museum
+https://www.mdm.de/deutschland-gold-anlage-depot-feingoldbarren
 https://www.mdm.de/deutschlands-offizielle-50-euro-goldmuenze-2025-gesundheit
 https://www.mdm.de/deutschlands-offizielle-50-euro-goldmuenze-2026-gestaltung
 https://www.mdm.de/dfb-pokal-gold
 https://www.mdm.de/die-deutsche-2-euro-muenze-2015-hessen
 https://www.mdm.de/die-einzigen-10-und-20-franken-vreneli
 https://www.mdm.de/die-gold-ergaenzungspraegungen-zur-10-serie-dienst-der-gesellschaft
+https://www.mdm.de/die-maus-und-der-elefant-geschenkideen
 https://www.mdm.de/die-neue-deutsche-20-euro-gold-gedenkmuenze-heimische-voegel-wanderfalke-2019
 https://www.mdm.de/die-offizielle-deutsche-100-euro-gold-muenze-faust-2023
 https://www.mdm.de/die-offiziellen-deutschen-silber-neuheiten-in-polierte-platte-alle-kommenden-ausgaben
+https://www.mdm.de/die-schlacht-zur-rettung-europas-1687
 https://www.mdm.de/digitale-muenzwaagen-libra
 https://www.mdm.de/doppelgulden-koenig-ludwig-i-von-bayern
 https://www.mdm.de/doppeltaler-frankfurt-1860-1866
@@ -2082,6 +2108,7 @@ https://www.mdm.de/feingoldmuenze-offizielles-logo-fifa-wm-2026
 https://www.mdm.de/feinsilber-mond-gedenkpraegung
 https://www.mdm.de/fifa-wm-2026-offizielle-gedenkmuenzen
 https://www.mdm.de/folder-mit-preussen-wilhelm-ii-3-m-j103
+https://www.mdm.de/frankenstein-eine-muenze
 https://www.mdm.de/frankfurt-doppelgulden-1855
 https://www.mdm.de/frankreich-10-euro-silbermuenze-citroen-2025
 https://www.mdm.de/frankreich-2016-2-eur-uefa-cu-ni-bfr-1
@@ -2099,6 +2126,7 @@ https://www.mdm.de/frankreich-gold-gedenkmuenze-citroen-2025
 https://www.mdm.de/frankreich-kusrmuenzensatz-champs-elysees
 https://www.mdm.de/frankreich-napoleon-iii-10-centimes
 https://www.mdm.de/frankreich-silbermuenze-asterix-olymp-spiele
+https://www.mdm.de/gallienus-gegen-die-dreissig-tyrannen
 https://www.mdm.de/gb-4-muenzen-aus-4-epochen
 https://www.mdm.de/gb-teilvergoldt-ag-observatorium-greenwich
 https://www.mdm.de/geburtstagstaler-happy-birthday-farbdruck
@@ -2143,6 +2171,7 @@ https://www.mdm.de/goldbarren-boersenbarren-2026-bulle-baer
 https://www.mdm.de/goldbarren-deutsche-wahrzeichen-1g
 https://www.mdm.de/goldbarren-euro-bulgarien-2026
 https://www.mdm.de/goldbarren-global-bullion-2026
+https://www.mdm.de/goldbarren-harry-potter-goldenes-trio
 https://www.mdm.de/goldbarren-kollektion-sternzeichen
 https://www.mdm.de/goldbarren-muenze-olympische-spiele-2026
 https://www.mdm.de/goldbarren-queen-king
@@ -2191,6 +2220,7 @@ https://www.mdm.de/goldmuenzen-fifa-wm-2026-premium
 https://www.mdm.de/goldmuenzen-magnificent-8-2026
 https://www.mdm.de/goldmuneze-kaiser-friedrich-iii-preussen
 https://www.mdm.de/goldpraegung-hill-spencer-vier-faeuste-halleluja
+https://www.mdm.de/goldpraegung-kulturhauptstadt-chemnitz
 https://www.mdm.de/goldpraegung-wilhelm-busch-pp
 https://www.mdm.de/grossbrit-1-2-pfund-victoria-i-gekroent
 https://www.mdm.de/grossbritannien-2026-muenzen-treasure-hunt
@@ -2202,6 +2232,7 @@ https://www.mdm.de/grossbritannien-victoria-penny
 https://www.mdm.de/hamburg-historische-silbermuenze
 https://www.mdm.de/herr-der-ringe-goldmuenze-frodo-2026
 https://www.mdm.de/hessen-ludwig-iii-10-mark-1872-73-j-213
+https://www.mdm.de/historische-japanische-silbermuenze
 https://www.mdm.de/historische-muenze-einviertel-oere-schweden
 https://www.mdm.de/historische-silbermuenze-sachsen-albert-5-mark
 https://www.mdm.de/hongkong-george-1-cent-1931-1934
@@ -2211,6 +2242,7 @@ https://www.mdm.de/italien-4-muenzen-aus-4-epochen
 https://www.mdm.de/japan-silbermuenze-shu
 https://www.mdm.de/jubilaeumsbarren-gold-trabant-35-jahre-fall-der-mauer-1-1
 https://www.mdm.de/kaiser-goetter-und-legionen-fuenf-echte-roemische-muenzen
+https://www.mdm.de/kambodscha-bronze-hamsa-vogel
 https://www.mdm.de/kamerun-2022-1000-cfa-zyklop-1oz-ag-af
 https://www.mdm.de/kamerun-2023-2000-cfa-achilles-2oz-ag-af
 https://www.mdm.de/kanada-2025-diamantherz-silbermuenze
@@ -2218,6 +2250,8 @@ https://www.mdm.de/kanada-2025-silbermuenze-biber-multilayered
 https://www.mdm.de/kanada-2026-gold-maple-leaf-goldmuenze
 https://www.mdm.de/kanada-2026-treasured-maple-leaf
 https://www.mdm.de/kapseln-grosspackungen-2
+https://www.mdm.de/kleinste-goldmz-bele-von-vijayanagara
+https://www.mdm.de/koenig-der-pentakel-silberne-tarotmuenze
 https://www.mdm.de/koffer-cargo-multi-xl
 https://www.mdm.de/kollektion-silber-himmelsscheibe-nebra
 https://www.mdm.de/komplett-satz-5-euro-gem-zone-2019-pp
@@ -2231,6 +2265,7 @@ https://www.mdm.de/kursmuenzensatz-2026-slowenien-cankar-kosovel
 https://www.mdm.de/kursmuenzensatz-deutsches-kaiserreich-wilhelm-2
 https://www.mdm.de/kursmuenzensets-deutschland-2024-1-1
 https://www.mdm.de/kursmuenzensets-deutschland-2025
+https://www.mdm.de/leucht-vista-album-2-euro-muenzen-brd
 https://www.mdm.de/leuchtturm-doppeltes-munztaschenalbum
 https://www.mdm.de/leuchtturm-munzrolle-tmrn
 https://www.mdm.de/limitierte-gedenkausgaben-zur-darts-wm-2025
@@ -2257,6 +2292,7 @@ https://www.mdm.de/mini-muenzkoffer
 https://www.mdm.de/monaco-2019-2-fuerst-honore-v-pp
 https://www.mdm.de/monaco-2025-gedenkmuenze-carlades
 https://www.mdm.de/mongolische-feingoldmuenze-jahr-des-pferdes
+https://www.mdm.de/monkey-money-8-muenzen-und-8-briefmarken
 https://www.mdm.de/muenzalbum-2-euro-muenzen-vista
 https://www.mdm.de/muenzalbum-presso-2-euro
 https://www.mdm.de/muenzalbum-presso-euro-coin-collection
@@ -2269,6 +2305,7 @@ https://www.mdm.de/muenzkassette-100-euro-goldmuenzen
 https://www.mdm.de/muenzkassette-volterra-deutsche-literatur
 https://www.mdm.de/muenzkoffer-inkl-6-tableaus
 https://www.mdm.de/munzfolder-bund-2-euro-gedenkmunzen
+https://www.mdm.de/nepal-gurkha-bullet-coin-album
 https://www.mdm.de/nfl-game-coin-2025-denver-broncos
 https://www.mdm.de/nfl-game-coin-2025-los-angeles-rams
 https://www.mdm.de/nfl-game-coin-2025-new-england-patriots
@@ -2288,6 +2325,7 @@ https://www.mdm.de/oesterreich-2026-muenze-fabelwesen-elfe
 https://www.mdm.de/oesterreich-3-euro-muenze-nacktkiemer-schnecke
 https://www.mdm.de/oesterreich-baby-euro-muenzensatz-2026
 https://www.mdm.de/offizielle-deutschland-goldbarren-fifa-wm-2026
+https://www.mdm.de/offizielle-gold-gedenkpraegung-dfb-rudi-voeller
 https://www.mdm.de/offizielle-praegungen-super-bowl-2026
 https://www.mdm.de/offiziellen-silbermuenzen-fifa-wm-2026
 https://www.mdm.de/oktoberfest-taler-gold-gedenkpraegung
@@ -2296,6 +2334,7 @@ https://www.mdm.de/original-goldmuenze-kruegerrand-2026
 https://www.mdm.de/original-silber-gedenkmuenze-weltflug-graf-zeppelin
 https://www.mdm.de/originalmuenzen-griechenland-goetter
 https://www.mdm.de/palau-gold-gedenkmuenze-basketball
+https://www.mdm.de/papst-johannes-paul-ii-25-jg-jubilaeum
 https://www.mdm.de/papst-johannes-paul-ii-mini
 https://www.mdm.de/pesos-echte-muenze-argentinien-1978-fussball-wm
 https://www.mdm.de/polen-4-muenzen-aus-4-epochen
@@ -2327,11 +2366,13 @@ https://www.mdm.de/schwedische-wrackmuenze-aus-dem-17-jahrhundert
 https://www.mdm.de/silber-2-euro-portugal-2016-bruecke-des-25-april
 https://www.mdm.de/silber-60-jahre-terence-hill-bud-spencer-nobody
 https://www.mdm.de/silber-baustein-8-noppen
+https://www.mdm.de/silber-bestes-duo-terence-hill-bud-spencer-und-banknote
 https://www.mdm.de/silber-big-five-bueffel-2026-suedafrika
 https://www.mdm.de/silber-denier-frankreich-poitou-1189-1199-richard-loewenherz-1-1
 https://www.mdm.de/silber-diobol-ionien-milet-5-jhdt-v-chr-1-1
 https://www.mdm.de/silber-dirham-des-kalifats-cordoba
 https://www.mdm.de/silber-gedenkmuenze-weihnachtsstern
+https://www.mdm.de/silber-gedenkpraegung-65-jahre-sandmaennchen
 https://www.mdm.de/silber-gedenkpraegung-franz-beckenbauer-1-1
 https://www.mdm.de/silber-kursmuenzen-deutschland-dm-1951-1974
 https://www.mdm.de/silber-philharmoniker-gemischt-1oz
@@ -2411,12 +2452,14 @@ https://www.mdm.de/teilverg-ag-muenze-rrs-discovery-schiff
 https://www.mdm.de/thrakien-istros-pfeilspitzengeld
 https://www.mdm.de/thrakien-olbia-delfingeld-5-jhdt-v-chr
 https://www.mdm.de/ultraschallreiniger-sauber
+https://www.mdm.de/ungar-freiheitskaempfer-lajos-kossuth
 https://www.mdm.de/usa-10-dollar-1908-1933-indianerkopf
 https://www.mdm.de/usa-10-dollar-goldmuenze-american-eagle-kopf-der-freiheitsgoettin
 https://www.mdm.de/usa-2025-goldmuenze-superman
 https://www.mdm.de/usa-5-dollar-indian-head
 https://www.mdm.de/usa-walking-liberty-20-dollars-1908-1933
 https://www.mdm.de/uv-lampe-holmes
+https://www.mdm.de/valentinstag-claudius-ii-gothicus
 https://www.mdm.de/vanuatu-hochrelief-muenze-saebelzahntiger
 https://www.mdm.de/vatikan-2015-2-viii-weltfamilientreffen-st
 https://www.mdm.de/velours-muenzbeutel-schwarz-blau-1-1

@@ -55,10 +55,10 @@
       "confidence": "Insufficient evidence"
     }
   ],
-  "fresh_stores": 32,
+  "fresh_stores": 30,
   "configured_stores": 37,
-  "fresh_listings": 29302,
-  "tracked_listings": 32290,
+  "fresh_listings": 24679,
+  "tracked_listings": 32344,
   "horizon_days": 7,
   "note": "Store-listing availability; not unit sales. Same product at different stores counts as separate listings.",
   "sales": [],
@@ -66,34 +66,34 @@
   "as_of": "2026-11-18",
   "methodology_version": 2,
   "snapshot": {
-    "colorized_tracked": 3008,
-    "tracked": 32290,
-    "available": 13802,
-    "unavailable": 15500,
-    "unknown": 2988,
-    "colorized_available": 1022,
-    "colorized_unavailable": 1672
+    "colorized_tracked": 3010,
+    "tracked": 32344,
+    "available": 13069,
+    "unavailable": 11610,
+    "unknown": 7665,
+    "colorized_available": 990,
+    "colorized_unavailable": 876
   },
   "collectors": [
     {
       "store": "https://www.coinstv.net",
-      "tracked": 4027,
-      "fresh": 3903
+      "tracked": 4035,
+      "fresh": 3904
     },
     {
       "store": "https://www.herobullion.com",
       "tracked": 1402,
-      "fresh": 1397
+      "fresh": 1396
     },
     {
       "store": "https://grreserve.com",
       "tracked": 2833,
-      "fresh": 2753
+      "fresh": 0
     },
     {
       "store": "https://bullionsharks.com",
       "tracked": 55,
-      "fresh": 17
+      "fresh": 55
     },
     {
       "store": "https://popcoins.store",
@@ -117,18 +117,18 @@
     },
     {
       "store": "https://www.apmex.com",
-      "tracked": 258,
-      "fresh": 40
+      "tracked": 263,
+      "fresh": 150
     },
     {
       "store": "https://sdbullion.com",
       "tracked": 161,
-      "fresh": 11
+      "fresh": 128
     },
     {
       "store": "https://bullionexchanges.com",
       "tracked": 15,
-      "fresh": 1
+      "fresh": 12
     },
     {
       "store": "https://www.providentmetals.com",
@@ -147,13 +147,13 @@
     },
     {
       "store": "https://www.moderncoinmart.com",
-      "tracked": 2907,
-      "fresh": 2789
+      "tracked": 2915,
+      "fresh": 2792
     },
     {
       "store": "https://www.pinehurstcoins.com",
-      "tracked": 2756,
-      "fresh": 2636
+      "tracked": 2760,
+      "fresh": 2632
     },
     {
       "store": "https://www.intagliomint.com",
@@ -188,7 +188,7 @@
     {
       "store": "https://www.numiscollect.eu",
       "tracked": 2771,
-      "fresh": 2771
+      "fresh": 0
     },
     {
       "store": "https://www.downies.com",
@@ -218,69 +218,69 @@
     {
       "store": "https://www.goldenstatemint.com",
       "tracked": 59,
-      "fresh": 39
+      "fresh": 59
     },
     {
       "store": "https://www.texmetals.com",
       "tracked": 87,
-      "fresh": 37
+      "fresh": 87
     },
     {
       "store": "https://www.boldpreciousmetals.com",
-      "tracked": 145,
-      "fresh": 39
+      "tracked": 148,
+      "fresh": 147
     },
     {
       "store": "https://www.govmint.com",
       "tracked": 465,
-      "fresh": 1
+      "fresh": 3
     },
     {
       "store": "https://www.perthmint.com",
       "tracked": 151,
-      "fresh": 32
+      "fresh": 142
     },
     {
       "store": "https://www.thecoinshop.com.au",
       "tracked": 74,
-      "fresh": 40
+      "fresh": 74
     },
     {
       "store": "https://www.royalmint.com",
       "tracked": 170,
-      "fresh": 39
+      "fresh": 148
     },
     {
       "store": "https://www.chards.co.uk",
-      "tracked": 138,
-      "fresh": 39
+      "tracked": 145,
+      "fresh": 142
     },
     {
       "store": "https://www.mdm.de",
-      "tracked": 209,
-      "fresh": 28
+      "tracked": 228,
+      "fresh": 118
     }
   ],
   "market": {
     "silver_spot": {
-      "value": 47.18,
-      "date": "2026-11-17"
+      "value": 44.88,
+      "date": "2026-11-18"
     },
     "silver_ret7_pct": {
-      "value": -7.67,
-      "date": "2026-11-17"
+      "value": -13.48,
+      "date": "2026-11-18"
     },
     "silver_ret30_pct": {
-      "value": -17.19,
-      "date": "2026-11-17"
+      "value": -22.22,
+      "date": "2026-11-18"
     },
     "ebay_colorized_listings": {
-      "value": 10718.0,
-      "date": "2026-11-17"
+      "value": 10736.0,
+      "date": "2026-11-18"
     },
     "ebay_collector_premium": {
-      "value": 1.188,
-      "date": "2026-11-17"
+      "value": 1.181,
+      "date": "2026-11-18"
     }
   }
 }
