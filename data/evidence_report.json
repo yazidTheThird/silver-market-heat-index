@@ -55,10 +55,10 @@
       "confidence": "Insufficient evidence"
     }
   ],
-  "fresh_stores": 30,
+  "fresh_stores": 29,
   "configured_stores": 37,
-  "fresh_listings": 27623,
-  "tracked_listings": 32859,
+  "fresh_listings": 27671,
+  "tracked_listings": 32917,
   "horizon_days": 7,
   "note": "Store-listing availability; not unit sales. Same product at different stores counts as separate listings.",
   "sales": [],
@@ -67,11 +67,11 @@
   "methodology_version": 2,
   "snapshot": {
     "colorized_tracked": 3046,
-    "tracked": 32859,
-    "available": 12916,
-    "unavailable": 14707,
-    "unknown": 5236,
-    "colorized_available": 980,
+    "tracked": 32917,
+    "available": 12915,
+    "unavailable": 14756,
+    "unknown": 5246,
+    "colorized_available": 963,
     "colorized_unavailable": 1662
   },
   "collectors": [
@@ -93,7 +93,7 @@
     {
       "store": "https://bullionsharks.com",
       "tracked": 55,
-      "fresh": 17
+      "fresh": 0
     },
     {
       "store": "https://popcoins.store",
@@ -118,12 +118,12 @@
     {
       "store": "https://www.apmex.com",
       "tracked": 303,
-      "fresh": 40
+      "fresh": 41
     },
     {
       "store": "https://sdbullion.com",
-      "tracked": 162,
-      "fresh": 3
+      "tracked": 163,
+      "fresh": 14
     },
     {
       "store": "https://bullionexchanges.com",
@@ -147,13 +147,13 @@
     },
     {
       "store": "https://www.moderncoinmart.com",
-      "tracked": 3036,
-      "fresh": 2799
+      "tracked": 3039,
+      "fresh": 2801
     },
     {
       "store": "https://www.pinehurstcoins.com",
-      "tracked": 2860,
-      "fresh": 2630
+      "tracked": 2865,
+      "fresh": 2632
     },
     {
       "store": "https://www.intagliomint.com",
@@ -227,8 +227,8 @@
     },
     {
       "store": "https://www.boldpreciousmetals.com",
-      "tracked": 192,
-      "fresh": 11
+      "tracked": 212,
+      "fresh": 31
     },
     {
       "store": "https://www.govmint.com",
@@ -247,18 +247,18 @@
     },
     {
       "store": "https://www.royalmint.com",
-      "tracked": 191,
-      "fresh": 39
+      "tracked": 203,
+      "fresh": 51
     },
     {
       "store": "https://www.chards.co.uk",
-      "tracked": 149,
-      "fresh": 26
+      "tracked": 162,
+      "fresh": 39
     },
     {
       "store": "https://www.mdm.de",
-      "tracked": 273,
-      "fresh": 18
+      "tracked": 277,
+      "fresh": 22
     }
   ],
   "market": {
