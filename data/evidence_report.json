@@ -55,10 +55,10 @@
       "confidence": "Insufficient evidence"
     }
   ],
-  "fresh_stores": 29,
+  "fresh_stores": 31,
   "configured_stores": 37,
-  "fresh_listings": 27668,
-  "tracked_listings": 33088,
+  "fresh_listings": 28811,
+  "tracked_listings": 33106,
   "horizon_days": 7,
   "note": "Store-listing availability; not unit sales. Same product at different stores counts as separate listings.",
   "sales": [],
@@ -66,13 +66,13 @@
   "as_of": "2026-11-22",
   "methodology_version": 2,
   "snapshot": {
-    "colorized_tracked": 3049,
-    "tracked": 33088,
-    "available": 12957,
-    "unavailable": 14711,
-    "unknown": 5420,
-    "colorized_available": 1016,
-    "colorized_unavailable": 1666
+    "colorized_tracked": 3052,
+    "tracked": 33106,
+    "available": 13752,
+    "unavailable": 15059,
+    "unknown": 4295,
+    "colorized_available": 1142,
+    "colorized_unavailable": 1756
   },
   "collectors": [
     {
@@ -93,7 +93,7 @@
     {
       "store": "https://bullionsharks.com",
       "tracked": 55,
-      "fresh": 0
+      "fresh": 55
     },
     {
       "store": "https://popcoins.store",
@@ -103,7 +103,7 @@
     {
       "store": "https://www.mycollectables.com.au",
       "tracked": 4339,
-      "fresh": 4329
+      "fresh": 4328
     },
     {
       "store": "https://www.directcoins.com.au",
@@ -117,18 +117,18 @@
     },
     {
       "store": "https://www.apmex.com",
-      "tracked": 306,
-      "fresh": 78
+      "tracked": 309,
+      "fresh": 150
     },
     {
       "store": "https://sdbullion.com",
       "tracked": 164,
-      "fresh": 4
+      "fresh": 123
     },
     {
       "store": "https://bullionexchanges.com",
       "tracked": 15,
-      "fresh": 0
+      "fresh": 10
     },
     {
       "store": "https://www.providentmetals.com",
@@ -147,13 +147,13 @@
     },
     {
       "store": "https://www.moderncoinmart.com",
-      "tracked": 3071,
+      "tracked": 3073,
       "fresh": 2804
     },
     {
       "store": "https://www.pinehurstcoins.com",
-      "tracked": 2900,
-      "fresh": 2640
+      "tracked": 2903,
+      "fresh": 2641
     },
     {
       "store": "https://www.intagliomint.com",
@@ -187,7 +187,7 @@
     },
     {
       "store": "https://www.numiscollect.eu",
-      "tracked": 2801,
+      "tracked": 2804,
       "fresh": 2773
     },
     {
@@ -218,69 +218,69 @@
     {
       "store": "https://www.goldenstatemint.com",
       "tracked": 60,
-      "fresh": 2
+      "fresh": 60
     },
     {
       "store": "https://www.texmetals.com",
       "tracked": 87,
-      "fresh": 11
+      "fresh": 82
     },
     {
       "store": "https://www.boldpreciousmetals.com",
       "tracked": 259,
-      "fresh": 34
+      "fresh": 182
     },
     {
       "store": "https://www.govmint.com",
       "tracked": 465,
-      "fresh": 6
+      "fresh": 2
     },
     {
       "store": "https://www.perthmint.com",
       "tracked": 191,
-      "fresh": 33
+      "fresh": 174
     },
     {
       "store": "https://www.thecoinshop.com.au",
       "tracked": 74,
-      "fresh": 3
+      "fresh": 74
     },
     {
       "store": "https://www.royalmint.com",
       "tracked": 209,
-      "fresh": 42
+      "fresh": 187
     },
     {
       "store": "https://www.chards.co.uk",
       "tracked": 172,
-      "fresh": 22
+      "fresh": 153
     },
     {
       "store": "https://www.mdm.de",
-      "tracked": 280,
-      "fresh": 19
+      "tracked": 287,
+      "fresh": 145
     }
   ],
   "market": {
     "silver_spot": {
-      "value": 41.03,
-      "date": "2026-11-21"
+      "value": 41.07,
+      "date": "2026-11-22"
     },
     "silver_ret7_pct": {
-      "value": -16.31,
-      "date": "2026-11-21"
+      "value": -16.24,
+      "date": "2026-11-22"
     },
     "silver_ret30_pct": {
-      "value": -25.07,
-      "date": "2026-11-21"
+      "value": -25.01,
+      "date": "2026-11-22"
     },
     "ebay_colorized_listings": {
-      "value": 10788.0,
-      "date": "2026-11-21"
+      "value": 10789.0,
+      "date": "2026-11-22"
     },
     "ebay_collector_premium": {
-      "value": 1.271,
-      "date": "2026-11-21"
+      "value": 1.224,
+      "date": "2026-11-22"
     }
   }
 }
