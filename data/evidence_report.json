@@ -55,10 +55,10 @@
       "confidence": "Insufficient evidence"
     }
   ],
-  "fresh_stores": 30,
+  "fresh_stores": 29,
   "configured_stores": 37,
-  "fresh_listings": 27674,
-  "tracked_listings": 33439,
+  "fresh_listings": 27683,
+  "tracked_listings": 33475,
   "horizon_days": 7,
   "note": "Store-listing availability; not unit sales. Same product at different stores counts as separate listings.",
   "sales": [],
@@ -66,19 +66,19 @@
   "as_of": "2026-11-24",
   "methodology_version": 2,
   "snapshot": {
-    "colorized_tracked": 3064,
-    "tracked": 33439,
-    "available": 12944,
-    "unavailable": 14730,
-    "unknown": 5765,
-    "colorized_available": 955,
-    "colorized_unavailable": 1666
+    "colorized_tracked": 3069,
+    "tracked": 33475,
+    "available": 12915,
+    "unavailable": 14768,
+    "unknown": 5792,
+    "colorized_available": 967,
+    "colorized_unavailable": 1668
   },
   "collectors": [
     {
       "store": "https://www.coinstv.net",
-      "tracked": 4056,
-      "fresh": 3906
+      "tracked": 4063,
+      "fresh": 3907
     },
     {
       "store": "https://www.herobullion.com",
@@ -87,13 +87,13 @@
     },
     {
       "store": "https://grreserve.com",
-      "tracked": 2844,
+      "tracked": 2845,
       "fresh": 2744
     },
     {
       "store": "https://bullionsharks.com",
       "tracked": 55,
-      "fresh": 0
+      "fresh": 17
     },
     {
       "store": "https://popcoins.store",
@@ -102,8 +102,8 @@
     },
     {
       "store": "https://www.mycollectables.com.au",
-      "tracked": 4341,
-      "fresh": 4329
+      "tracked": 4342,
+      "fresh": 4330
     },
     {
       "store": "https://www.directcoins.com.au",
@@ -118,17 +118,17 @@
     {
       "store": "https://www.apmex.com",
       "tracked": 314,
-      "fresh": 40
+      "fresh": 0
     },
     {
       "store": "https://sdbullion.com",
       "tracked": 164,
-      "fresh": 2
+      "fresh": 6
     },
     {
       "store": "https://bullionexchanges.com",
       "tracked": 16,
-      "fresh": 1
+      "fresh": 0
     },
     {
       "store": "https://www.providentmetals.com",
@@ -147,13 +147,13 @@
     },
     {
       "store": "https://www.moderncoinmart.com",
-      "tracked": 3113,
-      "fresh": 2804
+      "tracked": 3115,
+      "fresh": 2805
     },
     {
       "store": "https://www.pinehurstcoins.com",
       "tracked": 2952,
-      "fresh": 2651
+      "fresh": 2641
     },
     {
       "store": "https://www.intagliomint.com",
@@ -163,7 +163,7 @@
     {
       "store": "https://www.libertycoin.com",
       "tracked": 926,
-      "fresh": 125
+      "fresh": 122
     },
     {
       "store": "https://www.goldsilver.com",
@@ -227,18 +227,18 @@
     },
     {
       "store": "https://www.boldpreciousmetals.com",
-      "tracked": 297,
-      "fresh": 30
+      "tracked": 300,
+      "fresh": 33
     },
     {
       "store": "https://www.govmint.com",
       "tracked": 465,
-      "fresh": 6
+      "fresh": 8
     },
     {
       "store": "https://www.perthmint.com",
-      "tracked": 201,
-      "fresh": 38
+      "tracked": 204,
+      "fresh": 43
     },
     {
       "store": "https://www.thecoinshop.com.au",
@@ -247,18 +247,18 @@
     },
     {
       "store": "https://www.royalmint.com",
-      "tracked": 252,
-      "fresh": 39
+      "tracked": 270,
+      "fresh": 57
     },
     {
       "store": "https://www.chards.co.uk",
-      "tracked": 215,
-      "fresh": 26
+      "tracked": 216,
+      "fresh": 27
     },
     {
       "store": "https://www.mdm.de",
       "tracked": 347,
-      "fresh": 14
+      "fresh": 24
     }
   ],
   "market": {
