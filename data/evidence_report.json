@@ -55,10 +55,10 @@
       "confidence": "Insufficient evidence"
     }
   ],
-  "fresh_stores": 30,
+  "fresh_stores": 31,
   "configured_stores": 37,
-  "fresh_listings": 27878,
-  "tracked_listings": 34175,
+  "fresh_listings": 29037,
+  "tracked_listings": 34201,
   "horizon_days": 7,
   "note": "Store-listing availability; not unit sales. Same product at different stores counts as separate listings.",
   "sales": [],
@@ -67,17 +67,17 @@
   "methodology_version": 2,
   "snapshot": {
     "colorized_tracked": 3086,
-    "tracked": 34175,
-    "available": 13100,
-    "unavailable": 14778,
-    "unknown": 6297,
-    "colorized_available": 981,
-    "colorized_unavailable": 1675
+    "tracked": 34201,
+    "available": 13899,
+    "unavailable": 15138,
+    "unknown": 5164,
+    "colorized_available": 1145,
+    "colorized_unavailable": 1763
   },
   "collectors": [
     {
       "store": "https://www.coinstv.net",
-      "tracked": 4074,
+      "tracked": 4077,
       "fresh": 3901
     },
     {
@@ -93,7 +93,7 @@
     {
       "store": "https://bullionsharks.com",
       "tracked": 55,
-      "fresh": 15
+      "fresh": 48
     },
     {
       "store": "https://popcoins.store",
@@ -117,18 +117,18 @@
     },
     {
       "store": "https://www.apmex.com",
-      "tracked": 347,
-      "fresh": 42
+      "tracked": 352,
+      "fresh": 151
     },
     {
       "store": "https://sdbullion.com",
       "tracked": 167,
-      "fresh": 10
+      "fresh": 122
     },
     {
       "store": "https://bullionexchanges.com",
       "tracked": 16,
-      "fresh": 1
+      "fresh": 11
     },
     {
       "store": "https://www.providentmetals.com",
@@ -147,13 +147,13 @@
     },
     {
       "store": "https://www.moderncoinmart.com",
-      "tracked": 3191,
-      "fresh": 2828
+      "tracked": 3197,
+      "fresh": 2830
     },
     {
       "store": "https://www.pinehurstcoins.com",
-      "tracked": 3056,
-      "fresh": 2700
+      "tracked": 3067,
+      "fresh": 2704
     },
     {
       "store": "https://www.intagliomint.com",
@@ -163,7 +163,7 @@
     {
       "store": "https://www.libertycoin.com",
       "tracked": 926,
-      "fresh": 116
+      "fresh": 113
     },
     {
       "store": "https://www.goldsilver.com",
@@ -218,69 +218,69 @@
     {
       "store": "https://www.goldenstatemint.com",
       "tracked": 66,
-      "fresh": 7
+      "fresh": 66
     },
     {
       "store": "https://www.texmetals.com",
       "tracked": 88,
-      "fresh": 33
+      "fresh": 82
     },
     {
       "store": "https://www.boldpreciousmetals.com",
       "tracked": 329,
-      "fresh": 34
+      "fresh": 175
     },
     {
       "store": "https://www.govmint.com",
       "tracked": 465,
-      "fresh": 0
+      "fresh": 2
     },
     {
       "store": "https://www.perthmint.com",
       "tracked": 208,
-      "fresh": 42
+      "fresh": 184
     },
     {
       "store": "https://www.thecoinshop.com.au",
       "tracked": 75,
-      "fresh": 10
+      "fresh": 75
     },
     {
       "store": "https://www.royalmint.com",
       "tracked": 344,
-      "fresh": 61
+      "fresh": 208
     },
     {
       "store": "https://www.chards.co.uk",
-      "tracked": 240,
-      "fresh": 41
+      "tracked": 241,
+      "fresh": 189
     },
     {
       "store": "https://www.mdm.de",
       "tracked": 391,
-      "fresh": 31
+      "fresh": 170
     }
   ],
   "market": {
     "silver_spot": {
-      "value": 41.75,
-      "date": "2026-11-26"
+      "value": 44.02,
+      "date": "2026-11-27"
     },
     "silver_ret7_pct": {
-      "value": -5.79,
-      "date": "2026-11-26"
+      "value": -0.67,
+      "date": "2026-11-27"
     },
     "silver_ret30_pct": {
-      "value": -21.9,
-      "date": "2026-11-26"
+      "value": -17.65,
+      "date": "2026-11-27"
     },
     "ebay_colorized_listings": {
-      "value": 10716.0,
-      "date": "2026-11-26"
+      "value": 10731.0,
+      "date": "2026-11-27"
     },
     "ebay_collector_premium": {
-      "value": 1.201,
-      "date": "2026-11-26"
+      "value": 1.232,
+      "date": "2026-11-27"
     }
   }
 }
