@@ -3,17 +3,17 @@
     {
       "segment": "Colorized silver Eagles",
       "current": {
-        "eligible": 2,
+        "eligible": 0,
         "unavailable": 0,
         "unknown": 0
       },
       "previous": {
-        "eligible": 1,
+        "eligible": 3,
         "unavailable": 0,
         "unknown": 1
       },
-      "matched_stores": 1,
-      "matched_current": 2,
+      "matched_stores": 0,
+      "matched_current": 0,
       "matched_previous": 0,
       "change_pp": null,
       "confidence": "Insufficient evidence"
@@ -21,18 +21,18 @@
     {
       "segment": "Other colorized silver",
       "current": {
-        "eligible": 12,
-        "unavailable": 5,
+        "eligible": 9,
+        "unavailable": 3,
         "unknown": 0
       },
       "previous": {
-        "eligible": 11,
-        "unavailable": 5,
+        "eligible": 14,
+        "unavailable": 7,
         "unknown": 0
       },
       "matched_stores": 2,
-      "matched_current": 11,
-      "matched_previous": 7,
+      "matched_current": 8,
+      "matched_previous": 10,
       "change_pp": null,
       "confidence": "Insufficient evidence"
     },
@@ -55,24 +55,24 @@
       "confidence": "Insufficient evidence"
     }
   ],
-  "fresh_stores": 31,
+  "fresh_stores": 29,
   "configured_stores": 37,
-  "fresh_listings": 28793,
-  "tracked_listings": 33870,
+  "fresh_listings": 27768,
+  "tracked_listings": 34116,
   "horizon_days": 7,
   "note": "Store-listing availability; not unit sales. Same product at different stores counts as separate listings.",
   "sales": [],
   "sales_error": "",
-  "as_of": "2026-11-26",
+  "as_of": "2026-11-27",
   "methodology_version": 2,
   "snapshot": {
     "colorized_tracked": 3086,
-    "tracked": 33870,
-    "available": 13728,
-    "unavailable": 15065,
-    "unknown": 5077,
-    "colorized_available": 1152,
-    "colorized_unavailable": 1755
+    "tracked": 34116,
+    "available": 13031,
+    "unavailable": 14737,
+    "unknown": 6348,
+    "colorized_available": 964,
+    "colorized_unavailable": 1674
   },
   "collectors": [
     {
@@ -93,7 +93,7 @@
     {
       "store": "https://bullionsharks.com",
       "tracked": 55,
-      "fresh": 48
+      "fresh": 0
     },
     {
       "store": "https://popcoins.store",
@@ -118,17 +118,17 @@
     {
       "store": "https://www.apmex.com",
       "tracked": 347,
-      "fresh": 154
+      "fresh": 40
     },
     {
       "store": "https://sdbullion.com",
       "tracked": 165,
-      "fresh": 120
+      "fresh": 2
     },
     {
       "store": "https://bullionexchanges.com",
       "tracked": 16,
-      "fresh": 10
+      "fresh": 1
     },
     {
       "store": "https://www.providentmetals.com",
@@ -147,13 +147,13 @@
     },
     {
       "store": "https://www.moderncoinmart.com",
-      "tracked": 3182,
-      "fresh": 2826
+      "tracked": 3188,
+      "fresh": 2828
     },
     {
       "store": "https://www.pinehurstcoins.com",
-      "tracked": 3043,
-      "fresh": 2696
+      "tracked": 3051,
+      "fresh": 2700
     },
     {
       "store": "https://www.intagliomint.com",
@@ -197,8 +197,8 @@
     },
     {
       "store": "https://www.melbournecoins.com.au",
-      "tracked": 650,
-      "fresh": 605
+      "tracked": 871,
+      "fresh": 826
     },
     {
       "store": "https://www.goldstackers.com.au",
@@ -218,17 +218,17 @@
     {
       "store": "https://www.goldenstatemint.com",
       "tracked": 65,
-      "fresh": 65
+      "fresh": 6
     },
     {
       "store": "https://www.texmetals.com",
       "tracked": 88,
-      "fresh": 82
+      "fresh": 0
     },
     {
       "store": "https://www.boldpreciousmetals.com",
       "tracked": 329,
-      "fresh": 176
+      "fresh": 34
     },
     {
       "store": "https://www.govmint.com",
@@ -238,27 +238,27 @@
     {
       "store": "https://www.perthmint.com",
       "tracked": 208,
-      "fresh": 179
+      "fresh": 40
     },
     {
       "store": "https://www.thecoinshop.com.au",
       "tracked": 75,
-      "fresh": 75
+      "fresh": 10
     },
     {
       "store": "https://www.royalmint.com",
       "tracked": 333,
-      "fresh": 221
+      "fresh": 39
     },
     {
       "store": "https://www.chards.co.uk",
       "tracked": 230,
-      "fresh": 180
+      "fresh": 31
     },
     {
       "store": "https://www.mdm.de",
-      "tracked": 371,
-      "fresh": 165
+      "tracked": 382,
+      "fresh": 20
     }
   ],
   "market": {
