@@ -1081,13 +1081,18 @@ https://www.chards.co.uk/1932-gold-sovereign-george-v-south-africa/6004
 https://www.chards.co.uk/1957-gold-sovereign-elizabeth-ii/6003
 https://www.chards.co.uk/1958-gold-sovereign-elizabeth-ii/5951
 https://www.chards.co.uk/1966-gold-sovereign-elizabeth-ii/5999
+https://www.chards.co.uk/1967-gold-sovereign-elizabeth-ii/5998
 https://www.chards.co.uk/1968-gold-olympic-medal-bullion-mexico/540
+https://www.chards.co.uk/1968-gold-sovereign-elizabeth-ii/5967
 https://www.chards.co.uk/1968-silver-25-pesos-mexico/622
+https://www.chards.co.uk/1974-gold-sovereign-elizabeth-ii/5997
+https://www.chards.co.uk/1976-gold-sovereign-elizabeth-ii/5996
 https://www.chards.co.uk/1977-silver-five-roubles-russian-scenes-of-leningrad/578
 https://www.chards.co.uk/1977-silver-five-roubles-russian-scenes-of-tallinn/581
 https://www.chards.co.uk/1977-silver-five-roubles-russian/577
 https://www.chards.co.uk/1977-silver-ten-roubles-russian-map-of-ussr/561
 https://www.chards.co.uk/1977-silver-ten-roubles-russian/560
+https://www.chards.co.uk/1978-gold-sovereign-elizabeth-ii/5994
 https://www.chards.co.uk/1978-silver-five-roubles-russian-running/582
 https://www.chards.co.uk/1978-silver-five-roubles-russian-scenes-of-minsk/579
 https://www.chards.co.uk/1978-silver-five-roubles-russian-swimming/583
@@ -2181,6 +2186,7 @@ https://www.mdm.de/1kg-goldmuenze-2026-frankreich-mussee-d-orsay
 https://www.mdm.de/1kg-silber-suedafrika-2026-cheetah
 https://www.mdm.de/1kilo-silbermuenze-goetter-olymp
 https://www.mdm.de/1oz-gold-fwc-2026-pokal-replik
+https://www.mdm.de/1oz-goldmuenze-kruegerrand
 https://www.mdm.de/1oz-goldmuenze-maple-leaf
 https://www.mdm.de/1oz-goldmuenze-suedafrika-2026-cheetah
 https://www.mdm.de/1oz-silber-2026-100-geburtstag-queen
@@ -2538,6 +2544,7 @@ https://www.mdm.de/20-euro-goldmuenzen-2010-eiche
 https://www.mdm.de/20-euro-goldmuenzen-2012-fichte
 https://www.mdm.de/20-euro-goldmuenzen-deutschland-2014-kastanie
 https://www.mdm.de/20-euro-kulturhauptstadt-chemnitz
+https://www.mdm.de/20-euro-muenze-fussball-europameisterschaft-2020-gruppe
 https://www.mdm.de/20-euro-silber-gedenkmuenze-2016-ernst-litfass
 https://www.mdm.de/20-euro-silber-gedenkmuenze-2017-grimms-maerchen-bremer-stadtmusikanten
 https://www.mdm.de/20-euro-silber-gedenkmuenze-2024-grundgesetz-st-pp
@@ -2550,6 +2557,7 @@ https://www.mdm.de/20-euro-silber-muenze-2021-grimms-maerchen-frau-holle-pp
 https://www.mdm.de/20-euro-silber-muenzen-2017-4
 https://www.mdm.de/20-euro-silber-muenzen-2020
 https://www.mdm.de/20-euro-silber-muenzen-2021
+https://www.mdm.de/20-euro-silber-muenzen-2022
 https://www.mdm.de/20-euro-silber-muenzen-2023-3
 https://www.mdm.de/20-euro-silber-muenzen-2024-pp
 https://www.mdm.de/20-euro-silbergedenkmuenze-2019-250-geburtstag-alexander-von-humboldt
@@ -2686,6 +2694,7 @@ https://www.mdm.de/5-pfund-britische-gedenkmuenze-john-lennon
 https://www.mdm.de/5-pfund-gedenkmuenze-james-bond-007
 https://www.mdm.de/5-pfund-gedenkmuenze-james-bond-shaken
 https://www.mdm.de/5-pfund-grossbritannien-2024-gedenkmuenze-paul-mccartney
+https://www.mdm.de/5-reichsmark-1933-drittes-reich-drittes-martin-luther
 https://www.mdm.de/5-reichsmark-eichbaum
 https://www.mdm.de/5-reichsmark-muenze-hindenburg
 https://www.mdm.de/5-rubel-goldmuenze-russland-nikolaus-ii
@@ -2839,6 +2848,7 @@ https://www.mdm.de/cook-2021-0-5-hp-golden-snitch-vg-kol
 https://www.mdm.de/crown-grossbritannien-1965-ku-ni-winston-churchill
 https://www.mdm.de/d-mark-gold-repliken
 https://www.mdm.de/daenemark-10-kronen-goldmuenze-christian
+https://www.mdm.de/daenemark-20-kronen-1908-1912-friedrich-viii
 https://www.mdm.de/daenemark-kronen-1913-1917-christian-x-gruppe
 https://www.mdm.de/das-dunkle-zeitalter-mini-album
 https://www.mdm.de/das-papiergeld-der-samurai
@@ -2955,8 +2965,17 @@ https://www.mdm.de/digitale-muenzwaagen-libra
 https://www.mdm.de/doppelgulden-koenig-ludwig-i-von-bayern
 https://www.mdm.de/doppeltaler-frankfurt-1860-1866
 https://www.mdm.de/drachme-thrakien-apollonia-410-350-v-chr-silber-medusa
+https://www.mdm.de/drittes-reich-1-reichsmark-1933-39-j-354-1
 https://www.mdm.de/drittes-reich-1-reichsmark-1936
 https://www.mdm.de/drittes-reich-1-reichsmark-1939
+https://www.mdm.de/drittes-reich-1-reichspf-1945-46-j-373b
+https://www.mdm.de/drittes-reich-10-reichspf-1945-48-j-375
+https://www.mdm.de/drittes-reich-2-reichsmark-1934-j-355
+https://www.mdm.de/drittes-reich-5-reichsmark-1934-j-356
+https://www.mdm.de/drittes-reich-5-reichsmark-1934-j-359
+https://www.mdm.de/drittes-reich-5-reichsmark-1935-36-j-360
+https://www.mdm.de/drittes-reich-5-reichspf-1940-44-j-370
+https://www.mdm.de/drittes-reich-50-rp-1938-1939-j-365
 https://www.mdm.de/drittes-reich-kursmuenzensatz
 https://www.mdm.de/dt-kaiserreich-1-2-mark-1905-1919-j-16
 https://www.mdm.de/dt-kaiserreich-1-pfennig-1873-1889-j-1
@@ -3096,6 +3115,7 @@ https://www.mdm.de/gold-gedenkmuenze-wm-2026-mexiko
 https://www.mdm.de/gold-gedenkmuenzee-albrecht-duerer
 https://www.mdm.de/gold-gedenkmuenzen-mexico-wm-2026
 https://www.mdm.de/gold-gedenkpraegung-60-j-sandmaennchen
+https://www.mdm.de/gold-gedenkpraegung-deutscher-reichstag
 https://www.mdm.de/gold-gedenkpraegung-harry-potter-harry-ron-hermine
 https://www.mdm.de/gold-gedenkpraegung-harry-potter-hogwarts
 https://www.mdm.de/gold-gedenkpraegung-nebra-25-jahre-faszination
@@ -3258,6 +3278,7 @@ https://www.mdm.de/kaiser-goetter-und-legionen-fuenf-echte-roemische-muenzen
 https://www.mdm.de/kambodscha-bronze-hamsa-vogel
 https://www.mdm.de/kamerun-2022-1000-cfa-zyklop-1oz-ag-af
 https://www.mdm.de/kamerun-2023-2000-cfa-achilles-2oz-ag-af
+https://www.mdm.de/kamerun-silber-gedenkmuenze-meerjungfrau
 https://www.mdm.de/kanada-2025-diamantherz-silbermuenze
 https://www.mdm.de/kanada-2025-silbermuenze-biber-multilayered
 https://www.mdm.de/kanada-2026-gold-maple-leaf-goldmuenze
@@ -3557,6 +3578,7 @@ https://www.mdm.de/silber-gedenkmuenzen-der-kaiserzeit-zu-ehren-deutscher-univer
 https://www.mdm.de/silber-gedenkpraegung-65-jahre-sandmaennchen
 https://www.mdm.de/silber-gedenkpraegung-franz-beckenbauer-1-1
 https://www.mdm.de/silber-gedenktaler-friedrich-schiller
+https://www.mdm.de/silber-jubilaeumsausgabe-10-jahre-krypto
 https://www.mdm.de/silber-kursmuenzen-deutschland-dm-1951-1974
 https://www.mdm.de/silber-muenze-original-kopeke-iwan-des-schrecklichen-russland
 https://www.mdm.de/silber-philharmoniker-gemischt-1oz
@@ -3665,6 +3687,7 @@ https://www.mdm.de/silbernote-grossbritannien-james-bond-007-casino-royal
 https://www.mdm.de/silbernote-grossbritannien-offizielles-filmplakat-james-bond-007-skyfall
 https://www.mdm.de/silbernote-james-bond-007-offizielles-filmplakat-quantum-of-solace
 https://www.mdm.de/silberparabel-fall-des-osmanischen-reiches
+https://www.mdm.de/silberpraegung-50-jahre-playmobil
 https://www.mdm.de/silberpraegung-hill-spencer-rechte-linke-hand
 https://www.mdm.de/silberpraegung-mainzelmaennchen
 https://www.mdm.de/silberpraegung-mainzelmaennchen-pyramide
@@ -3735,8 +3758,10 @@ https://www.mdm.de/volterra-wildtiere
 https://www.mdm.de/wappen-lettland-2019-2-euro-aufgehende-sonne-stempelglanz-kupfer-nickel
 https://www.mdm.de/wasserfest-feuerfeste-dokumententasche-impervius
 https://www.mdm.de/weimar-50-pfennig-erste-munze-der-ersten-deutschen-republik
+https://www.mdm.de/weimarer-rep-3-reichsmark-1928-j-333
 https://www.mdm.de/weimarer-republik-2-reichsmark
 https://www.mdm.de/weimarer-republik-3-reichsmark-albrecht-duerer
+https://www.mdm.de/weimarer-republik-50-rp-1927-1938-j-324
 https://www.mdm.de/wertvolle-barren-aus-feingold-wahrzeichen-europas
 https://www.mdm.de/wertvollste-seltenste-deutsche-original-goldmuenzen
 https://www.mdm.de/wikinger-silber
@@ -3753,6 +3778,7 @@ https://www.perthmint.com/shop/bullion/bullion-coins/Australian-Kangaroo-2025-1-
 https://www.perthmint.com/shop/bullion/bullion-coins/Australian-Kangaroo-2025-1-2oz-Gold-Bullion-Coin-en.aspx
 https://www.perthmint.com/shop/bullion/bullion-coins/australian-brumby-2025-1oz-silver-bullion-coin/
 https://www.perthmint.com/shop/bullion/bullion-coins/australian-brumby-2026-1oz-silver-bullion-coin/
+https://www.perthmint.com/shop/bullion/bullion-coins/australian-emu-2026-1oz-silver-bullion-coin/
 https://www.perthmint.com/shop/bullion/bullion-coins/australian-kangaroo-2026-1-2oz-gold-bullion-coin/
 https://www.perthmint.com/shop/bullion/bullion-coins/australian-kangaroo-2026-1oz-silver-bullion-coins-in-tube/
 https://www.perthmint.com/shop/bullion/bullion-coins/australian-kangaroo-2027-1-10oz-gold-bullion-coin/
@@ -3766,8 +3792,12 @@ https://www.perthmint.com/shop/bullion/bullion-coins/australian-kangaroo-2027-1o
 https://www.perthmint.com/shop/bullion/bullion-coins/australian-koala-2026-1oz-silver-bullion-coin/
 https://www.perthmint.com/shop/bullion/bullion-coins/australian-kookaburra-2026-1-10oz-gold-bullion-coin/
 https://www.perthmint.com/shop/bullion/bullion-coins/australian-kookaburra-2026-1-10oz-platinum-bullion-coin/
+https://www.perthmint.com/shop/bullion/bullion-coins/australian-swan-2025-1oz-silver-bullion-coin/
 https://www.perthmint.com/shop/bullion/bullion-coins/australian-wedge-tailed-eagle-2026-1oz-silver-bullion-coin/
 https://www.perthmint.com/shop/bullion/bullion-coins/chinese-myths-and-legends-dragon-and-horse-2026-1oz-silver-bullion-coin/
+https://www.perthmint.com/shop/bullion/bullion-coins/dragon-2026-1oz-gold-rectangular-bullion-coin/
+https://www.perthmint.com/shop/bullion/bullion-coins/dragon-2026-1oz-silver-rectangular-bullion-coins-in-tube/
+https://www.perthmint.com/shop/bullion/bullion-coins/dragon-2026-1oz-silver-rectangular-individual-bullion-coin/
 https://www.royalmint.com/annual-sets/2027-annual-sets/100-years-of-the-proms-on-the-bbc/
 https://www.royalmint.com/annual-sets/2027-annual-sets/100-years-of-the-ryder-cup/
 https://www.royalmint.com/annual-sets/2027-annual-sets/150-years-of-the-championships-wimbledon/
